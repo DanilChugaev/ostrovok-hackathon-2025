@@ -1,14 +1,14 @@
 <template>
   <ToggleButton
-      v-model="isDark"
-      class="theme-switcher"
-      on-icon="pi pi-moon"
-      off-icon="pi pi-sun"
-      @update:model-value="toggleTheme"
+    v-model="isDark"
+    class="theme-switcher"
+    on-icon="pi pi-moon"
+    off-icon="pi pi-sun"
+    @update:model-value="toggleTheme"
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, inject } from 'vue';
 import { DARK_MODE_CLASS, STORAGE_MODE_KEY } from '../constants';
 
@@ -26,7 +26,7 @@ function toggleTheme() {
   }
 
   localStorage.setItem(STORAGE_MODE_KEY, newTheme);
-};
+}
 </script>
 
 <style>

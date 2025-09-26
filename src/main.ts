@@ -1,14 +1,14 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
-import PrimeVue from 'primevue/config'
-import Lara from '@primeuix/themes/lara'
+import { createApp } from 'vue';
+import './style.css';
+import App from './App.vue';
+import PrimeVue from 'primevue/config';
+import Lara from '@primeuix/themes/lara';
 import { DARK_MODE_CLASS, STORAGE_MODE_KEY } from './constants.ts';
-import 'primeicons/primeicons.css'
+import 'primeicons/primeicons.css';
 
-const app = createApp(App)
+const app = createApp(App);
 
-const themes = {
+const themes: Record<string, boolean> = {
   light: false,
   dark: true,
 };
@@ -19,10 +19,10 @@ app.use(PrimeVue, {
   theme: {
     preset: Lara,
     options: {
-      darkModeSelector: `.${DARK_MODE_CLASS}`
-    }
+      darkModeSelector: `.${DARK_MODE_CLASS}`,
+    },
   },
-})
+});
 
 if (themes[currentTheme]) {
   document.documentElement.classList.add(DARK_MODE_CLASS);
@@ -31,4 +31,4 @@ if (themes[currentTheme]) {
 app.provide('themes', themes);
 app.provide('currentTheme', currentTheme);
 
-app.mount('#app')
+app.mount('#app');
