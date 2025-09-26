@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker:prod": "docker compose down && docker compose up --build",
+    "docker:dev": "docker compose down && docker compose --profile dev up --build"
   },
   "dependencies": {
     "vue": "^3.5.21"

@@ -8,7 +8,7 @@
 ## Быстрый старт
 
 ```bash
-git clone https://github.com/ostrovok-hackathon-2025/doc
+git clone git@github.com:ostrovok-hackathon-2025/doc.git doc
 cd doc
 cp .env.example .env   # если нужно
 docker compose up --build
@@ -40,7 +40,8 @@ docker compose exec app bash -lc "python manage.py migrate && python manage.py l
 - `/health` — 200 OK, JSON `{ "status": "ok" }`
 - Тестовый пользователь: `admin / admin123` (если релевантно)
 
-## Если нет веб-интерфейса
+## Команды для работы с докером
 
-Точные команды запуска, формат входных данных, пример вызова и пример вывода.
+- `docker compose up --build` или `yarn docker:prod` - продакшен режим (доступно на http://localhost:8080)
+- `docker compose --profile dev up --build` или `yarn docker:dev` - dev режим с hot-reload (доступно на http://localhost:8081)
 
