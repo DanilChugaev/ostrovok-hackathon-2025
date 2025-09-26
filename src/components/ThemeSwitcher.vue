@@ -31,6 +31,7 @@ function toggleTheme() {
 
 <style>
 .theme-switcher {
+  display: flex;
   width: 44px;
   height: 44px;
   padding: 0 !important;

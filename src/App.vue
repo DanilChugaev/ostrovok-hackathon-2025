@@ -1,7 +1,11 @@
 <template>
-  <theme-switcher />
+  <layout-header class="container" />
+
+  <main class="container">
+    <RouterView />
+  </main>
 </template>
 
 <script setup lang="ts">
-import ThemeSwitcher from './components/ThemeSwitcher.vue';
+import LayoutHeader from './components/layout/Header.vue';
 </script>
