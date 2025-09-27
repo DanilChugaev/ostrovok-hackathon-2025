@@ -27,4 +27,13 @@ export const handlers = [
       ],
     });
   }),
+
+  http.get(`/api/cities`, () => {
+    return HttpResponse.json<ApiServerResponse<Review[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: ['Новосибирск', 'Пермь', 'Екатеринбург', 'Санкт-Петербург', 'Москва'],
+    });
+  }),
 ];

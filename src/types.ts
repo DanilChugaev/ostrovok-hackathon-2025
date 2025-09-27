@@ -12,3 +12,24 @@ export interface Review {
   city: string;
   text: string;
 }
+
+export interface RequestForm {
+  user: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: number | string;
+    age: number | string;
+    city: string;
+  };
+  experience: {
+    travel: string; // опыт путешествий
+    writingReviews: string; // опыт написания отзывов
+    reason: string; // почему хотите стать секретным гостем
+  };
+  preferences: {
+    travelAccessibility: string; // доступность для поездок типа выходные только, рабочие и тд
+    preferredDirections: string; // предпочтительные направления
+  };
+  agreeWithRules: boolean; // согласен с условиями
+}
