@@ -71,6 +71,18 @@ function submitRequest() {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-f);
+  position: relative;
+}
+
+.how-does-this-work-section__list::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 25px;
+  width: 1px;
+  z-index: 0;
+  background-color: var(--p-primary-color);
 }
 
 .how-does-this-work-section__item {
@@ -94,12 +106,13 @@ function submitRequest() {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
   background-color: var(--p-primary-color);
   color: var(--p-button-primary-color);
   box-shadow: var(--box-shadow);
   transition: box-shadow 0.3s;
+  z-index: 1;
 }
 
 .how-does-this-work-section__item:hover .how-does-this-work-section__counter {
