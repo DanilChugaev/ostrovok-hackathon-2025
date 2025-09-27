@@ -8,8 +8,13 @@
     </p>
 
     <div class="greetings__actions">
-      <Button @click="submitRequest" label="Подать заявку" icon="pi pi-file" />
-      <Button outlined label="Как это работает" icon="pi pi-question-circle" />
+      <Button label="Подать заявку" icon="pi pi-file" @click="submitRequest" />
+      <Button
+        outlined
+        label="Как это работает"
+        icon="pi pi-question-circle"
+        @click="scrollToElement"
+      />
     </div>
   </section>
 </template>
@@ -22,6 +27,10 @@ const router = useRouter();
 
 function submitRequest() {
   router.push(PAGES.SubmitRequest);
+}
+
+function scrollToElement() {
+  document.getElementById('how-does-this-work')?.scrollIntoView({ behavior: 'smooth' });
 }
 </script>
 

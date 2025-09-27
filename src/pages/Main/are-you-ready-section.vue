@@ -7,7 +7,7 @@
     </p>
 
     <div class="are-you-ready__actions">
-      <Button @click="submitRequest" label="Подать заявку" />
+      <Button label="Подать заявку" icon="pi pi-file" @click="submitRequest" />
     </div>
   </section>
 </template>

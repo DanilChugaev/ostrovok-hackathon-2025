@@ -1,5 +1,5 @@
 <template>
-  <section class="how-does-this-work">
+  <section id="how-does-this-work" class="how-does-this-work">
     <h2>Как это работает</h2>
 
     <ul class="how-does-this-work__list">

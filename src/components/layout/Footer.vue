@@ -22,7 +22,7 @@
               >
             </li>
             <li class="layout-footer__item">
-              <router-link :to="PAGES.Main" class="layout-footer_link">О программе</router-link>
+              <a class="layout-footer_link" @click="scrollToElement">О программе</a>
             </li>
           </ul>
         </div>
@@ -48,6 +48,10 @@
 
 <script setup lang="ts">
 import { PAGES } from '../../constants.ts';
+
+function scrollToElement() {
+  document.getElementById('advantages')?.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 
 <style scoped>
@@ -85,6 +89,7 @@ import { PAGES } from '../../constants.ts';
 }
 
 .layout-footer_link {
+  cursor: pointer;
   text-decoration: none;
   color: var(--p-primary-color);
 }

@@ -1,5 +1,5 @@
 <template>
-  <section class="advantages">
+  <section id="advantages" class="advantages">
     <h2>Преимущества программы</h2>
 
     <card-list :items="advantages">
