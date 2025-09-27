@@ -1,9 +1,11 @@
 <template>
   <header class="layout-header">
     <div class="container">
-      <router-link to="/" class="layout-header__title"> Секретный гость </router-link>
+      <Menubar :model="items" class="container">
+        <template #start>
+          <router-link to="/" class="layout-header__title"> Секретный гость </router-link>
+        </template>
 
-      <Menubar :model="items">
         <template #item="{ item, props }">
           <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
             <a :href="href" v-bind="props.action" @click="navigate">
@@ -12,12 +14,14 @@
             </a>
           </router-link>
         </template>
-      </Menubar>
 
-      <div class="layout-header__actions">
-        <theme-switcher />
-        <Button>Профиль</Button>
-      </div>
+        <template #end>
+          <div class="layout-header__actions">
+            <theme-switcher />
+            <Button>Профиль</Button>
+          </div>
+        </template>
+      </Menubar>
     </div>
   </header>
 </template>
@@ -46,10 +50,12 @@ const items = ref([
   background-color: var(--p-menubar-background);
 }
 
-.layout-header .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.layout-header:deep(.p-menubar-button) {
+  order: 1;
+}
+
+.layout-header:deep(.p-menubar-start) {
+  margin-right: auto;
 }
 
 .layout-header__title {
