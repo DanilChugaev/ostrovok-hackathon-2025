@@ -27,6 +27,7 @@ import { onMounted, ref } from 'vue';
 import type { Review } from '../../types.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import CardList from '../../components/CardList.vue';
+import { API } from '../../constants.ts';
 
 const { errorNotify } = useNotifications();
 
@@ -34,7 +35,7 @@ const reviews = ref<Review[]>([]);
 
 async function fetchReviews() {
   try {
-    reviews.value = await apiRequest<Review[]>(`/api/reviews`, { method: 'GET' }).then(
+    reviews.value = await apiRequest<Review[]>(API.Reviews, { method: 'GET' }).then(
       data => data.data,
     );
   } catch (e: any) {

@@ -33,3 +33,19 @@ export interface RequestForm {
   };
   agreeWithRules: boolean; // согласен с условиями
 }
+
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  email: string;
+  phone: number | string;
+  age: number | string;
+  city: string;
+  status: string;
+  loyalty: {
+    score: number;
+    status: string;
+  };
+}

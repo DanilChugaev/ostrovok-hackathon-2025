@@ -9,6 +9,14 @@ export const MAX_COUNT_CHARS_IN_TEXTAREA_FIELD = 1000;
 export const PAGES = {
   Main: '/',
   SubmitRequest: '/submit-request',
+  Profile: '/profile',
+};
+
+export const API = {
+  Reviews: '/api/reviews',
+  Cities: '/api/cities',
+  AccessibilityListForTravel: '/api/accessibility-list-for-travel',
+  SendRequestForm: '/api/send-request-form',
 };
 
 export const SUBMIT_REQUEST_FORM_STAGES = {

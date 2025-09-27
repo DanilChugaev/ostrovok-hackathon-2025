@@ -68,7 +68,7 @@
       <div class="submit-request-form__field-container">
         <label for="city">Город проживания</label>
 
-        <Select :options="cities" id="city" name="city" />
+        <Select :options="cities" label-id="city" name="city" />
 
         <Message v-if="$form.city?.invalid" severity="error" size="small" variant="simple">
           {{ $form.city.error?.message }}
@@ -95,6 +95,7 @@ import { Form } from '@primevue/forms';
 import type { RequestForm } from '../../types.ts';
 import { onMounted, ref } from 'vue';
 import {
+  API,
   MAX_COUNT_CHARS_IN_FIELD,
   MIN_COUNT_CHARS_IN_FIELD,
   MIN_COUNT_CHARS_IN_USERNAME,
@@ -182,7 +183,7 @@ async function onValidateForm({ valid, values }: { valid: boolean; values: Reque
 
 async function fetchCities() {
   try {
-    cities.value = await apiRequest<string[]>(`/api/cities`, { method: 'GET' }).then(
+    cities.value = await apiRequest<string[]>(API.Cities, { method: 'GET' }).then(
       data => data.data,
     );
   } catch (e: any) {

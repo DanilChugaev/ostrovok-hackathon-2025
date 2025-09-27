@@ -1,8 +1,9 @@
 import { http, HttpResponse } from 'msw';
-import type { ApiServerResponse, Review } from '../../types.ts';
+import type { ApiServerResponse, RequestForm, Review, User } from '../../types.ts';
+import { API } from '../../constants.ts';
 
 export const handlers = [
-  http.get(`/api/reviews`, () => {
+  http.get(API.Reviews, () => {
     return HttpResponse.json<ApiServerResponse<Review[]>>({
       success: true,
       statusCode: 200,
@@ -28,12 +29,47 @@ export const handlers = [
     });
   }),
 
-  http.get(`/api/cities`, () => {
-    return HttpResponse.json<ApiServerResponse<Review[]>>({
+  http.get(API.Cities, () => {
+    return HttpResponse.json<ApiServerResponse<string[]>>({
       success: true,
       statusCode: 200,
       message: '',
       data: ['Новосибирск', 'Пермь', 'Екатеринбург', 'Санкт-Петербург', 'Москва'],
+    });
+  }),
+
+  http.get(API.AccessibilityListForTravel, () => {
+    return HttpResponse.json<ApiServerResponse<string[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: ['Только выходные', 'Только будни', 'В любое время', 'Только праздники и отпуск'],
+    });
+  }),
+
+  http.post(API.SendRequestForm, async ({ request }) => {
+    const body = (await request.json()) as RequestForm;
+    console.log(body);
+
+    return HttpResponse.json<ApiServerResponse<User>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: {
+        id: 0,
+        firstName: body.user.firstName,
+        lastName: body.user.lastName,
+        avatar: '',
+        email: body.user.email,
+        phone: body.user.phone,
+        age: body.user.age,
+        city: body.user.city,
+        status: 'Заявка находится на рассмотрении',
+        loyalty: {
+          score: 0,
+          status: 'bronze',
+        },
+      },
     });
   }),
 ];
