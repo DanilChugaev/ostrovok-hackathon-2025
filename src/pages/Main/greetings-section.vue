@@ -1,5 +1,5 @@
 <template>
-  <section class="main__greetings greetings">
+  <section class="greetings">
     <h1>Станьте секретным гостем Островка</h1>
 
     <p class="greetings__description">
