@@ -2,10 +2,11 @@ import { createWebHistory, createRouter } from 'vue-router';
 
 import Main from './pages/Main/Main.vue';
 import SubmitRequest from './pages/SubmitRequest.vue';
+import { PAGES } from './constants.ts';
 
 const routes = [
-  { path: '/', component: Main },
-  { path: '/submit-request', component: SubmitRequest },
+  { path: PAGES.Main, component: Main },
+  { path: PAGES.SubmitRequest, component: SubmitRequest },
 ];
 
 export const router = createRouter({

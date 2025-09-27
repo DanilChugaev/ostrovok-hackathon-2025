@@ -32,9 +32,7 @@ function toggleTheme() {
 <style>
 .theme-switcher {
   display: flex;
-  width: 44px;
-  height: 44px;
-  padding: 0 !important;
+  padding: var(--p-button-padding-y) var(--p-button-padding-x);
 }
 .theme-switcher .p-togglebutton-label {
   display: none;
