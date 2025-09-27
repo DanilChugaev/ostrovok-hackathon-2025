@@ -26,8 +26,7 @@ function submitRequest() {
 <style scoped>
 .are-you-ready {
   gap: var(--spacer-e);
-  padding-top: var(--spacer-g);
-  padding-bottom: var(--spacer-g);
+  margin-bottom: var(--spacer-f);
 }
 
 .are-you-ready__title {

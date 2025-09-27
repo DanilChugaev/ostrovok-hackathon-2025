@@ -1,0 +1,130 @@
+<template>
+  <footer class="layout-footer">
+    <div class="container">
+      <div class="layout-footer__column-container">
+        <div class="layout-footer__column">
+          <h2 class="layout-footer__title">Секретный гость</h2>
+          <p class="layout-footer__description">
+            Программа для улучшения качества отелей и повышения доверия пользователей к отзывам.
+          </p>
+        </div>
+
+        <div class="layout-footer__column">
+          <h2 class="layout-footer__title">Ссылки</h2>
+
+          <ul class="layout-footer__list">
+            <li class="layout-footer__item">
+              <router-link :to="PAGES.Main" class="layout-footer_link">Главная</router-link>
+            </li>
+            <li class="layout-footer__item">
+              <router-link :to="PAGES.SubmitRequest" class="layout-footer_link"
+                >Стать гостем</router-link
+              >
+            </li>
+            <li class="layout-footer__item">
+              <router-link :to="PAGES.Main" class="layout-footer_link">О программе</router-link>
+            </li>
+          </ul>
+        </div>
+
+        <div class="layout-footer__column">
+          <h2 class="layout-footer__title">Контакты</h2>
+
+          <div>
+            <p class="layout-footer__description">
+              Если у вас возникли вопросы, свяжитесь с нами по электронной почте:
+            </p>
+            <a href="mailto:secretguest@ostrovok.ru" target="_blank" class="layout-footer_link"
+              >secretguest@ostrovok.ru</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="layout-footer__copyright">© 2025 Островок. Все права защищены.</div>
+    </div>
+  </footer>
+</template>
+
+<script setup lang="ts">
+import { PAGES } from '../../constants.ts';
+</script>
+
+<style scoped>
+.layout-footer {
+  align-content: end;
+  background-color: var(--p-menubar-background);
+  margin-top: auto;
+}
+
+.layout-footer .container {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--spacer-e);
+  padding-bottom: var(--spacer-e);
+  gap: var(--spacer-f);
+}
+
+.layout-footer__title {
+  margin: 0;
+  font-size: 1rem;
+  margin-bottom: var(--spacer-e);
+}
+
+.layout-footer__copyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.layout-footer__description,
+.layout-footer_link {
+  text-align: start;
+  font-size: 0.8rem;
+}
+
+.layout-footer_link {
+  text-decoration: none;
+  color: var(--p-primary-color);
+}
+
+.layout-footer_link:hover {
+  text-decoration: underline;
+}
+
+.layout-footer__column-container {
+  display: flex;
+  gap: var(--spacer-f);
+}
+
+.layout-footer__column {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  flex: 1;
+}
+
+.layout-footer__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-d);
+}
+
+.layout-footer__item {
+  display: flex;
+}
+
+@media (max-width: 991px) {
+  .layout-footer__title {
+    margin-bottom: var(--spacer-c);
+  }
+  .layout-footer__column-container {
+    flex-direction: column;
+    gap: var(--spacer-e);
+  }
+  .layout-footer .container {
+    gap: var(--spacer-e);
+  }
+}
+</style>

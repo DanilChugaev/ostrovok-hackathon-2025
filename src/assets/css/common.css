@@ -27,6 +27,12 @@ html.dark-mode {
     padding: var(--spacer-d);
 }
 
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 h1,
 h2,
 h3,
@@ -68,7 +74,7 @@ p {
     margin: 0;
 }
 
-section:not(:first-child) {
+section {
     margin-top: var(--spacer-gh);
 }
 
