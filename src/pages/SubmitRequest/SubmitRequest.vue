@@ -3,28 +3,45 @@
     <h1 class="submit-request__title">Заявка на участие в программе<br />"Секретный гость"</h1>
 
     <div class="submit-request__container">
-      <Stepper value="1" linear>
+      <Stepper :value="SUBMIT_REQUEST_FORM_STAGES.Experience" linear>
         <StepList>
-          <Step value="1">Личные данные</Step>
-          <Step value="2">Опыт</Step>
-          <Step value="3">Предпочтения</Step>
+          <Step :value="SUBMIT_REQUEST_FORM_STAGES.User">Личные данные</Step>
+          <Step :value="SUBMIT_REQUEST_FORM_STAGES.Experience">Опыт</Step>
+          <Step :value="SUBMIT_REQUEST_FORM_STAGES.Preferences">Предпочтения</Step>
         </StepList>
 
         <StepPanels>
-          <StepPanel v-slot="{ activateCallback }" value="1">
-            <user-form v-model="form.user" @next="activateCallback('2')" />
-          </StepPanel>
-
-          <StepPanel v-slot="{ activateCallback }" value="2">
-            <experience-form
-              v-model="form.experience"
-              @back="activateCallback('1')"
-              @next="activateCallback('3')"
+          <StepPanel v-slot="{ activateCallback }" :value="SUBMIT_REQUEST_FORM_STAGES.User">
+            <user-form
+              v-model="form.user"
+              class="submit-request__form"
+              @next="activateCallback(SUBMIT_REQUEST_FORM_STAGES.Experience)"
             />
           </StepPanel>
 
-          <StepPanel v-slot="{ activateCallback }" value="3">
-            <preferences-form v-model="form.preferences" @back="activateCallback('2')" />
+          <StepPanel
+            v-slot="{ activateCallback, active }"
+            :value="SUBMIT_REQUEST_FORM_STAGES.Experience"
+          >
+            <experience-form
+              v-if="active"
+              v-model="form.experience"
+              class="submit-request__form"
+              @back="activateCallback(SUBMIT_REQUEST_FORM_STAGES.User)"
+              @next="activateCallback(SUBMIT_REQUEST_FORM_STAGES.Preferences)"
+            />
+          </StepPanel>
+
+          <StepPanel
+            v-slot="{ activateCallback, active }"
+            :value="SUBMIT_REQUEST_FORM_STAGES.Preferences"
+          >
+            <preferences-form
+              v-if="active"
+              v-model="form.preferences"
+              class="submit-request__form"
+              @back="activateCallback(SUBMIT_REQUEST_FORM_STAGES.Experience)"
+            />
           </StepPanel>
         </StepPanels>
       </Stepper>
@@ -35,11 +52,13 @@
 </template>
 
 <script setup lang="ts">
-import ExperienceForm from './experience-form.vue';
-import { reactive } from 'vue';
+import { defineAsyncComponent, reactive } from 'vue';
 import UserForm from './user-form.vue';
 import type { RequestForm } from '../../types.ts';
-import PreferencesForm from './preferences-form.vue';
+import { SUBMIT_REQUEST_FORM_STAGES } from '../../constants.ts';
+
+const ExperienceForm = defineAsyncComponent(() => import('./experience-form.vue'));
+const PreferencesForm = defineAsyncComponent(() => import('./preferences-form.vue'));
 
 const form = reactive<RequestForm>({
   user: {
@@ -64,6 +83,13 @@ const form = reactive<RequestForm>({
 </script>
 
 <style>
+.submit-request__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-de);
+  padding: var(--spacer-e);
+}
+
 .submit-request__title {
   margin: var(--spacer-f) 0;
 }
@@ -83,7 +109,29 @@ const form = reactive<RequestForm>({
   margin-left: auto;
 }
 
-.submit-request:deep(.p-steppanel) {
+.submit-request .p-steppanel {
   border-radius: var(--p-border-radius-lg);
+}
+
+.submit-request-form__title {
+  margin-bottom: 2rem;
+  padding: 0;
+}
+
+.submit-request-form__line {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacer-d);
+}
+
+.submit-request-form__field-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--spacer-b);
+}
+
+.submit-request-form__field-container .p-select {
+  width: 100%;
 }
 </style>

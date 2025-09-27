@@ -23,6 +23,7 @@ declare module 'vue' {
     StepPanel: typeof import('primevue/steppanel')['default']
     StepPanels: typeof import('primevue/steppanels')['default']
     Stepper: typeof import('primevue/stepper')['default']
+    Textarea: typeof import('primevue/textarea')['default']
     ThemeSwitcher: typeof import('./src/components/ThemeSwitcher.vue')['default']
     Toast: typeof import('primevue/toast')['default']
     ToggleButton: typeof import('primevue/togglebutton')['default']

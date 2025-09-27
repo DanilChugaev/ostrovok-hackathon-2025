@@ -1,7 +1,7 @@
 <template>
   <Form>
     <div class="form-actions">
-      <Button label="Назад" severity="secondary" icon="pi pi-arrow-left" @click="$emit('back')" />
+      <Button label="Назад" outlined icon="pi pi-arrow-left" @click="$emit('back')" />
     </div>
   </Form>
 </template>

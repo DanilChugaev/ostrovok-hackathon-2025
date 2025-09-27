@@ -1,15 +1,15 @@
 <template>
   <Form
     v-slot="$form"
-    class="user-form"
+    class="submit-request-form"
     :initialValues="initialValues"
     :resolver="resolver"
     @submit="onValidateForm"
   >
-    <h2 class="user-form__title">Личные данные</h2>
+    <h2 class="submit-request-form__title">Личные данные</h2>
 
-    <div class="user-form__line">
-      <div class="user-form__field-container">
+    <div class="submit-request-form__line">
+      <div class="submit-request-form__field-container">
         <label for="firstName">Имя</label>
 
         <InputText id="firstName" fluid name="firstName" type="text" />
@@ -19,7 +19,7 @@
         </Message>
       </div>
 
-      <div class="user-form__field-container">
+      <div class="submit-request-form__field-container">
         <label for="lastName">Фамилия</label>
 
         <InputText id="lastName" fluid name="lastName" type="text" />
@@ -30,8 +30,8 @@
       </div>
     </div>
 
-    <div class="user-form__line">
-      <div class="user-form__field-container">
+    <div class="submit-request-form__line">
+      <div class="submit-request-form__field-container">
         <label for="email">Email</label>
 
         <InputText id="email" fluid name="email" type="text" />
@@ -42,8 +42,8 @@
       </div>
     </div>
 
-    <div class="user-form__line">
-      <div class="user-form__field-container">
+    <div class="submit-request-form__line">
+      <div class="submit-request-form__field-container">
         <label for="phone">Телефон</label>
 
         <InputText id="phone" fluid name="phone" type="number" />
@@ -54,8 +54,8 @@
       </div>
     </div>
 
-    <div class="user-form__line">
-      <div class="user-form__field-container">
+    <div class="submit-request-form__line">
+      <div class="submit-request-form__field-container">
         <label for="age">Возраст</label>
 
         <InputText id="age" fluid name="age" type="number" />
@@ -65,7 +65,7 @@
         </Message>
       </div>
 
-      <div class="user-form__field-container">
+      <div class="submit-request-form__field-container">
         <label for="city">Город проживания</label>
 
         <Select :options="cities" id="city" name="city" />
@@ -194,34 +194,3 @@ onMounted(async () => {
   await fetchCities();
 });
 </script>
-
-<style>
-.user-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacer-d);
-  padding: var(--spacer-d);
-}
-
-.user-form__title {
-  margin: 0;
-  padding: 0;
-}
-
-.user-form__line {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--spacer-d);
-}
-
-.user-form__field-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: var(--spacer-b);
-}
-
-.user-form__field-container .p-select {
-  width: 100%;
-}
-</style>
