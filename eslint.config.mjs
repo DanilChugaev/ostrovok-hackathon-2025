@@ -29,7 +29,7 @@ export default [
       'vue/require-default-prop': 'off',
       // Правила из @typescript-eslint
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   {

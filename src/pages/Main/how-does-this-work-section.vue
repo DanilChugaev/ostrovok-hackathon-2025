@@ -1,21 +1,21 @@
 <template>
-  <section class="how-does-this-work-section">
+  <section class="how-does-this-work">
     <h2>Как это работает</h2>
 
-    <ul class="how-does-this-work-section__list">
-      <li v-for="item in processList" :key="item.id" class="how-does-this-work-section__item">
-        <span class="how-does-this-work-section__counter">{{ item.id }}</span>
+    <ul class="how-does-this-work__list">
+      <li v-for="item in processList" :key="item.id" class="how-does-this-work__item">
+        <span class="how-does-this-work__counter">{{ item.id }}</span>
 
-        <div class="how-does-this-work-section__info">
-          <h3 class="how-does-this-work-section__title">{{ item.title }}</h3>
+        <div class="how-does-this-work__info">
+          <h3 class="how-does-this-work__title">{{ item.title }}</h3>
 
-          <p>{{ item.description }}</p>
+          <p class="how-does-this-work__description">{{ item.description }}</p>
         </div>
       </li>
     </ul>
 
     <Button
-      class="how-does-this-work-section__button"
+      class="how-does-this-work__button"
       label="Стать секретным гостем"
       icon="pi pi-user"
       @click="submitRequest"
@@ -67,14 +67,14 @@ function submitRequest() {
 </script>
 
 <style scoped>
-.how-does-this-work-section__list {
+.how-does-this-work__list {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-f);
   position: relative;
 }
 
-.how-does-this-work-section__list::before {
+.how-does-this-work__list::before {
   content: '';
   position: absolute;
   top: 10px;
@@ -85,26 +85,27 @@ function submitRequest() {
   background-color: var(--p-primary-color);
 }
 
-.how-does-this-work-section__item {
+.how-does-this-work__item {
   display: flex;
   align-items: center;
   gap: var(--spacer-d);
 }
 
-.how-does-this-work-section__title {
+.how-does-this-work__title {
   text-align: start;
 }
 
-.how-does-this-work-section__info {
+.how-does-this-work__info {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-c);
 }
 
-.how-does-this-work-section__counter {
+.how-does-this-work__counter {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: start;
   border-radius: 50%;
   min-width: 50px;
   min-height: 50px;
@@ -115,11 +116,15 @@ function submitRequest() {
   z-index: 1;
 }
 
-.how-does-this-work-section__item:hover .how-does-this-work-section__counter {
+.how-does-this-work__item:hover .how-does-this-work__counter {
   box-shadow: var(--box-shadow-hover);
 }
 
-.how-does-this-work-section__button {
+.how-does-this-work__button {
   margin-top: var(--spacer-f);
+}
+
+.how-does-this-work__description {
+  text-align: start;
 }
 </style>

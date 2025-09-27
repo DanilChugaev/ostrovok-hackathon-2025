@@ -29,7 +29,8 @@ html.dark-mode {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
     text-align: center;
     margin: 0;
     line-height: 1;
@@ -47,6 +48,9 @@ h2 {
 
 h3 {
     font-size: 1rem;
+}
+h4 {
+    font-size: 0.8rem;
 }
 
 ul {
@@ -66,4 +70,18 @@ p {
 
 section:not(:first-child) {
     margin-top: var(--spacer-gh);
+}
+
+@media (max-width: 1199px) {
+    html,
+    body {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 991px) {
+    html,
+    body {
+        font-size: 14px;
+    }
 }

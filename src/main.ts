@@ -2,11 +2,16 @@ import { createApp } from 'vue';
 import PrimeVue from 'primevue/config';
 import Lara from '@primeuix/themes/lara';
 import { definePreset } from '@primeuix/themes';
+import ToastService from 'primevue/toastservice';
 import 'primeicons/primeicons.css';
 import './assets/css/index';
 import App from './App.vue';
 import { DARK_MODE_CLASS, STORAGE_MODE_KEY } from './constants.ts';
 import { router } from './router.ts';
+
+// todo: удалить, когда появится реальное апи
+const { worker } = await import('./api/mocks/browser');
+await worker.start();
 
 const app = createApp(App);
 
@@ -49,6 +54,7 @@ if (themes[currentTheme]) {
 app.provide('themes', themes);
 app.provide('currentTheme', currentTheme);
 
+app.use(ToastService);
 app.use(router);
 
 app.mount('#app');

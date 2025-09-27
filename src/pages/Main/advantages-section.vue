@@ -2,22 +2,32 @@
   <section class="advantages">
     <h2>Преимущества программы</h2>
 
-    <ul class="advantages__list">
-      <li v-for="item in advantages" :key="item.id" class="advantages__item">
-        <i class="advantages__icon" :class="item.icon"></i>
+    <card-list :items="advantages">
+      <template #default="{ item }: { item: Advantage }">
+        <div class="advantages__item">
+          <i class="advantages__icon" :class="item.icon"></i>
 
-        <h3>{{ item.title }}</h3>
+          <h3>{{ item.title }}</h3>
 
-        <p>{{ item.description }}</p>
-      </li>
-    </ul>
+          <p>{{ item.description }}</p>
+        </div>
+      </template>
+    </card-list>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import CardList from '../../components/CardList.vue';
 
-const advantages = ref([
+interface Advantage {
+  id: number | string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const advantages = ref<Advantage[]>([
   {
     id: 'freeAccommodation',
     icon: 'pi pi-star',
@@ -41,30 +51,11 @@ const advantages = ref([
 </script>
 
 <style scoped>
-.advantages__list {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--spacer-e);
-}
-
 .advantages__item {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--spacer-d);
-  flex: 1;
-  flex-wrap: wrap;
-  min-width: 350px;
-  padding: var(--spacer-e);
-  border: 1px solid var(--border-color);
-  border-radius: vaR(--p-border-radius-lg);
-  background-color: var(--p-menubar-background);
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.09);
-  transition: box-shadow 0.3s;
-}
-
-.advantages__item:hover {
-  box-shadow: 0 0.6rem 0.9rem rgba(0, 0, 0, 0.09);
 }
 
 .advantages__icon {

@@ -4,6 +4,8 @@
   <main class="container">
     <RouterView />
   </main>
+
+  <Toast position="bottom-center" />
 </template>
 
 <script setup lang="ts">
