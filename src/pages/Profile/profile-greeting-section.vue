@@ -34,6 +34,7 @@ function selectNewHotel() {
 }
 
 .profile-greeting-section__title {
+  text-align: start;
   font-size: 2.5rem;
   margin-bottom: var(--spacer-b);
 }
