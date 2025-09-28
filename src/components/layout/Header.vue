@@ -24,6 +24,7 @@
               :icon="loginButtonIcon"
               @click="onLoginButtonClick"
             />
+
             <Button
               v-if="isAuth"
               v-tooltip.bottom="'Выйти'"
@@ -63,19 +64,25 @@ const navigation = ref<HeaderNavigation[]>([
   },
   {
     label: 'Личный кабинет',
-    icon: 'pi pi-file',
+    icon: 'pi pi-user',
     route: PAGES.Profile,
     permissions: ['user'],
   },
   {
     label: 'Админ панель',
-    icon: 'pi pi-file',
+    icon: 'pi pi-wrench',
     route: PAGES.Admin,
     permissions: ['admin'],
   },
   {
+    label: 'Отели',
+    icon: 'pi pi-building',
+    route: PAGES.Admin,
+    permissions: ['hotel'],
+  },
+  {
     label: 'Выбрать отель',
-    icon: 'pi pi-file',
+    icon: 'pi pi-building',
     route: PAGES.Hotels,
     permissions: ['user'],
   },

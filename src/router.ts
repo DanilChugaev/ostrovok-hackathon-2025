@@ -3,7 +3,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Main from './pages/Main/Main.vue';
 import Login from './pages/Login.vue';
 import SubmitRequest from './pages/SubmitRequest/SubmitRequest.vue';
-import Profile from './pages/Profile.vue';
+import Profile from './pages/Profile/Profile.vue';
 import Admin from './pages/Admin.vue';
 import HotelAccount from './pages/HotelAccount.vue';
 import Hotels from './pages/Hotels.vue';

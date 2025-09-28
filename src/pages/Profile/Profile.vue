@@ -1,10 +1,13 @@
-<template>Profile</template>
+<template>
+  <profile-greeting-section />
+</template>
 
 <script setup lang="ts">
-import { useUser } from '../composables/useUser.ts';
+import { useUser } from '../../composables/useUser.ts';
 import { onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
-import { PAGES } from '../constants.ts';
+import { PAGES } from '../../constants.ts';
+import ProfileGreetingSection from './profile-greeting-section.vue';
 
 const { isAuth, isAdmin, isHotel } = useUser();
 const router = useRouter();
