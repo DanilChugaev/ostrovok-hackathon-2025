@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import type { Summary, Trip } from '../../types.ts';
 import InfoCardList from '../../components/InfoCardList.vue';
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
 
 const props = defineProps<{
@@ -24,7 +24,7 @@ const props = defineProps<{
 
 const { user } = useUser();
 
-const summary = ref<Summary[]>([
+const summary = computed<Summary[]>(() => [
   {
     id: 1,
     count: props.trips.length,
