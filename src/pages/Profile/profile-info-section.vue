@@ -149,4 +149,19 @@ const loyaltyStatus = computed(
 .profile-info-section__loyalty-score .pi-star {
   color: var(--p-yellow-500);
 }
+
+@media (max-width: 499px) {
+  .profile-info-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-info-section__loyalty-container {
+    align-items: flex-start;
+  }
+
+  .profile-info-section__loyalty-container::before {
+    display: none;
+  }
+}
 </style>

@@ -29,3 +29,8 @@ export const SUBMIT_REQUEST_FORM_STAGES = {
   Experience: '2',
   Preferences: '3',
 };
+
+export const PROFILE_TABS = {
+  Trips: '1',
+  Awards: '2',
+};

@@ -27,8 +27,7 @@ function selectNewHotel() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0;
-  margin-bottom: var(--spacer-d);
+  margin: 0;
   padding-top: var(--spacer-e);
   padding-bottom: var(--spacer-e);
   gap: var(--spacer-d);
