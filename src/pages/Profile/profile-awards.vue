@@ -1,7 +1,20 @@
 <template>
   <div class="profile-awards">
-    <div>
-      <h3 class="profile-awards__title">Ваши награды</h3>
+    <div class="profile-awards__info">
+      <div class="profile-awards__info-header">
+        <div>
+          <h3 class="profile-awards__title">Ваши награды</h3>
+          <p>Текущий уровень: {{ LOYALTY_STATUS_MAP[userStatus] }}</p>
+        </div>
+
+        <user-score :score="score" />
+      </div>
+
+      <div class="profile-awards__progress">
+        <p class="profile-awards__progress-info">Прогресс до следующего уровня</p>
+
+        <ProgressBar :value="scorePercent"> {{ score }}/{{ maxScoreInCurrentStatus }} </ProgressBar>
+      </div>
     </div>
 
     <div>
@@ -34,24 +47,43 @@
 </template>
 
 <script setup lang="ts">
-import type { Award, LoyaltyStatus } from '../../types.ts';
+import type { Award, LoyaltyBase, LoyaltyStatus } from '../../types.ts';
 import InfoCardList from '../../components/InfoCardList.vue';
 import { useNotifications } from '../../composables/useNotifications.ts';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { apiRequest } from '../../api/request.ts';
 import { API, LOYALTY_STATUS_MAP } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useConfirm } from 'primevue/useconfirm';
+import UserScore from '../../components/UserScore.vue';
 
 const { errorNotify, successNotify } = useNotifications();
 const { user } = useUser();
 const confirm = useConfirm();
 
 const awards = ref<Award[]>([]);
+const loyalty = ref<LoyaltyBase[]>([]);
+
+const userStatus = computed(() => user.value?.loyalty?.status ?? 'bronze');
+const score = computed(() => user.value?.loyalty?.score ?? 0);
+const scorePercent = computed(() => (score.value / 500) * 100);
+const maxScoreInCurrentStatus = computed(
+  () => loyalty.value.find(item => item.status === userStatus.value)?.maxScore ?? 0,
+);
 
 async function fetchAwards() {
   try {
     awards.value = await apiRequest<Award[]>(API.Awards, { method: 'GET' }).then(data => data.data);
+  } catch (e: any) {
+    errorNotify(e.message);
+  }
+}
+
+async function fetchLoyalty() {
+  try {
+    loyalty.value = await apiRequest<LoyaltyBase[]>(API.Loyalty, { method: 'GET' }).then(
+      data => data.data,
+    );
   } catch (e: any) {
     errorNotify(e.message);
   }
@@ -91,6 +123,7 @@ function onExchangeButtonClick(award: Award) {
 
 onMounted(async () => {
   await fetchAwards();
+  await fetchLoyalty();
 });
 </script>
 
@@ -107,6 +140,26 @@ onMounted(async () => {
   margin-bottom: var(--spacer-e);
 }
 
+.profile-awards__info {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--p-menubar-background);
+  border-radius: var(--p-border-radius-lg);
+  gap: var(--spacer-d);
+  padding: var(--spacer-de);
+}
+
+.profile-awards__info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-awards__info-header .profile-awards__title {
+  margin-bottom: var(--spacer-c);
+  text-align: start;
+}
+
 .profile-awards__list {
   flex-wrap: wrap;
 }
@@ -121,7 +174,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--spacer-d);
+  gap: var(--spacer-c);
 }
 
 .profile-awards__icon {
@@ -135,6 +188,13 @@ onMounted(async () => {
   color: var(--p-sky-900);
 }
 
+.profile-awards__progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-b);
+}
+
+.profile-awards__progress-info,
 .profile-awards__description {
   text-align: start;
   font-size: 0.8rem;

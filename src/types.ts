@@ -110,3 +110,10 @@ export interface Award {
   price: number;
   loyaltyStatuses: LoyaltyStatus[];
 }
+
+export interface LoyaltyBase {
+  id: number;
+  minScore: number;
+  maxScore: number;
+  status: LoyaltyStatus;
+}

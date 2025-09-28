@@ -26,6 +26,7 @@ export const API = {
   Trips: '/api/trips',
   Hotels: '/api/hotels',
   Awards: '/api/awards',
+  Loyalty: '/api/loyalty',
 };
 
 export const SUBMIT_REQUEST_FORM_STAGES = {

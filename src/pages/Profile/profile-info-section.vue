@@ -17,10 +17,7 @@
     </div>
 
     <div class="profile-info-section__loyalty-container">
-      <div class="profile-info-section__loyalty-score">
-        <i class="pi pi-star"></i>
-        <span>{{ score }}</span>
-      </div>
+      <user-score :score="user?.loyalty?.score" />
 
       <div>{{ loyaltyStatus }}</div>
     </div>
@@ -31,6 +28,7 @@
 import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
 import { LOYALTY_STATUS_MAP } from '../../constants.ts';
+import UserScore from '../../components/UserScore.vue';
 
 const { fullUserName, user } = useUser();
 
@@ -59,7 +57,6 @@ const requestStatusClasses = computed(() => {
 const mappedStatusObj = computed(() => requestStatusMap[user.value?.status ?? 'awaiting']);
 const requestStatusIcon = computed(() => mappedStatusObj.value.icon);
 const requestStatusText = computed(() => mappedStatusObj.value.text);
-const score = computed(() => `${user.value?.loyalty?.score ?? 0} баллов`);
 const loyaltyStatus = computed(
   () => `Уровень: ${LOYALTY_STATUS_MAP[user.value?.loyalty?.status ?? 'bronze']}`,
 );
@@ -137,16 +134,6 @@ const loyaltyStatus = computed(
   top: 0;
   left: -1.333rem;
   background-color: var(--p-avatar-background);
-}
-
-.profile-info-section__loyalty-score {
-  display: flex;
-  align-items: baseline;
-  gap: var(--spacer-c);
-}
-
-.profile-info-section__loyalty-score .pi-star {
-  color: var(--p-yellow-500);
 }
 
 @media (max-width: 499px) {

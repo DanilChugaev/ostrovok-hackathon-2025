@@ -4,6 +4,7 @@ import type {
   Award,
   Hotel,
   LoginForm,
+  LoyaltyBase,
   RequestForm,
   Review,
   Trip,
@@ -120,6 +121,40 @@ export const handlers = [
           description: 'В любом отеле до 4 звезд',
           price: 1000,
           loyaltyStatuses: ['diamond'],
+        },
+      ],
+    });
+  }),
+
+  http.get(API.Loyalty, () => {
+    return HttpResponse.json<ApiServerResponse<LoyaltyBase[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: [
+        {
+          id: 1,
+          minScore: 0,
+          maxScore: 500,
+          status: 'bronze',
+        },
+        {
+          id: 2,
+          minScore: 501,
+          maxScore: 1000,
+          status: 'silver',
+        },
+        {
+          id: 3,
+          minScore: 1001,
+          maxScore: 4000,
+          status: 'gold',
+        },
+        {
+          id: 4,
+          minScore: 4001,
+          maxScore: Infinity,
+          status: 'diamond',
         },
       ],
     });
