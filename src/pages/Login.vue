@@ -78,7 +78,7 @@ async function onValidateForm({ valid, values }: { valid: boolean; values: Login
 
 async function sendLoginForm(form: LoginForm) {
   try {
-    const response = await apiRequest<User>(API.Login, {
+    const response = await apiRequest<User | null>(API.Login, {
       method: 'POST',
       body: form,
     });

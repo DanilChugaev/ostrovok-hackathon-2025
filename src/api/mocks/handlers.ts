@@ -1,12 +1,29 @@
 import { http, HttpResponse } from 'msw';
-import type { ApiServerResponse, LoginForm, RequestForm, Review, User } from '../../types.ts';
+import type {
+  ApiServerResponse,
+  Hotel,
+  LoginForm,
+  RequestForm,
+  Review,
+  Trip,
+  User,
+} from '../../types.ts';
 import { API } from '../../constants.ts';
 
 function getUsers(): User[] {
   return JSON.parse(localStorage.getItem('users') ?? '[]');
 }
 
+function getHotels(): Hotel[] {
+  return JSON.parse(localStorage.getItem('hotels') ?? '[]');
+}
+
+function getTrips(): Trip[] {
+  return JSON.parse(localStorage.getItem('trips') ?? '[]');
+}
+
 export const handlers = [
+  /** GET запросы **/
   http.get(API.Reviews, () => {
     return HttpResponse.json<ApiServerResponse<Review[]>>({
       success: true,
@@ -51,6 +68,26 @@ export const handlers = [
     });
   }),
 
+  http.get(API.Hotels, () => {
+    return HttpResponse.json<ApiServerResponse<Hotel[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: getHotels(),
+    });
+  }),
+
+  http.get(API.Trips, () => {
+    return HttpResponse.json<ApiServerResponse<Trip[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: getTrips(),
+    });
+  }),
+  /** GET запросы **/
+
+  /** POST запросы **/
   http.post(API.SendRequestForm, async ({ request }) => {
     const body = (await request.json()) as RequestForm;
     const currentUsers = getUsers();
@@ -66,7 +103,7 @@ export const handlers = [
       phone: body.user.phone,
       age: body.user.age,
       city: body.user.city,
-      status: 'Заявка находится на рассмотрении',
+      status: 'awaiting',
       loyalty: {
         score: 0,
         status: 'bronze',
@@ -113,4 +150,5 @@ export const handlers = [
       data: user,
     });
   }),
+  /** POST запросы **/
 ];

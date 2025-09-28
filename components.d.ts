@@ -12,7 +12,6 @@ declare module 'vue' {
     Button: typeof import('primevue/button')['default']
     CardList: typeof import('./src/components/CardList.vue')['default']
     Checkbox: typeof import('primevue/checkbox')['default']
-    Chip: typeof import('primevue/chip')['default']
     Footer: typeof import('./src/components/layout/Footer.vue')['default']
     FormField: typeof import('./src/components/FormField.vue')['default']
     Header: typeof import('./src/components/layout/Header.vue')['default']

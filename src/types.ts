@@ -66,3 +66,25 @@ export interface User {
   };
   role: 'user' | 'admin' | 'hotel';
 }
+
+export interface Hotel {
+  id: number;
+  name: string;
+  photo: string;
+  city: string;
+  address: string;
+  description: string;
+  category: number;
+  pricePerNight: number;
+  currency: string;
+  availableDates: string[];
+}
+
+export interface Trip {
+  id: number;
+  hotel: Hotel;
+  startDate: string;
+  endDate: string;
+  hasReport: boolean;
+  totalScore?: number;
+}

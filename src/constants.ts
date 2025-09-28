@@ -22,6 +22,8 @@ export const API = {
   Cities: '/api/cities',
   AccessibilityListForTravel: '/api/accessibility-list-for-travel',
   SendRequestForm: '/api/send-request-form',
+  Trips: '/api/trips',
+  Hotels: '/api/hotels',
 };
 
 export const SUBMIT_REQUEST_FORM_STAGES = {
