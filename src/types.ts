@@ -59,10 +59,10 @@ export interface User {
   phone: number | string;
   age: number | string;
   city: string;
-  status?: string;
+  status?: 'awaiting' | 'accepted' | 'rejected';
   loyalty?: {
     score: number;
-    status: string;
+    status: 'bronze' | 'silver' | 'gold' | 'diamond';
   };
   role: 'user' | 'admin' | 'hotel';
 }

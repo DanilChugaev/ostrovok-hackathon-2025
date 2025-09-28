@@ -12,11 +12,18 @@ export function useUser() {
   const isUser = computed(() => user.value?.role === 'user');
   const isHotel = computed(() => user.value?.role === 'hotel');
 
+  const fullUserName = computed(() => {
+    if (!user.value) return '';
+
+    return `${user.value.firstName} ${user.value.lastName}`;
+  });
+
   return {
     isAuth,
     isAdmin,
     isUser,
     isHotel,
     user,
+    fullUserName,
   };
 }

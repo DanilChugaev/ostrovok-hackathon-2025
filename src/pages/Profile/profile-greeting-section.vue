@@ -10,17 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
 import { useRouter } from 'vue-router';
 import { PAGES } from '../../constants.ts';
 
-const { user } = useUser();
+const { fullUserName } = useUser();
 const router = useRouter();
-
-const fullUserName = computed(() => {
-  return `${user.value!.firstName} ${user.value!.lastName}`;
-});
 
 function selectNewHotel() {
   router.push(PAGES.Hotels);
@@ -32,7 +27,8 @@ function selectNewHotel() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: var(--spacer-d);
   padding-top: var(--spacer-e);
   padding-bottom: var(--spacer-e);
   gap: var(--spacer-d);

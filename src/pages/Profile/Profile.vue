@@ -1,5 +1,7 @@
 <template>
   <profile-greeting-section />
+
+  <profile-info-section />
 </template>
 
 <script setup lang="ts">
@@ -8,6 +10,7 @@ import { onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import { PAGES } from '../../constants.ts';
 import ProfileGreetingSection from './profile-greeting-section.vue';
+import ProfileInfoSection from './profile-info-section.vue';
 
 const { isAuth, isAdmin, isHotel } = useUser();
 const router = useRouter();
