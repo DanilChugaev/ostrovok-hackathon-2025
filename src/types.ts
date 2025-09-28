@@ -90,3 +90,11 @@ export interface Trip {
   hasReport: boolean;
   totalScore?: number;
 }
+
+export interface Summary {
+  id: number | string;
+  count: number;
+  icon: string;
+  text: string;
+  className: string;
+}

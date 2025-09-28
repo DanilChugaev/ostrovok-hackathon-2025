@@ -39,27 +39,19 @@
 </template>
 
 <script setup lang="ts">
-import { apiRequest } from '../../api/request.ts';
 import type { Trip } from '../../types.ts';
-import { API, PAGES } from '../../constants.ts';
-import { onMounted, ref } from 'vue';
-import { useNotifications } from '../../composables/useNotifications.ts';
+import { PAGES } from '../../constants.ts';
+import { ref } from 'vue';
 import HotelCard from '../../components/HotelCard.vue';
 import { useRouter } from 'vue-router';
 
-const { errorNotify } = useNotifications();
+defineProps<{
+  trips: Trip[];
+}>();
+
 const router = useRouter();
 
-const trips = ref<Trip[]>([]);
 const isVisibleDialog = ref(false);
-
-async function fetchTrips() {
-  try {
-    trips.value = await apiRequest<Trip[]>(API.Trips, { method: 'GET' }).then(data => data.data);
-  } catch (e: any) {
-    errorNotify(e.message);
-  }
-}
 
 function onReadMoreButtonClick() {
   isVisibleDialog.value = true;
@@ -68,10 +60,6 @@ function onReadMoreButtonClick() {
 function onReportButtonClick(id: number) {
   router.push(`${PAGES.ReportHotel}/${id}`);
 }
-
-onMounted(async () => {
-  await fetchTrips();
-});
 </script>
 
 <style scoped>
@@ -79,7 +67,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-e);
-  padding: var(--spacer-e) 0;
+  margin-bottom: var(--spacer-f);
 }
 
 .profile-trips__dates {
