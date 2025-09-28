@@ -30,7 +30,6 @@
               icon="pi pi-sign-out"
               @click="onLogoutButtonClick"
             />
-            <!-- todo: добавить кнопку выхода -->
           </div>
         </template>
       </Menubar>
@@ -112,6 +111,8 @@ function onLoginButtonClick() {
 
 function onLogoutButtonClick() {
   user.value = null;
+
+  router.push(PAGES.Main);
 }
 </script>
 
