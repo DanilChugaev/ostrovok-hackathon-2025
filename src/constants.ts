@@ -25,6 +25,7 @@ export const API = {
   SendRequestForm: '/api/send-request-form',
   Trips: '/api/trips',
   Hotels: '/api/hotels',
+  Awards: '/api/awards',
 };
 
 export const SUBMIT_REQUEST_FORM_STAGES = {
@@ -36,4 +37,11 @@ export const SUBMIT_REQUEST_FORM_STAGES = {
 export const PROFILE_TABS = {
   Trips: '1',
   Awards: '2',
+};
+
+export const LOYALTY_STATUS_MAP = {
+  bronze: 'Бронзовый',
+  silver: 'Серебрянный',
+  gold: 'Золотой',
+  diamond: 'Бриллиантовый',
 };

@@ -23,7 +23,7 @@ defineProps<{
   flex: 1;
   padding: var(--spacer-e);
   border: 1px solid var(--border-color);
-  border-radius: vaR(--p-border-radius-lg);
+  border-radius: var(--p-border-radius-lg);
   background-color: var(--p-menubar-background);
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.09);
   transition: box-shadow 0.3s;

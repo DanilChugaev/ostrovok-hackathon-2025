@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import type {
   ApiServerResponse,
+  Award,
   Hotel,
   LoginForm,
   RequestForm,
@@ -83,6 +84,44 @@ export const handlers = [
       statusCode: 200,
       message: '',
       data: getTrips(),
+    });
+  }),
+
+  http.get(API.Awards, () => {
+    return HttpResponse.json<ApiServerResponse<Award[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: [
+        {
+          id: 1,
+          name: 'Скидка 10%',
+          description: 'На любое бронирование на Островке',
+          price: 100,
+          loyaltyStatuses: ['bronze', 'silver', 'gold', 'diamond'],
+        },
+        {
+          id: 2,
+          name: 'Скидка 15%',
+          description: 'На бронирование в отелях-партнерах',
+          price: 250,
+          loyaltyStatuses: ['silver', 'gold', 'diamond'],
+        },
+        {
+          id: 3,
+          name: 'Скидка 25%',
+          description: 'На бронирование в отелях-партнерах',
+          price: 500,
+          loyaltyStatuses: ['gold', 'diamond'],
+        },
+        {
+          id: 4,
+          name: 'Бесплатная ночь',
+          description: 'В любом отеле до 4 звезд',
+          price: 1000,
+          loyaltyStatuses: ['diamond'],
+        },
+      ],
     });
   }),
   /** GET запросы **/

@@ -9,7 +9,7 @@ export interface HeaderNavigation {
   label: string;
   icon: string;
   route: string;
-  permissions: User['role'][];
+  permissions: UserRole[];
 }
 
 export interface Review {
@@ -48,6 +48,10 @@ export interface RequestForm {
   agreeWithRules: boolean; // согласен с условиями
 }
 
+export type ReportStatus = 'awaiting' | 'accepted' | 'rejected';
+export type LoyaltyStatus = 'bronze' | 'silver' | 'gold' | 'diamond';
+export type UserRole = 'user' | 'admin' | 'hotel';
+
 export interface User {
   id: number;
   username: string;
@@ -59,12 +63,12 @@ export interface User {
   phone: number | string;
   age: number | string;
   city: string;
-  status?: 'awaiting' | 'accepted' | 'rejected';
+  status?: ReportStatus;
   loyalty?: {
     score: number;
-    status: 'bronze' | 'silver' | 'gold' | 'diamond';
+    status: LoyaltyStatus;
   };
-  role: 'user' | 'admin' | 'hotel';
+  role: UserRole;
 }
 
 export interface Hotel {
@@ -97,4 +101,12 @@ export interface Summary {
   icon: string;
   text: string;
   className: string;
+}
+
+export interface Award {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  loyaltyStatuses: LoyaltyStatus[];
 }

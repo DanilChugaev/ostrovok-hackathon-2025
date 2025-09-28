@@ -9,6 +9,7 @@ import App from './App.vue';
 import { DARK_MODE_CLASS, STORAGE_MODE_KEY } from './constants.ts';
 import { router } from './router.ts';
 import { users, hotels, trips } from './api/mocks/constants.ts';
+import ConfirmationService from 'primevue/confirmationservice';
 
 // todo: удалить, когда появится реальное апи
 /** -- mocks -- **/
@@ -63,6 +64,7 @@ app.provide('themes', themes);
 app.provide('currentTheme', currentTheme);
 
 app.use(ToastService);
+app.use(ConfirmationService);
 app.use(router);
 
 app.mount('#app');

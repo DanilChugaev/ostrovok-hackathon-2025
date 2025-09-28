@@ -8,6 +8,7 @@
   <layout-footer />
 
   <Toast position="bottom-center" />
+  <ConfirmDialog />
 </template>
 
 <script setup lang="ts">

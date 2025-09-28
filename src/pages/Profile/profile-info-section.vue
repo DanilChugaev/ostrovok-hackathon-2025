@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
+import { LOYALTY_STATUS_MAP } from '../../constants.ts';
 
 const { fullUserName, user } = useUser();
 
@@ -47,12 +48,6 @@ const requestStatusMap = {
     text: 'Заявка: Отклонена',
   },
 };
-const loyaltyStatusMap = {
-  bronze: 'Бронзовый',
-  silver: 'Серебрянный',
-  gold: 'Золотой',
-  diamond: 'Бриллиантовый',
-};
 
 const userAvatar = computed(() => user.value?.avatar || undefined);
 const requestStatusClasses = computed(() => {
@@ -66,7 +61,7 @@ const requestStatusIcon = computed(() => mappedStatusObj.value.icon);
 const requestStatusText = computed(() => mappedStatusObj.value.text);
 const score = computed(() => `${user.value?.loyalty?.score ?? 0} баллов`);
 const loyaltyStatus = computed(
-  () => `Уровень: ${loyaltyStatusMap[user.value?.loyalty?.status ?? 'bronze']}`,
+  () => `Уровень: ${LOYALTY_STATUS_MAP[user.value?.loyalty?.status ?? 'bronze']}`,
 );
 </script>
 
