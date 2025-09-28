@@ -1,4 +1,4 @@
-<template>Profile</template>
+<template>Admin</template>
 
 <script setup lang="ts">
 import { useUser } from '../composables/useUser.ts';
@@ -6,22 +6,12 @@ import { onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import { PAGES } from '../constants.ts';
 
-const { isAuth, isAdmin, isHotel } = useUser();
+const { isAuth, isAdmin } = useUser();
 const router = useRouter();
 
 onBeforeMount(() => {
-  if (!isAuth.value) {
-    router.push(PAGES.Login);
-  }
-
-  if (isAuth.value) {
-    if (isAdmin.value) {
-      router.push(PAGES.Admin);
-    }
-
-    if (isHotel.value) {
-      router.push(PAGES.HotelAccount);
-    }
+  if (!isAuth.value || !isAdmin.value) {
+    router.push(PAGES.Main);
   }
 });
 </script>

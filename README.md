@@ -38,7 +38,10 @@ docker compose exec app bash -lc "python manage.py migrate && python manage.py l
 
 - `/` — UI
 - `/health` — 200 OK, JSON `{ "status": "ok" }`
-- Тестовый пользователь: `admin / admin123` (если релевантно)
+- Тестовые пользователи:
+  - user/user - секретный гость
+  - admin/admin - администратор системы
+  - hotel/hotel - представитель отелей
 
 ## Команды для работы с докером
 

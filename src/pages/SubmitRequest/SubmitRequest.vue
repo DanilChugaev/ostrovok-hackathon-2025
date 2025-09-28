@@ -19,12 +19,8 @@
             />
           </StepPanel>
 
-          <StepPanel
-            v-slot="{ activateCallback, active }"
-            :value="SUBMIT_REQUEST_FORM_STAGES.Experience"
-          >
+          <StepPanel v-slot="{ activateCallback }" :value="SUBMIT_REQUEST_FORM_STAGES.Experience">
             <experience-form
-              v-if="active"
               v-model="form.experience"
               class="submit-request__form"
               @back="activateCallback(SUBMIT_REQUEST_FORM_STAGES.User)"
@@ -32,12 +28,8 @@
             />
           </StepPanel>
 
-          <StepPanel
-            v-slot="{ activateCallback, active }"
-            :value="SUBMIT_REQUEST_FORM_STAGES.Preferences"
-          >
+          <StepPanel v-slot="{ activateCallback }" :value="SUBMIT_REQUEST_FORM_STAGES.Preferences">
             <preferences-form
-              v-if="active"
               v-model:preferences="form.preferences"
               v-model:agree-with-rules="form.agreeWithRules"
               class="submit-request__form"
@@ -52,22 +44,26 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, reactive } from 'vue';
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import UserForm from './user-form.vue';
+import ExperienceForm from './experience-form.vue';
+import PreferencesForm from './preferences-form.vue';
 import type { RequestForm, User } from '../../types.ts';
 import { API, PAGES, SUBMIT_REQUEST_FORM_STAGES } from '../../constants.ts';
 import { apiRequest } from '../../api/request.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
-import { useRouter } from 'vue-router';
-
-const ExperienceForm = defineAsyncComponent(() => import('./experience-form.vue'));
-const PreferencesForm = defineAsyncComponent(() => import('./preferences-form.vue'));
+import { useUser } from '../../composables/useUser.ts';
 
 const { errorNotify } = useNotifications();
 const router = useRouter();
 
+const { user } = useUser();
+
 const form = reactive<RequestForm>({
   user: {
+    username: '',
+    password: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -89,12 +85,11 @@ const form = reactive<RequestForm>({
 
 async function sendRequestForm() {
   try {
-    const user = await apiRequest<User>(API.SendRequestForm, {
+    user.value = await apiRequest<User>(API.SendRequestForm, {
       method: 'POST',
       body: form,
     }).then(data => data.data);
 
-    localStorage.setItem('user', JSON.stringify(user));
     router.push(PAGES.Profile);
   } catch (e: any) {
     errorNotify(e.message);

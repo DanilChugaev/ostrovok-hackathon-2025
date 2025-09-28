@@ -9,71 +9,85 @@
     <h2 class="submit-request-form__title">Личные данные</h2>
 
     <div class="submit-request-form__line">
-      <div class="submit-request-form__field-container">
-        <label for="firstName">Имя</label>
+      <form-field
+        class="submit-request-form__field-container"
+        label="Никнейм для входа"
+        field-id="username"
+        :field-state="$form.username"
+      >
+        <InputText id="username" fluid name="username" type="text" />
+      </form-field>
 
+      <form-field
+        class="submit-request-form__field-container"
+        label="Пароль"
+        field-id="password"
+        :field-state="$form.password"
+      >
+        <InputText id="password" fluid name="password" type="password" />
+      </form-field>
+    </div>
+
+    <div class="submit-request-form__line">
+      <form-field
+        class="submit-request-form__field-container"
+        label="Имя"
+        field-id="firstName"
+        :field-state="$form.firstName"
+      >
         <InputText id="firstName" fluid name="firstName" type="text" />
+      </form-field>
 
-        <Message v-if="$form.firstName?.invalid" severity="error" size="small" variant="simple">
-          {{ $form.firstName.error?.message }}
-        </Message>
-      </div>
-
-      <div class="submit-request-form__field-container">
-        <label for="lastName">Фамилия</label>
-
+      <form-field
+        class="submit-request-form__field-container"
+        label="Фамилия"
+        field-id="lastName"
+        :field-state="$form.lastName"
+      >
         <InputText id="lastName" fluid name="lastName" type="text" />
-
-        <Message v-if="$form.lastName?.invalid" severity="error" size="small" variant="simple">
-          {{ $form.lastName.error?.message }}
-        </Message>
-      </div>
+      </form-field>
     </div>
 
     <div class="submit-request-form__line">
-      <div class="submit-request-form__field-container">
-        <label for="email">Email</label>
-
+      <form-field
+        class="submit-request-form__field-container"
+        label="Email"
+        field-id="email"
+        :field-state="$form.email"
+      >
         <InputText id="email" fluid name="email" type="text" />
-
-        <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">
-          {{ $form.email.error?.message }}
-        </Message>
-      </div>
+      </form-field>
     </div>
 
     <div class="submit-request-form__line">
-      <div class="submit-request-form__field-container">
-        <label for="phone">Телефон</label>
-
-        <InputText id="phone" fluid name="phone" type="number" />
-
-        <Message v-if="$form.phone?.invalid" severity="error" size="small" variant="simple">
-          {{ $form.phone.error?.message }}
-        </Message>
-      </div>
+      <form-field
+        class="submit-request-form__field-container"
+        label="Телефон"
+        field-id="phone"
+        :field-state="$form.phone"
+      >
+        <InputText id="phone" fluid name="phone" type="text" />
+      </form-field>
     </div>
 
     <div class="submit-request-form__line">
-      <div class="submit-request-form__field-container">
-        <label for="age">Возраст</label>
-
+      <form-field
+        class="submit-request-form__field-container"
+        label="Возраст"
+        field-id="age"
+        :field-state="$form.age"
+      >
         <InputText id="age" fluid name="age" type="number" />
+      </form-field>
 
-        <Message v-if="$form.age?.invalid" severity="error" size="small" variant="simple">
-          {{ $form.age.error?.message }}
-        </Message>
-      </div>
-
-      <div class="submit-request-form__field-container">
-        <label for="city">Город проживания</label>
-
+      <form-field
+        class="submit-request-form__field-container"
+        label="Город проживания"
+        field-id="city"
+        :field-state="$form.city"
+      >
         <Select :options="cities" label-id="city" name="city" />
-
-        <Message v-if="$form.city?.invalid" severity="error" size="small" variant="simple">
-          {{ $form.city.error?.message }}
-        </Message>
-      </div>
+      </form-field>
     </div>
 
     <div class="form-actions">
@@ -94,14 +108,10 @@ import { z } from 'zod';
 import { Form } from '@primevue/forms';
 import type { RequestForm } from '../../types.ts';
 import { onMounted, ref } from 'vue';
-import {
-  API,
-  MAX_COUNT_CHARS_IN_FIELD,
-  MIN_COUNT_CHARS_IN_FIELD,
-  MIN_COUNT_CHARS_IN_USERNAME,
-} from '../../constants.ts';
+import { API } from '../../constants.ts';
 import { apiRequest } from '../../api/request.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
+import { useAppForm } from '../../composables/useAppForm.ts';
 
 const model = defineModel<RequestForm['user']>();
 
@@ -110,8 +120,20 @@ const emit = defineEmits<{
 }>();
 
 const { errorNotify } = useNotifications();
+const {
+  usernameValidation,
+  passwordValidation,
+  firstNameValidation,
+  lastNameValidation,
+  emailValidation,
+  phoneValidation,
+  ageValidation,
+  cityValidation,
+} = useAppForm();
 
 const initialValues = ref<RequestForm['user']>({
+  username: '',
+  password: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -123,58 +145,20 @@ const initialValues = ref<RequestForm['user']>({
 const resolver = ref(
   zodResolver(
     z.object({
-      firstName: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Введите имя' })
-        .min(MIN_COUNT_CHARS_IN_USERNAME, { message: 'Минимум 3 символа' })
-        .max(MAX_COUNT_CHARS_IN_FIELD, { message: 'Слишком длинное имя' })
-        .refine(checkStartFromDigits, {
-          message: 'Имя не должно начинаться с цифры',
-        })
-        .refine(checkContainSpaces, {
-          message: 'Поле не должно содержать пробелы',
-        }),
-      lastName: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Введите фамилию' })
-        .min(MIN_COUNT_CHARS_IN_USERNAME, { message: 'Минимум 3 символа' })
-        .max(MAX_COUNT_CHARS_IN_FIELD, { message: 'Слишком длинная фамилия' })
-        .refine(checkStartFromDigits, {
-          message: 'Фамилия не должна начинаться с цифры',
-        })
-        .refine(checkContainSpaces, {
-          message: 'Поле не должно содержать пробелы',
-        }),
-      email: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Введите email' })
-        .email({ message: 'Неверный email' })
-        .max(MAX_COUNT_CHARS_IN_FIELD, { message: 'Слишком длинный email' })
-        .refine(checkContainSpaces, {
-          message: 'Поле не должно содержать пробелы',
-        }),
-      phone: z.string().min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Введите телефон' }),
-      age: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Введите возраст' })
-        .refine((value: string) => Number(value) >= 18, {
-          message: 'Возраст не может быть меньше 18',
-        }),
-      city: z.string().min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Выберите город' }),
+      username: usernameValidation(),
+      password: passwordValidation(),
+      firstName: firstNameValidation(),
+      lastName: lastNameValidation(),
+      email: emailValidation(),
+      phone: phoneValidation(),
+      age: ageValidation(),
+      city: cityValidation(),
     }),
   ),
 );
 const cities = ref<string[]>([]);
 
-function checkStartFromDigits(value: string) {
-  return !/^\d/.test(value);
-}
-
-function checkContainSpaces(value: string) {
-  return !/\s/.test(value);
-}
-
-async function onValidateForm({ valid, values }: { valid: boolean; values: RequestForm['user'] }) {
+function onValidateForm({ valid, values }: { valid: boolean; values: RequestForm['user'] }) {
   if (valid) {
     model.value = values;
     emit('next');

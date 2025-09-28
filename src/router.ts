@@ -1,14 +1,22 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
 import Main from './pages/Main/Main.vue';
+import Login from './pages/Login.vue';
 import SubmitRequest from './pages/SubmitRequest/SubmitRequest.vue';
 import Profile from './pages/Profile.vue';
+import Admin from './pages/Admin.vue';
+import HotelAccount from './pages/HotelAccount.vue';
+import Hotels from './pages/Hotels.vue';
 import { PAGES } from './constants.ts';
 
 const routes = [
   { path: PAGES.Main, component: Main },
+  { path: PAGES.Login, component: Login },
   { path: PAGES.SubmitRequest, component: SubmitRequest },
   { path: PAGES.Profile, component: Profile },
+  { path: PAGES.Admin, component: Admin },
+  { path: PAGES.HotelAccount, component: HotelAccount },
+  { path: PAGES.Hotels, component: Hotels },
 ];
 
 export const router = createRouter({

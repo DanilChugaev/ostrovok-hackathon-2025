@@ -5,6 +5,13 @@ export interface ApiServerResponse<T> {
   data: T;
 }
 
+export interface HeaderNavigation {
+  label: string;
+  icon: string;
+  route: string;
+  permissions: User['role'][];
+}
+
 export interface Review {
   id: number;
   imageUrl: string;
@@ -13,8 +20,15 @@ export interface Review {
   text: string;
 }
 
+export interface LoginForm {
+  username: string;
+  password: string;
+}
+
 export interface RequestForm {
   user: {
+    username: string;
+    password: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -36,6 +50,8 @@ export interface RequestForm {
 
 export interface User {
   id: number;
+  username: string;
+  password: string;
   firstName: string;
   lastName: string;
   avatar: string;
@@ -43,9 +59,10 @@ export interface User {
   phone: number | string;
   age: number | string;
   city: string;
-  status: string;
-  loyalty: {
+  status?: string;
+  loyalty?: {
     score: number;
     status: string;
   };
+  role: 'user' | 'admin' | 'hotel';
 }

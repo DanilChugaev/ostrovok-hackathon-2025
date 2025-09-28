@@ -8,10 +8,14 @@ import './assets/css/index';
 import App from './App.vue';
 import { DARK_MODE_CLASS, STORAGE_MODE_KEY } from './constants.ts';
 import { router } from './router.ts';
+import { users } from './api/mocks/constants.ts';
 
 // todo: удалить, когда появится реальное апи
+/** -- mocks -- **/
+localStorage.setItem('users', JSON.stringify(users));
 const { worker } = await import('./api/mocks/browser');
 await worker.start();
+/** -- mocks -- **/
 
 const app = createApp(App);
 

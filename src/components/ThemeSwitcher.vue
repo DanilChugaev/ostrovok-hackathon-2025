@@ -1,6 +1,7 @@
 <template>
   <ToggleButton
     v-model="isDark"
+    v-tooltip.bottom="'Сменить тему'"
     class="theme-switcher"
     on-icon="pi pi-moon"
     off-icon="pi pi-sun"

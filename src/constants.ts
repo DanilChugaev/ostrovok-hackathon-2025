@@ -8,11 +8,16 @@ export const MAX_COUNT_CHARS_IN_TEXTAREA_FIELD = 1000;
 
 export const PAGES = {
   Main: '/',
+  Login: '/login',
   SubmitRequest: '/submit-request',
-  Profile: '/profile',
+  Profile: '/profile', // todo: добавить /profile/:id для просмотра инфы о гостях
+  Admin: '/admin',
+  HotelAccount: '/hotel-account',
+  Hotels: '/hotels',
 };
 
 export const API = {
+  Login: '/api/login',
   Reviews: '/api/reviews',
   Cities: '/api/cities',
   AccessibilityListForTravel: '/api/accessibility-list-for-travel',

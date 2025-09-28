@@ -89,13 +89,15 @@ import { z } from 'zod';
 import { Form } from '@primevue/forms';
 import { ref } from 'vue';
 import type { RequestForm } from '../../types.ts';
-import { MAX_COUNT_CHARS_IN_TEXTAREA_FIELD, MIN_COUNT_CHARS_IN_FIELD } from '../../constants.ts';
+import { useAppForm } from '../../composables/useAppForm.ts';
 
 const model = defineModel<RequestForm['experience']>();
 
 const emit = defineEmits<{
   next: [];
 }>();
+
+const { descriptionValidation } = useAppForm();
 
 const initialValues = ref<RequestForm['experience']>({
   travel: '',
@@ -106,29 +108,14 @@ const initialValues = ref<RequestForm['experience']>({
 const resolver = ref(
   zodResolver(
     z.object({
-      travel: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Обязательное поле' })
-        .max(MAX_COUNT_CHARS_IN_TEXTAREA_FIELD, { message: 'Слишком длинный текст' }),
-      writingReviews: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Обязательное поле' })
-        .max(MAX_COUNT_CHARS_IN_TEXTAREA_FIELD, { message: 'Слишком длинный текст' }),
-      reason: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Обязательное поле' })
-        .max(MAX_COUNT_CHARS_IN_TEXTAREA_FIELD, { message: 'Слишком длинный текст' }),
+      travel: descriptionValidation(),
+      writingReviews: descriptionValidation(),
+      reason: descriptionValidation(),
     }),
   ),
 );
 
-async function onValidateForm({
-  valid,
-  values,
-}: {
-  valid: boolean;
-  values: RequestForm['experience'];
-}) {
+function onValidateForm({ valid, values }: { valid: boolean; values: RequestForm['experience'] }) {
   if (valid) {
     model.value = values;
     emit('next');

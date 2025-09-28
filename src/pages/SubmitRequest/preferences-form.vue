@@ -102,11 +102,8 @@ import type { RequestForm } from '../../types.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
-import {
-  API,
-  MAX_COUNT_CHARS_IN_TEXTAREA_FIELD,
-  MIN_COUNT_CHARS_IN_FIELD,
-} from '../../constants.ts';
+import { API } from '../../constants.ts';
+import { useAppForm } from '../../composables/useAppForm.ts';
 
 const preferencesModel = defineModel<RequestForm['preferences']>('preferences');
 const agreeWithRulesModel = defineModel<RequestForm['agreeWithRules']>('agreeWithRules');
@@ -117,6 +114,7 @@ const emit = defineEmits<{
 }>();
 
 const { errorNotify } = useNotifications();
+const { descriptionValidation, booleanValidation, travelAccessibilityValidation } = useAppForm();
 
 const initialValues = ref<
   RequestForm['preferences'] & { agreeWithRules: RequestForm['agreeWithRules'] }
@@ -129,21 +127,22 @@ const initialValues = ref<
 const resolver = ref(
   zodResolver(
     z.object({
-      travelAccessibility: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Выберите вариант' }),
-      preferredDirections: z
-        .string()
-        .min(MIN_COUNT_CHARS_IN_FIELD, { message: 'Обязательное поле' })
-        .max(MAX_COUNT_CHARS_IN_TEXTAREA_FIELD, { message: 'Слишком длинный текст' }),
-      agreeWithRules: z.custom(val => val === true, { message: 'Обязательный пункт' }),
+      travelAccessibility: travelAccessibilityValidation(),
+      preferredDirections: descriptionValidation(),
+      agreeWithRules: booleanValidation(),
     }),
   ),
 );
 
 const accessibilityListForTravel = ref<string[]>([]);
 
-async function onValidateForm({ valid, values }) {
+function onValidateForm({
+  valid,
+  values,
+}: {
+  valid: boolean;
+  values: RequestForm['preferences'] & { agreeWithRules: RequestForm['agreeWithRules'] };
+}) {
   if (valid) {
     preferencesModel.value!.travelAccessibility = values.travelAccessibility;
     preferencesModel.value!.preferredDirections = values.preferredDirections;

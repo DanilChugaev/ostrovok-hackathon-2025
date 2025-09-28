@@ -12,6 +12,7 @@ declare module 'vue' {
     CardList: typeof import('./src/components/CardList.vue')['default']
     Checkbox: typeof import('primevue/checkbox')['default']
     Footer: typeof import('./src/components/layout/Footer.vue')['default']
+    FormField: typeof import('./src/components/FormField.vue')['default']
     Header: typeof import('./src/components/layout/Header.vue')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Menubar: typeof import('primevue/menubar')['default']
@@ -28,5 +29,8 @@ declare module 'vue' {
     ThemeSwitcher: typeof import('./src/components/ThemeSwitcher.vue')['default']
     Toast: typeof import('primevue/toast')['default']
     ToggleButton: typeof import('primevue/togglebutton')['default']
+  }
+  export interface GlobalDirectives {
+    Tooltip: typeof import('primevue/tooltip')['default']
   }
 }

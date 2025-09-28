@@ -1,6 +1,10 @@
 import { http, HttpResponse } from 'msw';
-import type { ApiServerResponse, RequestForm, Review, User } from '../../types.ts';
+import type { ApiServerResponse, LoginForm, RequestForm, Review, User } from '../../types.ts';
 import { API } from '../../constants.ts';
+
+function getUsers(): User[] {
+  return JSON.parse(localStorage.getItem('users') ?? '[]');
+}
 
 export const handlers = [
   http.get(API.Reviews, () => {
@@ -49,27 +53,64 @@ export const handlers = [
 
   http.post(API.SendRequestForm, async ({ request }) => {
     const body = (await request.json()) as RequestForm;
-    console.log(body);
+    const currentUsers = getUsers();
+    const countCurrentUsers = currentUsers.length;
+    const newUser: User = {
+      id: countCurrentUsers + 1,
+      username: body.user.username,
+      password: body.user.password,
+      firstName: body.user.firstName,
+      lastName: body.user.lastName,
+      avatar: '',
+      email: body.user.email,
+      phone: body.user.phone,
+      age: body.user.age,
+      city: body.user.city,
+      status: 'Заявка находится на рассмотрении',
+      loyalty: {
+        score: 0,
+        status: 'bronze',
+      },
+      role: 'user',
+    };
+    localStorage.setItem('users', JSON.stringify([...currentUsers, newUser]));
+
+    return HttpResponse.json<ApiServerResponse<User>>({
+      success: true,
+      statusCode: 200,
+      message: 'Заявка оформлена',
+      data: newUser,
+    });
+  }),
+
+  http.post(API.Login, async ({ request }) => {
+    const body = (await request.json()) as LoginForm;
+    const currentUsers = getUsers();
+    const user = currentUsers.find(item => item.username === body.username);
+
+    if (!user) {
+      return HttpResponse.json<ApiServerResponse<null>>({
+        success: false,
+        statusCode: 404,
+        message: 'Такого пользователя не существует',
+        data: null,
+      });
+    }
+
+    if (user.password !== body.password) {
+      return HttpResponse.json<ApiServerResponse<null>>({
+        success: false,
+        statusCode: 401,
+        message: 'Неправильный пароль',
+        data: null,
+      });
+    }
 
     return HttpResponse.json<ApiServerResponse<User>>({
       success: true,
       statusCode: 200,
       message: '',
-      data: {
-        id: 0,
-        firstName: body.user.firstName,
-        lastName: body.user.lastName,
-        avatar: '',
-        email: body.user.email,
-        phone: body.user.phone,
-        age: body.user.age,
-        city: body.user.city,
-        status: 'Заявка находится на рассмотрении',
-        loyalty: {
-          score: 0,
-          status: 'bronze',
-        },
-      },
+      data: user,
     });
   }),
 ];
