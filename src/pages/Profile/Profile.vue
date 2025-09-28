@@ -69,5 +69,6 @@ onBeforeMount(() => {
 .profile-tabs:deep(.p-tablist),
 .profile-tabs:deep(.p-tabpanels) {
   background-color: transparent;
+  padding: 0;
 }
 </style>

@@ -80,6 +80,8 @@ export interface Hotel {
   availableDates: string[];
 }
 
+export type HotelFiltersType = Pick<Hotel, 'name' | 'city' | 'category'>;
+
 export interface Trip {
   id: number;
   hotel: Hotel;

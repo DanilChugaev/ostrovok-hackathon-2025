@@ -14,6 +14,7 @@ export const PAGES = {
   Admin: '/admin',
   HotelAccount: '/hotel-account',
   Hotels: '/hotels',
+  ReportHotel: '/report/hotel',
 };
 
 export const API = {

@@ -2,7 +2,7 @@
   <section id="advantages" class="advantages">
     <h2>Преимущества программы</h2>
 
-    <card-list :items="advantages">
+    <info-card-list :items="advantages">
       <template #default="{ item }: { item: Advantage }">
         <div class="advantages__item">
           <i class="advantages__icon" :class="item.icon"></i>
@@ -12,13 +12,13 @@
           <p>{{ item.description }}</p>
         </div>
       </template>
-    </card-list>
+    </info-card-list>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import CardList from '../../components/CardList.vue';
+import InfoCardList from '../../components/InfoCardList.vue';
 
 interface Advantage {
   id: number | string;

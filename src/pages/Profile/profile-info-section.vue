@@ -107,19 +107,23 @@ const loyaltyStatus = computed(
   gap: var(--spacer-c);
   padding: var(--spacer-b) var(--spacer-d);
   border-radius: 1rem;
+  font-size: 0.8rem;
   margin-top: var(--spacer-c);
 }
 
 .profile-info-section__status--awaiting {
-  background-color: var(--p-orange-400);
+  background-color: var(--p-amber-200);
+  color: var(--p-amber-900);
 }
 
 .profile-info-section__status--accepted {
-  background-color: var(--p-emerald-400);
+  background-color: var(--p-emerald-200);
+  color: var(--p-emerald-900);
 }
 
 .profile-info-section__status--rejected {
-  background-color: var(--p-red-400);
+  background-color: var(--p-red-200);
+  color: var(--p-red-900);
 }
 
 .profile-info-section__loyalty-container {

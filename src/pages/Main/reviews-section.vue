@@ -2,7 +2,7 @@
   <section class="reviews">
     <h2>Отзывы участников программы</h2>
 
-    <card-list :items="reviews">
+    <info-card-list :items="reviews">
       <template #default="{ item }: { item: Review }">
         <div class="reviews__item">
           <div class="reviews__title-container">
@@ -17,7 +17,7 @@
           <p>"{{ item.text }}"</p>
         </div>
       </template>
-    </card-list>
+    </info-card-list>
   </section>
 </template>
 
@@ -26,7 +26,7 @@ import { apiRequest } from '../../api/request.ts';
 import { onMounted, ref } from 'vue';
 import type { Review } from '../../types.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
-import CardList from '../../components/CardList.vue';
+import InfoCardList from '../../components/InfoCardList.vue';
 import { API } from '../../constants.ts';
 
 const { errorNotify } = useNotifications();

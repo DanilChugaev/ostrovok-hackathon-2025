@@ -1,4 +1,4 @@
-<template>Hotels</template>
+<template>ReportHotel</template>
 
 <script setup lang="ts"></script>
 
