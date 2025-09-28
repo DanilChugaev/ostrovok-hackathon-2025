@@ -48,9 +48,17 @@
 
 <script setup lang="ts">
 import { PAGES } from '../../constants.ts';
+import { useRouter, useRoute } from 'vue-router';
+
+const route = useRoute();
+const router = useRouter();
 
 function scrollToElement() {
-  document.getElementById('advantages')?.scrollIntoView({ behavior: 'smooth' });
+  if (route.path === PAGES.Main) {
+    document.getElementById('advantages')?.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    router.push(`${PAGES.Main}#advantages`);
+  }
 }
 </script>
 
