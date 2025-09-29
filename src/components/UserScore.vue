@@ -1,6 +1,6 @@
 <template>
   <div class="user-score">
-    <i class="pi pi-star"></i>
+    <i class="pi pi-trophy"></i>
     <span>{{ scoreLabel }}</span>
   </div>
 </template>
@@ -22,7 +22,7 @@ const scoreLabel = computed(() => `${props.score ?? 0} баллов`);
   gap: var(--spacer-c);
 }
 
-.user-score .pi-star {
+.user-score .pi {
   color: var(--p-yellow-500);
 }
 </style>

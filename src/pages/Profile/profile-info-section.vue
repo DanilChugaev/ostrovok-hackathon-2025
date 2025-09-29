@@ -4,10 +4,11 @@
       <div class="profile-info-section__user">
         <Avatar :image="userAvatar" icon="pi pi-user" class="mr-2" size="large" shape="circle" />
 
-        <h2 class="profile-info-section__username">{{ fullUserName }}</h2>
+        <div>
+          <h2 class="profile-info-section__username">{{ fullUserName }}</h2>
+          <p>{{ user?.email }}</p>
+        </div>
       </div>
-
-      <p>{{ user?.email }}</p>
 
       <div :class="requestStatusClasses">
         <i :class="requestStatusIcon"></i>
@@ -88,8 +89,9 @@ const loyaltyStatus = computed(
 }
 
 .profile-info-section__username {
+  text-align: start;
   font-size: 1rem;
-  margin: 0;
+  margin: var(--spacer-b) 0;
   padding: 0;
 }
 

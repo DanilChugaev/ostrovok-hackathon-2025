@@ -42,7 +42,7 @@ const summary = computed<Summary[]>(() => [
   {
     id: 3,
     count: user.value?.loyalty?.score ?? 0,
-    icon: 'pi pi-star',
+    icon: 'pi pi-trophy',
     text: 'Накопленных баллов',
     className: 'profile-summary__item--star',
   },

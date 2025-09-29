@@ -10,7 +10,7 @@
 ```bash
 git clone git@github.com:ostrovok-hackathon-2025/doc.git doc
 cd doc
-cp .env.example .env   # если нужно
+#cp .env.example .env   # если нужно
 docker compose up --build
 # открыть http://localhost:8080
 ```

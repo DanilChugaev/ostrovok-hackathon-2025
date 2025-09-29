@@ -5,7 +5,7 @@
       <p class="profile-greeting-section__greeting">Добро пожаловать, {{ fullUserName }}</p>
     </div>
 
-    <Button label="Выбрать новый отель" @click="selectNewHotel" />
+    <Button label="Выбрать отель" @click="selectNewHotel" />
   </section>
 </template>
 

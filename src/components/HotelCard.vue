@@ -1,7 +1,7 @@
 <template>
   <div class="hotel-card">
     <div class="hotel-card__score">
-      <i v-for="i in hotel.category" :key="i" class="pi pi-star"></i>
+      <i v-for="i in hotel.category" :key="i" class="pi pi-star-fill"></i>
     </div>
 
     <Image
@@ -88,7 +88,7 @@ const price = computed(() => `${props.hotel.pricePerNight} ${props.hotel.currenc
   z-index: 1;
 }
 
-.hotel-card__score .pi-star {
+.hotel-card__score .pi {
   color: var(--p-yellow-500);
 }
 
