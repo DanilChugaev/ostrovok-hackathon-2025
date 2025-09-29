@@ -2,7 +2,7 @@
 CREATE TABLE preferred_travel_days (
     id SERIAL PRIMARY KEY,
     code VARCHAR(100) UNIQUE NOT NULL, -- например: weekends_only
-    name JSONB NOT NULL DEFAULT '{}', -- например: '{ru: "Только выходные", en: "Weekends only"}'
+    name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- например: '{ru: "Только выходные", en: "Weekends only"}'
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -15,7 +15,7 @@ CREATE TABLE preferred_travel_days (
 CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
     code VARCHAR(100) UNIQUE NOT NULL, -- например: admin, hotel, user или secret_guest
-    name JSONB NOT NULL DEFAULT '{}', -- например: '{ru: "Администратор системы", en: "System Administrator"}'
+    name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- например: '{ru: "Администратор системы", en: "System Administrator"}'
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -24,7 +24,7 @@ CREATE TABLE roles (
 CREATE TABLE loyalty (
     id SERIAL PRIMARY KEY,
     code VARCHAR(100) UNIQUE NOT NULL, -- например: bronze, silver, gold или diamond
-    name JSONB NOT NULL DEFAULT '{}', -- например: '{ru: "Бронзовый", en: "Bronze"}'
+    name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- например: '{ru: "Бронзовый", en: "Bronze"}'
     min_score INT NOT NULL CHECK (min_score >= 0), -- минимальное количество баллов для получения статуса, например: 0 для статуса Бронзовый
     max_score INT CHECK (max_score > min_score OR max_score IS NULL), -- максимальное количество баллов у статуса, например: 500 для статуса Бронзовый
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -36,7 +36,7 @@ CREATE TABLE loyalty (
 CREATE TABLE cities (
     id SERIAL PRIMARY KEY,
     code VARCHAR(255) UNIQUE NOT NULL, -- например: moscow
-    name JSONB NOT NULL DEFAULT '{}', -- например: '{ru: "Москва", en: "Moscow"}'
+    name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- например: '{ru: "Москва", en: "Moscow"}'
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -87,8 +87,8 @@ CREATE TABLE requests (
 CREATE TABLE stages (
     id SERIAL PRIMARY KEY,
     code VARCHAR(100) UNIQUE NOT NULL, -- например: reservation
-    name JSONB NOT NULL DEFAULT '{}',  -- название этапа, например: '{ru: "Бронирование", en: "Reservation"}'
-    description JSONB NOT NULL DEFAULT '{}', -- описание этапа, например: '{ru: "Описание этапа", en: "Description of the stage"}'
+    name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'),  -- название этапа, например: '{ru: "Бронирование", en: "Reservation"}'
+    description JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- описание этапа, например: '{ru: "Описание этапа", en: "Description of the stage"}'
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -98,8 +98,8 @@ CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
     stage_id INTEGER NOT NULL REFERENCES stages(id) ON DELETE CASCADE,
     code VARCHAR(100) UNIQUE NOT NULL, -- например: online_booking
-    name JSONB NOT NULL DEFAULT '{}',  -- название категорий, например: '{ru: "Онлайн-бронирование", en: "Online booking"}'
-    description JSONB NOT NULL DEFAULT '{}', -- описание категории, например: '{ru: "Описание категории", en: "Category description"}'
+    name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'),  -- название категорий, например: '{ru: "Онлайн-бронирование", en: "Online booking"}'
+    description JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- описание категории, например: '{ru: "Описание категории", en: "Category description"}'
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -109,8 +109,8 @@ CREATE TABLE criteria (
     id SERIAL PRIMARY KEY,
     category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
     code VARCHAR(100) UNIQUE NOT NULL, -- например: interface_convenience
-    name JSONB NOT NULL DEFAULT '{}',  -- например: '{ru: "Удобство интерфейса сайта/приложения", en: "Convenience of the website/application interface"}'
-    description JSONB NOT NULL DEFAULT '{}', -- описание критерия, например: '{ru: "Описание критерия", en: "Description of the criterion"}'
+    name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'),  -- например: '{ru: "Удобство интерфейса сайта/приложения", en: "Convenience of the website/application interface"}'
+    description JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- описание критерия, например: '{ru: "Описание критерия", en: "Description of the criterion"}'
     is_basic BOOLEAN DEFAULT TRUE,  -- основной (true) или дополнительный (false)
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -123,8 +123,8 @@ CREATE TABLE hotels (
     city_id INTEGER NOT NULL REFERENCES cities(id),
     address TEXT, -- предполагается, что адрес тоже берется из внешнего сервиса (address_id)
     code VARCHAR(255) UNIQUE NOT NULL, -- например: first_hotel
-    name JSONB NOT NULL DEFAULT '{}', -- например: '{ru: "Первый Отель", en: "First Hotel"}'
-    description JSONB NOT NULL DEFAULT '{}', -- например: '{ru: "Описание отеля", en: "Hotel description"}'
+    name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- например: '{ru: "Первый Отель", en: "First Hotel"}'
+    description JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- например: '{ru: "Описание отеля", en: "Hotel description"}'
     stars INTEGER CHECK (stars BETWEEN 1 AND 5),  -- количество звезд отеля от 1 до 5
     price_per_night INTEGER NOT NULL CHECK (price_per_night > 0),  -- стоимость ночи
     available_dates DATE[] DEFAULT '{}', -- список доступных дат для бронирования

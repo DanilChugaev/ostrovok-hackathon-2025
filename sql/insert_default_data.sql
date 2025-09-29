@@ -15,9 +15,9 @@ INSERT INTO roles (code, name) VALUES
 -- Заполняем таблицу программы лояльности
 INSERT INTO loyalty (code, name, min_score, max_score) VALUES
 ('bronze', '{"ru": "Бронзовый", "en": "Bronze"}', 0, 500),
-('silver', '{"ru": "Серебрянный", "en": "Silver"}', 501, 1000),
+('silver', '{"ru": "Серебряный", "en": "Silver"}', 501, 1000),
 ('gold', '{"ru": "Золотой", "en": "Gold"}', 1001, 4000),
-('diamond', '{"ru": "Бриллиантовый", "en": "Diamond"}', 4001, Infinity);
+('diamond', '{"ru": "Бриллиантовый", "en": "Diamond"}', 4001, NULL);
 
 -- Заполняем таблицу городов
 INSERT INTO cities (code, name) VALUES
@@ -43,13 +43,26 @@ BEGIN
     (secret_guest_id, city_id, 'secret_guest', 'secret_guest', 'Ольга', 'Кузнецова', 'olga.kuznetsova@example.com', '+79993333333', 30);
 END $$;
 
+-- Заполняем таблицу лояльности для некоторых пользователей
+DO $$
+DECLARE
+    test_user_id INTEGER (SELECT id FROM users WHERE username = 'user');
+    test_secret_guest_id INTEGER (SELECT id FROM users WHERE username = 'secret_guest');
+    bronze_loyalty_id INTEGER (SELECT id FROM users WHERE username = 'bronze');
+    silver_loyalty_id INTEGER (SELECT id FROM users WHERE username = 'bronze');
+BEGIN
+    INSERT INTO loyalty_users (user_id, loyalty_id, score) VALUES
+    (test_user_id, bronze_loyalty_id, 100),
+    (test_secret_guest_id, silver_loyalty_id, 600);
+END $$;
+
 -- Заполняем таблицу этапов
 INSERT INTO stages (code, name, description) VALUES
 ('reservation', '{ru: "Бронирование", en: "Reservation"}', '{ru: "Оценка процесса бронирования (онлайн или по телефону/почте). Этот этап важен, так как первое впечатление формируется еще до приезда", en: "Evaluate the booking process (online or by phone/email). This step is important, as first impressions are formed even before arrival"}'),
-('checkin', '{ru: "Заселение", en: "Accommodation"}', '{ru: "Оценка процесса регистрации и первого впечатления от отеля", en: "Evaluation of the check-in process and first impression of the hotel"}'),
-('accommodation', '{ru: "Проживание", en: "Check-in"}', '{ru: "Оценка качества номера, удобств и взаимодействия с персоналом во время пребывания", en: "Rating of room quality, amenities and interaction with staff during the stay"}'),
+('checkin', '{ru: "Заселение", en: "Check-in"}', '{ru: "Оценка процесса регистрации и первого впечатления от отеля", en: "Evaluation of the check-in process and first impression of the hotel"}'),
+('accommodation', '{ru: "Проживание", en: "Accommodation"}', '{ru: "Оценка качества номера, удобств и взаимодействия с персоналом во время пребывания", en: "Rating of room quality, amenities and interaction with staff during the stay"}'),
 ('nutrition', '{ru: "Питание", en: "Nutrition"}', '{ru: "Оценка качества еды и обслуживания в ресторанах/кафе отеля", en: "Evaluation of the quality of food and service in the hotel restaurants/cafes"}'),
-('checkinout', '{ru: "Выезд", en: "Checkin out"}', '{ru: "Оценка процесса выселения и финального впечатления", en: "Evaluation of the eviction process and final impression"}');
+('checkinout', '{ru: "Выезд", en: "Check-out"}', '{ru: "Оценка процесса выселения и финального впечатления", en: "Evaluation of the eviction process and final impression"}');
 
 -- Заполняем таблицу категорий
 DO $$
@@ -156,7 +169,7 @@ INSERT INTO criteria (category_id, code, name, description, is_basic) VALUES
 END $$;
 
 -- Заполняем таблицу отелей
-INSERT INTO hotels (city_id, address, code, name, description, score, price_per_night, available_dates, photo_url) VALUES
+INSERT INTO hotels (city_id, address, code, name, description, stars, price_per_night, available_dates, photo_url) VALUES
 (1, 'ул. Тверская, д. 10, Москва', 'grand_moscow', '{ru: "Гранд Москва", en: "Grand Moscow"}', '{ru: "Роскошный отель в центре Москвы с видом на Красную площадь", en: "Luxury hotel in the heart of Moscow with a view of Red Square"}', 5, 15000, ARRAY['2025-10-01', '2025-10-02', '2025-10-03']::DATE[], 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'),
 (2, 'наб. Канала Грибоедова, д. 5, Санкт-Петербург', 'neva_palace', '{ru: "Нева Палас", en: "Neva Palace"}', '{ru: "Элегантный отель на берегу Невы с исторической атмосферой", en: "Elegant hotel on the Neva riverbank with a historic atmosphere"}', 4, 12000, ARRAY['2025-10-05', '2025-10-06', '2025-10-07']::DATE[], 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80'),
 (3, 'ул. Сибирская, д. 15, Новосибирск', 'sibir_star', '{ru: "Сибирская Звезда", en: "Siberian Star"}', '{ru: "Современный отель в центре Новосибирска с отличным сервисом", en: "Modern hotel in the center of Novosibirsk with excellent service"}', 3, 8000, ARRAY['2025-10-10', '2025-10-11']::DATE[], 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'),
