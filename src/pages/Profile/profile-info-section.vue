@@ -6,7 +6,7 @@
 
         <div>
           <h2 class="profile-info-section__username">{{ fullUserName }}</h2>
-          <p>{{ user?.email }}</p>
+          <p class="profile-info-section__email">{{ user?.email }}</p>
         </div>
       </div>
 
@@ -93,6 +93,10 @@ const loyaltyStatus = computed(
   font-size: 1rem;
   margin: var(--spacer-b) 0;
   padding: 0;
+}
+
+.profile-info-section__email {
+  text-align: start;
 }
 
 .profile-info-section__status {
