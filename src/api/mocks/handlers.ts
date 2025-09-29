@@ -200,7 +200,7 @@ export const handlers = [
     const user = currentUsers.find(item => item.username === body.username);
 
     if (!user) {
-      return HttpResponse.json<ApiServerResponse<null>>({
+      return HttpResponse.json<ApiServerResponse<User | null>>({
         success: false,
         statusCode: 404,
         message: 'Такого пользователя не существует',
@@ -209,7 +209,7 @@ export const handlers = [
     }
 
     if (user.password !== body.password) {
-      return HttpResponse.json<ApiServerResponse<null>>({
+      return HttpResponse.json<ApiServerResponse<User | null>>({
         success: false,
         statusCode: 401,
         message: 'Неправильный пароль',

@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { Form } from '@primevue/forms';
+import { Form, type FormSubmitEvent } from '@primevue/forms';
 import { onBeforeMount, ref } from 'vue';
 import type { LoginForm, User } from '../types.ts';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
@@ -70,9 +70,10 @@ const resolver = ref(
   ),
 );
 
-async function onValidateForm({ valid, values }: { valid: boolean; values: LoginForm }) {
+async function onValidateForm({ valid, values }: FormSubmitEvent<Record<string, any>>) {
   if (valid) {
-    await sendLoginForm(values);
+    const typedValues = values as unknown as LoginForm;
+    await sendLoginForm(typedValues);
   }
 }
 

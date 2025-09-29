@@ -86,20 +86,23 @@
 <script setup lang="ts">
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
-import { Form } from '@primevue/forms';
+import { Form, type FormSubmitEvent } from '@primevue/forms';
 import { ref } from 'vue';
 import type { RequestForm } from '../../types.ts';
 import { useAppForm } from '../../composables/useAppForm.ts';
 
-const model = defineModel<RequestForm['experience']>();
+type ExperienceRequestForm = RequestForm['experience'];
+
+const model = defineModel<ExperienceRequestForm>();
 
 const emit = defineEmits<{
+  back: [];
   next: [];
 }>();
 
 const { descriptionValidation } = useAppForm();
 
-const initialValues = ref<RequestForm['experience']>({
+const initialValues = ref<ExperienceRequestForm>({
   travel: '',
   writingReviews: '',
   reason: '',
@@ -115,9 +118,9 @@ const resolver = ref(
   ),
 );
 
-function onValidateForm({ valid, values }: { valid: boolean; values: RequestForm['experience'] }) {
+function onValidateForm({ valid, values }: FormSubmitEvent<Record<string, any>>) {
   if (valid) {
-    model.value = values;
+    model.value = values as ExperienceRequestForm;
     emit('next');
   }
 }

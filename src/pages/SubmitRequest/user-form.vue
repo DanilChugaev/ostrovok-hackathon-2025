@@ -105,7 +105,7 @@
 <script setup lang="ts">
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
-import { Form } from '@primevue/forms';
+import { Form, type FormSubmitEvent } from '@primevue/forms';
 import type { RequestForm } from '../../types.ts';
 import { onMounted, ref } from 'vue';
 import { API } from '../../constants.ts';
@@ -113,7 +113,9 @@ import { apiRequest } from '../../api/request.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import { useAppForm } from '../../composables/useAppForm.ts';
 
-const model = defineModel<RequestForm['user']>();
+type UserRequestForm = RequestForm['user'];
+
+const model = defineModel<UserRequestForm>();
 
 const emit = defineEmits<{
   next: [];
@@ -131,7 +133,7 @@ const {
   cityValidation,
 } = useAppForm();
 
-const initialValues = ref<RequestForm['user']>({
+const initialValues = ref<UserRequestForm>({
   username: '',
   password: '',
   firstName: '',
@@ -158,9 +160,9 @@ const resolver = ref(
 );
 const cities = ref<string[]>([]);
 
-function onValidateForm({ valid, values }: { valid: boolean; values: RequestForm['user'] }) {
+function onValidateForm({ valid, values }: FormSubmitEvent<Record<string, any>>) {
   if (valid) {
-    model.value = values;
+    model.value = values as UserRequestForm;
     emit('next');
   }
 }

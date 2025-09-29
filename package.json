@@ -11,7 +11,8 @@
     "docker:dev": "docker compose down && docker compose --profile dev up --build",
     "lint": "eslint . --ext .js,.ts,.vue",
     "lint:fix": "eslint . --ext .js,.ts,.vue --fix",
-    "format": "prettier --write \"src/**/*.{js,ts,vue}\""
+    "format": "prettier --write \"src/**/*.{js,ts,vue}\"",
+    "ts:check": "vue-tsc -b"
   },
   "dependencies": {
     "@primeuix/themes": "^1.2.4",

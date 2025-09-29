@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { Form } from '@primevue/forms';
+import { Form, type FormSubmitEvent } from '@primevue/forms';
 import { apiRequest } from '../../api/request.ts';
 import { onMounted, ref } from 'vue';
 import type { RequestForm } from '../../types.ts';
@@ -104,6 +104,8 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
 import { API } from '../../constants.ts';
 import { useAppForm } from '../../composables/useAppForm.ts';
+
+type PreferencesRequestForm = RequestForm['preferences'] & Pick<RequestForm, 'agreeWithRules'>;
 
 const preferencesModel = defineModel<RequestForm['preferences']>('preferences');
 const agreeWithRulesModel = defineModel<RequestForm['agreeWithRules']>('agreeWithRules');
@@ -116,9 +118,7 @@ const emit = defineEmits<{
 const { errorNotify } = useNotifications();
 const { descriptionValidation, booleanValidation, travelAccessibilityValidation } = useAppForm();
 
-const initialValues = ref<
-  RequestForm['preferences'] & { agreeWithRules: RequestForm['agreeWithRules'] }
->({
+const initialValues = ref<PreferencesRequestForm>({
   travelAccessibility: '',
   preferredDirections: '',
   agreeWithRules: false,
@@ -136,17 +136,13 @@ const resolver = ref(
 
 const accessibilityListForTravel = ref<string[]>([]);
 
-function onValidateForm({
-  valid,
-  values,
-}: {
-  valid: boolean;
-  values: RequestForm['preferences'] & { agreeWithRules: RequestForm['agreeWithRules'] };
-}) {
+function onValidateForm({ valid, values }: FormSubmitEvent<Record<string, any>>) {
   if (valid) {
-    preferencesModel.value!.travelAccessibility = values.travelAccessibility;
-    preferencesModel.value!.preferredDirections = values.preferredDirections;
-    agreeWithRulesModel.value = values.agreeWithRules;
+    const typedValues = values as unknown as PreferencesRequestForm;
+
+    preferencesModel.value!.travelAccessibility = typedValues.travelAccessibility;
+    preferencesModel.value!.preferredDirections = typedValues.preferredDirections;
+    agreeWithRulesModel.value = typedValues.agreeWithRules;
     emit('send-request-form');
   }
 }
