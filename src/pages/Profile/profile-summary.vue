@@ -17,14 +17,14 @@ import type { Summary, Trip } from '../../types.ts';
 import InfoCardList from '../../components/InfoCardList.vue';
 import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
-import { useI18n } from 'vue-i18n';
+import { useLocale } from '../../composables/useLocale.ts';
 
 const props = defineProps<{
   trips: Trip[];
 }>();
 
 const { user } = useUser();
-const { t } = useI18n();
+const { t } = useLocale();
 
 const summary = computed<Summary[]>(() => [
   {

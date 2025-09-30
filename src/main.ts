@@ -9,25 +9,27 @@ import './assets/css/index';
 import App from './App.vue';
 import { DARK_MODE_CLASS, STORAGE_LANGUAGE_KEY, STORAGE_MODE_KEY } from './constants.ts';
 import { router } from './router.ts';
-import { users, hotels, trips } from './api/mocks/constants.ts';
+import { users, hotels, trips, cities } from './api/mocks/constants.ts';
 import ConfirmationService from 'primevue/confirmationservice';
 import { localizationMessages } from './localization';
+import type { LocalizationMessagesKeys } from './types.ts';
 
 // todo: удалить, когда появится реальное апи
 /** -- mocks -- **/
 localStorage.setItem('users', JSON.stringify(users));
 localStorage.setItem('hotels', JSON.stringify(hotels));
 localStorage.setItem('trips', JSON.stringify(trips));
+localStorage.setItem('cities', JSON.stringify(cities));
 const { worker } = await import('./api/mocks/browser');
 await worker.start({
   onUnhandledRequest: 'bypass',
 });
 /** -- mocks -- **/
 
-type LocalizationMessagesKeys = keyof typeof localizationMessages;
 type MessageSchema = (typeof localizationMessages)['ru'];
 
-const locale = localStorage.getItem(STORAGE_LANGUAGE_KEY) || 'ru';
+const locale: LocalizationMessagesKeys =
+  (localStorage.getItem(STORAGE_LANGUAGE_KEY) as LocalizationMessagesKeys) || 'ru';
 
 const i18n = createI18n<[MessageSchema], LocalizationMessagesKeys>({
   legacy: false,

@@ -7,11 +7,20 @@
     <div class="hotels__list">
       <hotel-card v-for="hotel in hotelsFiltered" :key="hotel.id" :hotel="hotel">
         <template #actions>
-          <Button :label="$t('selectAHotel')" @click="onSelectHotelButtonClick(hotel.id)" />
+          <Button :label="selectHotelButtonLabel" @click="onSelectHotelButtonClick(hotel.id)" />
         </template>
       </hotel-card>
     </div>
   </div>
+
+  <Dialog
+    v-model:visible="isVisibleInfoAboutHotelDialog"
+    modal
+    :header="$t('hotelInformation')"
+    :style="{ width: '25rem' }"
+  >
+    {{ $t('hotel') }}
+  </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -23,33 +32,43 @@ import { useNotifications } from '../../composables/useNotifications.ts';
 import { apiRequest } from '../../api/request.ts';
 import { API, PAGES } from '../../constants.ts';
 import { useRouter } from 'vue-router';
+import { useLocale } from '../../composables/useLocale.ts';
+import { useUser } from '../../composables/useUser.ts';
 
 const { errorNotify } = useNotifications();
 const router = useRouter();
+const { t, localeKey } = useLocale();
+const { isSecretGuestProgramAccepted } = useUser();
 
 const filters = reactive<HotelFiltersType>({
   name: '',
   city: '',
-  category: 0,
+  stars: 0,
 });
 
 const hotels = ref<Hotel[]>([]);
+const isVisibleInfoAboutHotelDialog = ref(false);
 
-const cities = computed(() => [...new Set(hotels.value.map(item => item.city))]);
-const categories = computed(() => [...new Set(hotels.value.map(item => item.category.toString()))]);
+const cities = computed(() => [...new Set(hotels.value.map(item => item.city[localeKey.value]))]);
+const categories = computed(() => [...new Set(hotels.value.map(item => item.stars.toString()))]);
 const hotelsFiltered = computed(() => {
   return hotels.value.filter(item => {
-    if (!filters.name && !filters.city && !filters.category) {
+    if (!filters.name && !filters.city && !filters.stars) {
       return true;
     }
 
     return (
-      (item.name && filters.name && item.name.toLowerCase().includes(filters.name.toLowerCase())) ||
-      item.city === filters.city ||
-      item.category === filters.category
+      (item.name &&
+        filters.name &&
+        item.name[localeKey.value].toLowerCase().includes(filters.name.toLowerCase())) ||
+      item.city[localeKey.value] === filters.city ||
+      item.stars === filters.stars
     );
   });
 });
+const selectHotelButtonLabel = computed(() =>
+  isSecretGuestProgramAccepted.value ? t('selectAHotel') : t('hotelInformation'),
+);
 
 async function fetchTrips() {
   try {
@@ -60,7 +79,11 @@ async function fetchTrips() {
 }
 
 function onSelectHotelButtonClick(id: number) {
-  router.push(`${PAGES.ReportHotel}/${id}`);
+  if (isSecretGuestProgramAccepted.value) {
+    router.push(`${PAGES.ReportHotel}/${id}`);
+  } else {
+    isVisibleInfoAboutHotelDialog.value = true;
+  }
 }
 
 onMounted(async () => {

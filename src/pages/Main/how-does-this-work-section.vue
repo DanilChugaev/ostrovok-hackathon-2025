@@ -27,10 +27,10 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { PAGES } from '../../constants.ts';
-import { useI18n } from 'vue-i18n';
+import { useLocale } from '../../composables/useLocale.ts';
 
 const router = useRouter();
-const { t } = useI18n();
+const { t } = useLocale();
 
 const processList = ref([
   {

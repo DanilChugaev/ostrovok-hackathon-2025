@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import InfoCardList from '../../components/InfoCardList.vue';
-import { useI18n } from 'vue-i18n';
+import { useLocale } from '../../composables/useLocale.ts';
 
 interface Advantage {
   id: number | string;
@@ -28,7 +28,7 @@ interface Advantage {
   description: string;
 }
 
-const { t } = useI18n();
+const { t } = useLocale();
 
 const advantages = ref<Advantage[]>([
   {

@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
 import { useStorage } from '@vueuse/core';
+import { useI18n } from 'vue-i18n';
 import { LOCALES, STORAGE_LANGUAGE_KEY } from '../constants.ts';
 
 const { locale } = useI18n();

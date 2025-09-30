@@ -3,6 +3,7 @@
     <hotel-card v-for="trip in trips" :key="trip.id" :hotel="trip.hotel">
       <template #badge>
         <div
+          v-if="isSecretGuestProgramAccepted"
           :class="[
             'profile-trips__badge',
             {
@@ -24,14 +25,19 @@
       </template>
 
       <template #actions>
+        <b v-if="checkCurrentDateIsBeforeTripDate(trip.startDate)">
+          {{ $t('upcomingTrip') }}
+        </b>
+
         <Button
-          v-if="trip.hasReport"
+          v-else-if="!isSecretGuestProgramAccepted || trip.hasReport"
           :label="$t('learnMore')"
           outlined
           @click="onReadMoreButtonClick"
         />
+
         <Button
-          v-else
+          v-else-if="isSecretGuestProgramAccepted && !trip.hasReport"
           :label="$t('fillOutTheReport')"
           @click="onReportButtonClick(trip.hotel.id)"
         />
@@ -40,12 +46,21 @@
   </div>
 
   <Dialog
-    v-model:visible="isVisibleDialog"
+    v-model:visible="isVisibleReportDialog"
     modal
     :header="$t('reportInformation')"
     :style="{ width: '25rem' }"
   >
     {{ $t('report') }}
+  </Dialog>
+
+  <Dialog
+    v-model:visible="isVisibleTripDialog"
+    modal
+    :header="$t('tripInformation')"
+    :style="{ width: '25rem' }"
+  >
+    {{ $t('trip') }}
   </Dialog>
 </template>
 
@@ -55,17 +70,29 @@ import { PAGES } from '../../constants.ts';
 import { ref } from 'vue';
 import HotelCard from '../../components/HotelCard.vue';
 import { useRouter } from 'vue-router';
+import { useUser } from '../../composables/useUser.ts';
+import dayjs from 'dayjs';
 
 defineProps<{
   trips: Trip[];
 }>();
 
 const router = useRouter();
+const { isSecretGuestProgramAccepted } = useUser();
 
-const isVisibleDialog = ref(false);
+const isVisibleReportDialog = ref(false);
+const isVisibleTripDialog = ref(false);
+
+function checkCurrentDateIsBeforeTripDate(date: string) {
+  return dayjs(new Date()).isBefore(dayjs(date));
+}
 
 function onReadMoreButtonClick() {
-  isVisibleDialog.value = true;
+  if (isSecretGuestProgramAccepted.value) {
+    isVisibleReportDialog.value = true;
+  } else {
+    isVisibleTripDialog.value = true;
+  }
 }
 
 function onReportButtonClick(id: number) {

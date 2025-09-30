@@ -30,13 +30,13 @@ import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
 import { LOYALTY_STATUS_MAP } from '../../constants.ts';
 import UserScore from '../../components/UserScore.vue';
-import { useI18n } from 'vue-i18n';
+import { useLocale } from '../../composables/useLocale.ts';
 
 const { fullUserName, user } = useUser();
-const { t } = useI18n();
+const { t } = useLocale();
 
 const requestStatusMap = {
-  awaiting: {
+  pending: {
     icon: 'pi pi-clock',
     text: t('underReview'),
   },
@@ -54,10 +54,12 @@ const userAvatar = computed(() => user.value?.avatar || undefined);
 const requestStatusClasses = computed(() => {
   return [
     'profile-info-section__status',
-    `profile-info-section__status--${user.value?.status ?? 'awaiting'}`,
+    `profile-info-section__status--${user.value?.programRequestStatus ?? 'pending'}`,
   ];
 });
-const mappedStatusObj = computed(() => requestStatusMap[user.value?.status ?? 'awaiting']);
+const mappedStatusObj = computed(
+  () => requestStatusMap[user.value?.programRequestStatus ?? 'pending'],
+);
 const requestStatusIcon = computed(() => mappedStatusObj.value.icon);
 const requestStatusText = computed(() => mappedStatusObj.value.text);
 const loyaltyStatus = computed(
@@ -111,7 +113,7 @@ const loyaltyStatus = computed(
   margin-top: var(--spacer-c);
 }
 
-.profile-info-section__status--awaiting {
+.profile-info-section__status--pending {
   background-color: var(--p-amber-200);
   color: var(--p-amber-900);
 }

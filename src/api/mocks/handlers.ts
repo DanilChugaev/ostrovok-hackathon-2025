@@ -2,6 +2,7 @@ import { http, HttpResponse } from 'msw';
 import type {
   ApiServerResponse,
   Award,
+  City,
   Hotel,
   LoginForm,
   LoyaltyBase,
@@ -22,6 +23,10 @@ function getHotels(): Hotel[] {
 
 function getTrips(): Trip[] {
   return JSON.parse(localStorage.getItem('trips') ?? '[]');
+}
+
+function getCities(): City[] {
+  return JSON.parse(localStorage.getItem('cities') ?? '[]');
 }
 
 export const handlers = [
@@ -53,11 +58,11 @@ export const handlers = [
   }),
 
   http.get(API.Cities, () => {
-    return HttpResponse.json<ApiServerResponse<string[]>>({
+    return HttpResponse.json<ApiServerResponse<City[]>>({
       success: true,
       statusCode: 200,
       message: '',
-      data: ['Новосибирск', 'Пермь', 'Екатеринбург', 'Санкт-Петербург', 'Москва'],
+      data: getCities(),
     });
   }),
 
@@ -168,6 +173,7 @@ export const handlers = [
     const countCurrentUsers = currentUsers.length;
     const newUser: User = {
       id: countCurrentUsers + 1,
+      role: 'user',
       username: body.user.username,
       password: body.user.password,
       firstName: body.user.firstName,
@@ -177,12 +183,11 @@ export const handlers = [
       phone: body.user.phone,
       age: body.user.age,
       city: body.user.city,
-      status: 'awaiting',
+      programRequestStatus: 'pending',
       loyalty: {
         score: 0,
         status: 'bronze',
       },
-      role: 'user',
     };
     localStorage.setItem('users', JSON.stringify([...currentUsers, newUser]));
 

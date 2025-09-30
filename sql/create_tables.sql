@@ -121,7 +121,7 @@ CREATE TABLE criteria (
 CREATE TABLE hotels (
     id SERIAL PRIMARY KEY,
     city_id INTEGER NOT NULL REFERENCES cities(id),
-    address TEXT, -- предполагается, что адрес тоже берется из внешнего сервиса (address_id)
+    address JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- предполагается, что адрес тоже берется из внешнего сервиса (и тут будет address_id)
     code VARCHAR(255) UNIQUE NOT NULL, -- например: first_hotel
     name JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- например: '{ru: "Первый Отель", en: "First Hotel"}'
     description JSONB NOT NULL DEFAULT '{}' CHECK (name ? 'ru' AND name ? 'en'), -- например: '{ru: "Описание отеля", en: "Hotel description"}'

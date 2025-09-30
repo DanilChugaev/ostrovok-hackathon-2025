@@ -52,7 +52,7 @@ import { apiRequest } from '../api/request.ts';
 import { useNotifications } from '../composables/useNotifications.ts';
 
 const { usernameValidation, passwordValidation } = useAppForm();
-const { isAuth, isAdmin, isHotel, isUser, user } = useUser();
+const { isAuth, isAdmin, isHotel, isUser, isSecretGuest, user } = useUser();
 const router = useRouter();
 const { errorNotify } = useNotifications();
 
@@ -97,7 +97,7 @@ async function sendLoginForm(form: LoginForm) {
 }
 
 function redirectOnProfile() {
-  if (isUser.value) {
+  if (isUser.value || isSecretGuest.value) {
     router.push(PAGES.Profile);
   }
 

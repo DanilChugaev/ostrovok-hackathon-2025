@@ -1,9 +1,14 @@
+import { localizationMessages } from './localization';
+
 export interface ApiServerResponse<T> {
   success: boolean;
   message: string;
   statusCode: number;
   data: T;
 }
+
+export type LocalizationMessagesKeys = keyof typeof localizationMessages;
+export type LocaleString = Record<LocalizationMessagesKeys, string>;
 
 export interface HeaderNavigation {
   label: string;
@@ -48,9 +53,9 @@ export interface RequestForm {
   agreeWithRules: boolean; // согласен с условиями
 }
 
-export type ReportStatus = 'awaiting' | 'accepted' | 'rejected';
+export type ProgramRequestStatus = 'pending' | 'accepted' | 'rejected';
 export type LoyaltyStatus = 'bronze' | 'silver' | 'gold' | 'diamond';
-export type UserRole = 'user' | 'admin' | 'hotel';
+export type UserRole = 'user' | 'secret_guest' | 'admin' | 'hotel';
 
 export interface User {
   id: number;
@@ -63,7 +68,7 @@ export interface User {
   phone: number | string;
   age: number | string;
   city: string;
-  status?: ReportStatus;
+  programRequestStatus?: ProgramRequestStatus;
   loyalty?: {
     score: number;
     status: LoyaltyStatus;
@@ -73,18 +78,21 @@ export interface User {
 
 export interface Hotel {
   id: number;
-  name: string;
+  name: LocaleString;
   photo: string;
-  city: string;
-  address: string;
-  description: string;
-  category: number;
+  city: LocaleString;
+  address: LocaleString;
+  description: LocaleString;
+  stars: number;
   pricePerNight: number;
-  currency: string;
   availableDates: string[];
 }
 
-export type HotelFiltersType = Pick<Hotel, 'name' | 'city' | 'category'>;
+export interface HotelFiltersType {
+  name: string;
+  city: string;
+  stars: number;
+}
 
 export interface Trip {
   id: number;
@@ -116,4 +124,10 @@ export interface LoyaltyBase {
   minScore: number;
   maxScore: number;
   status: LoyaltyStatus;
+}
+
+export interface City {
+  id: number;
+  code: string;
+  name: LocaleString;
 }

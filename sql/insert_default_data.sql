@@ -49,7 +49,7 @@ DECLARE
     test_user_id INTEGER (SELECT id FROM users WHERE username = 'user');
     test_secret_guest_id INTEGER (SELECT id FROM users WHERE username = 'secret_guest');
     bronze_loyalty_id INTEGER (SELECT id FROM users WHERE username = 'bronze');
-    silver_loyalty_id INTEGER (SELECT id FROM users WHERE username = 'bronze');
+    silver_loyalty_id INTEGER (SELECT id FROM users WHERE username = 'silver');
 BEGIN
     INSERT INTO loyalty_users (user_id, loyalty_id, score) VALUES
     (test_user_id, bronze_loyalty_id, 100),
@@ -169,9 +169,19 @@ INSERT INTO criteria (category_id, code, name, description, is_basic) VALUES
 END $$;
 
 -- Заполняем таблицу отелей
-INSERT INTO hotels (city_id, address, code, name, description, stars, price_per_night, available_dates, photo_url) VALUES
-(1, 'ул. Тверская, д. 10, Москва', 'grand_moscow', '{ru: "Гранд Москва", en: "Grand Moscow"}', '{ru: "Роскошный отель в центре Москвы с видом на Красную площадь", en: "Luxury hotel in the heart of Moscow with a view of Red Square"}', 5, 15000, ARRAY['2025-10-01', '2025-10-02', '2025-10-03']::DATE[], 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'),
-(2, 'наб. Канала Грибоедова, д. 5, Санкт-Петербург', 'neva_palace', '{ru: "Нева Палас", en: "Neva Palace"}', '{ru: "Элегантный отель на берегу Невы с исторической атмосферой", en: "Elegant hotel on the Neva riverbank with a historic atmosphere"}', 4, 12000, ARRAY['2025-10-05', '2025-10-06', '2025-10-07']::DATE[], 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80'),
-(3, 'ул. Сибирская, д. 15, Новосибирск', 'sibir_star', '{ru: "Сибирская Звезда", en: "Siberian Star"}', '{ru: "Современный отель в центре Новосибирска с отличным сервисом", en: "Modern hotel in the center of Novosibirsk with excellent service"}', 3, 8000, ARRAY['2025-10-10', '2025-10-11']::DATE[], 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'),
-(4, 'ул. Уральская, д. 20, Екатеринбург', 'ural_comfort', '{ru: "Урал Комфорт", en: "Ural Comfort"}', '{ru: "Уютный отель с удобным расположением в Екатеринбурге", en: "Cozy hotel with a convenient location in Yekaterinburg"}', 4, 10000, ARRAY['2025-10-15', '2025-10-16', '2025-10-17']::DATE[], 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80'),
-(5, 'ул. Кремлевская, д. 12, Казань', 'kazan_riviera', '{ru: "Казань Ривьера", en: "Kazan Riviera"}', '{ru: "Отель с панорамным видом на Казанский Кремль", en: "Hotel with a panoramic view of the Kazan Kremlin"}', 5, 18000, ARRAY['2025-10-20', '2025-10-21', '2025-10-22']::DATE[], 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+DO $$
+DECLARE
+admin_id INTEGER (SELECT id FROM roles WHERE code = 'admin');
+    moscow_id INTEGER (SELECT id FROM cities WHERE code = 'moscow');
+    saint_petersburg_id INTEGER (SELECT id FROM cities WHERE code = 'saint_petersburg');
+    novosibirsk_id INTEGER (SELECT id FROM cities WHERE code = 'novosibirsk');
+    yekaterinburg_id INTEGER (SELECT id FROM cities WHERE code = 'yekaterinburg');
+    kazan_id INTEGER (SELECT id FROM cities WHERE code = 'kazan');
+BEGIN
+    INSERT INTO hotels (city_id, address, code, name, description, stars, price_per_night, available_dates, photo_url) VALUES
+    (moscow_id, '{ru: "ул. Тверская, д. 10", en: "Tverskaya St., Building 10"}', 'grand_moscow', '{ru: "Гранд Москва", en: "Grand Moscow"}', '{ru: "Роскошный отель в центре Москвы с видом на Красную площадь", en: "Luxury hotel in the heart of Moscow with a view of Red Square"}', 5, 15000, ARRAY['2025-10-01', '2025-10-02', '2025-10-03']::DATE[], 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'),
+    (saint_petersburg_id, '{ru: "наб. Канала Грибоедова, д. 5", en: "emb. Kanala Griboyedova, 5"}', 'neva_palace', '{ru: "Нева Палас", en: "Neva Palace"}', '{ru: "Элегантный отель на берегу Невы с исторической атмосферой", en: "Elegant hotel on the Neva riverbank with a historic atmosphere"}', 4, 12000, ARRAY['2025-10-05', '2025-10-06', '2025-10-07']::DATE[], 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80'),
+    (novosibirsk_id, '{ru: "ул. Сибирская, д. 15", en: "st. Sibirskaya, 15"}', 'sibir_star', '{ru: "Сибирская Звезда", en: "Siberian Star"}', '{ru: "Современный отель в центре Новосибирска с отличным сервисом", en: "Modern hotel in the center of Novosibirsk with excellent service"}', 3, 8000, ARRAY['2025-10-10', '2025-10-11']::DATE[], 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'),
+    (yekaterinburg_id, '{ru: "ул. Уральская, д. 20", en: "st. Uralskaya, 20"}', 'ural_comfort', '{ru: "Урал Комфорт", en: "Ural Comfort"}', '{ru: "Уютный отель с удобным расположением в Екатеринбурге", en: "Cozy hotel with a convenient location in Yekaterinburg"}', 4, 10000, ARRAY['2025-10-15', '2025-10-16', '2025-10-17']::DATE[], 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80'),
+    (kazan_id, '{ru: "ул. Кремлевская, д. 12", en: "st. Kremlevskaya, 12"}', 'kazan_riviera', '{ru: "Казань Ривьера", en: "Kazan Riviera"}', '{ru: "Отель с панорамным видом на Казанский Кремль", en: "Hotel with a panoramic view of the Kazan Kremlin"}', 5, 18000, ARRAY['2025-10-20', '2025-10-21', '2025-10-22']::DATE[], 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+END $$;

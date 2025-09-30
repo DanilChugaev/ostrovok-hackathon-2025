@@ -16,9 +16,9 @@
         <b>{{ $t('hotelCategory') }}</b>
 
         <SelectButton
-          :model-value="model!.category.toString()"
+          :model-value="model!.stars.toString()"
           :options="categories"
-          @update:model-value="model!.category = Number($event)"
+          @update:model-value="model!.stars = Number($event)"
         />
       </div>
     </div>

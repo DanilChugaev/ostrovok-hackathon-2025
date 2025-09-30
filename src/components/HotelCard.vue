@@ -1,7 +1,7 @@
 <template>
   <div class="hotel-card">
     <div class="hotel-card__score">
-      <i v-for="i in hotel.category" :key="i" class="pi pi-star-fill"></i>
+      <i v-for="i in hotel.stars" :key="i" class="pi pi-star-fill"></i>
     </div>
 
     <Image
@@ -9,13 +9,13 @@
       preview
       width="400"
       :src="hotel.photo"
-      :alt="`${$t('hotelPhoto')} ${hotel.name}`"
+      :alt="`${$t('hotelPhoto')} ${name}`"
     />
 
     <div class="hotel-card__info">
       <div class="hotel-card__header">
         <div>
-          <div class="hotel-card__name">{{ hotel.name }}</div>
+          <div class="hotel-card__name">{{ name }}</div>
           <div class="hotel-card__location">
             <i class="pi pi-map-marker"></i>
             <div>{{ location }}</div>
@@ -29,7 +29,7 @@
         </slot>
       </div>
 
-      <p class="hotel-card__description">{{ hotel.description }}</p>
+      <p class="hotel-card__description">{{ description }}</p>
 
       <slot name="dates">
         <div class="hotel-card__dates">
@@ -53,18 +53,20 @@
 <script setup lang="ts">
 import type { Hotel } from '../types.ts';
 import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { useLocale } from '../composables/useLocale.ts';
 
 const props = defineProps<{
   hotel: Hotel;
 }>();
 
-const { t } = useI18n();
+const { t, localeKey } = useLocale();
 
-const location = computed(() => `${props.hotel.city}, ${props.hotel.address}`);
-const price = computed(
-  () => `${props.hotel.pricePerNight} ${props.hotel.currency} / ${t('night')}`,
+const name = computed(() => props.hotel.name[localeKey.value]);
+const description = computed(() => props.hotel.description[localeKey.value]);
+const location = computed(
+  () => `${props.hotel.city[localeKey.value]}, ${props.hotel.address[localeKey.value]}`,
 );
+const price = computed(() => `${props.hotel.pricePerNight} ₽ / ${t('night')}`);
 </script>
 
 <style scoped>
@@ -74,6 +76,7 @@ const price = computed(
   border-radius: var(--p-border-radius-lg);
   overflow: hidden;
   position: relative;
+  min-height: 270px;
 }
 
 .hotel-card:deep(.p-image img) {
@@ -155,9 +158,21 @@ const price = computed(
 
 .hotel-card__actions {
   margin-top: var(--spacer-e);
+  margin-top: auto;
+}
+
+@media (max-width: 999px) {
+  .hotel-card {
+    min-height: 230px;
+    max-height: 230px;
+  }
 }
 
 @media (max-width: 799px) {
+  .hotel-card {
+    min-height: initial;
+    max-height: initial;
+  }
   .hotel-card:deep(.p-image img) {
     width: 300px;
   }

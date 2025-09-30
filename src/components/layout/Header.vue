@@ -47,19 +47,19 @@ import { PAGES } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useRouter } from 'vue-router';
 import type { HeaderNavigation } from '../../types.ts';
-import { useI18n } from 'vue-i18n';
 import LanguageSwitcher from '../LanguageSwitcher.vue';
+import { useLocale } from '../../composables/useLocale.ts';
 
-const { isAuth, user, isAdmin, isUser, isHotel } = useUser();
+const { isAuth, user, isAdmin, isUser, isSecretGuest, isHotel } = useUser();
 const router = useRouter();
-const { t } = useI18n();
+const { t } = useLocale();
 
 const navigation = ref<HeaderNavigation[]>([
   {
     label: t('home'),
     icon: 'pi pi-home',
     route: PAGES.Main,
-    permissions: ['user', 'admin', 'hotel'],
+    permissions: ['user', 'secret_guest', 'admin', 'hotel'],
   },
   {
     label: t('submitRequest'),
@@ -71,7 +71,7 @@ const navigation = ref<HeaderNavigation[]>([
     label: t('personalAccount'),
     icon: 'pi pi-user',
     route: PAGES.Profile,
-    permissions: ['user'],
+    permissions: ['user', 'secret_guest'],
   },
   {
     label: t('adminPanel'),
@@ -89,7 +89,7 @@ const navigation = ref<HeaderNavigation[]>([
     label: t('selectAHotel'),
     icon: 'pi pi-building',
     route: PAGES.Hotels,
-    permissions: ['user'],
+    permissions: ['user', 'secret_guest'],
   },
 ]);
 
@@ -106,7 +106,7 @@ const navigationFiltered = computed(() => {
 });
 
 function onLoginButtonClick() {
-  if (isUser.value) {
+  if (isUser.value || isSecretGuest.value) {
     router.push(PAGES.Profile);
   }
 
