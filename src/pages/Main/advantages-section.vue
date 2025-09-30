@@ -1,6 +1,6 @@
 <template>
   <section id="advantages" class="advantages">
-    <h2>Преимущества программы</h2>
+    <h2>{{ $t('benefitsOfTheProgram') }}</h2>
 
     <info-card-list :items="advantages">
       <template #default="{ item }: { item: Advantage }">
@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import InfoCardList from '../../components/InfoCardList.vue';
+import { useI18n } from 'vue-i18n';
 
 interface Advantage {
   id: number | string;
@@ -27,25 +28,26 @@ interface Advantage {
   description: string;
 }
 
+const { t } = useI18n();
+
 const advantages = ref<Advantage[]>([
   {
     id: 'freeAccommodation',
     icon: 'pi pi-star',
-    title: 'Бесплатное проживание',
-    description:
-      'Получите возможность бесплатно остановиться в отелях или со значительной скидкой.',
+    title: t('freeAccommodation'),
+    description: t('getFreeOrSignificantlyDiscountedHotelStays'),
   },
   {
     id: 'flexibleChoice',
     icon: 'pi pi-map-marker',
-    title: 'Гибкий выбор',
-    description: 'Выбирайте из множества отелей в разных городах и странах.',
+    title: t('flexibleChoice'),
+    description: t('chooseFromAWideRangeOfHotelsInDifferentCitiesAndCountries'),
   },
   {
     id: 'impactOnQuality',
     icon: 'pi pi-check',
-    title: 'Влияние на качество',
-    description: 'Ваши отзывы помогут улучшить качество сервиса и обслуживания в отелях.',
+    title: t('impactOnQuality'),
+    description: t('yourFeedbackWillHelpImproveTheQualityOfServiceAndCustomerServiceAtHotels'),
   },
 ]);
 </script>

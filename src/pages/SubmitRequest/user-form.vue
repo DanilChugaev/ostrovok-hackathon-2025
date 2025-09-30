@@ -6,12 +6,12 @@
     :resolver="resolver"
     @submit="onValidateForm"
   >
-    <h2 class="submit-request-form__title">Личные данные</h2>
+    <h2 class="submit-request-form__title">{{ $t('personalInformation') }}</h2>
 
     <div class="submit-request-form__line">
       <form-field
         class="submit-request-form__field-container"
-        label="Никнейм для входа"
+        :label="$t('username')"
         field-id="username"
         :field-state="$form.username"
       >
@@ -20,7 +20,7 @@
 
       <form-field
         class="submit-request-form__field-container"
-        label="Пароль"
+        :label="$t('password')"
         field-id="password"
         :field-state="$form.password"
       >
@@ -31,7 +31,7 @@
     <div class="submit-request-form__line">
       <form-field
         class="submit-request-form__field-container"
-        label="Имя"
+        :label="$t('firstName')"
         field-id="firstName"
         :field-state="$form.firstName"
       >
@@ -40,7 +40,7 @@
 
       <form-field
         class="submit-request-form__field-container"
-        label="Фамилия"
+        :label="$t('lastName')"
         field-id="lastName"
         :field-state="$form.lastName"
       >
@@ -62,7 +62,7 @@
     <div class="submit-request-form__line">
       <form-field
         class="submit-request-form__field-container"
-        label="Телефон"
+        :label="$t('phone')"
         field-id="phone"
         :field-state="$form.phone"
       >
@@ -73,7 +73,7 @@
     <div class="submit-request-form__line">
       <form-field
         class="submit-request-form__field-container"
-        label="Возраст"
+        :label="$t('age')"
         field-id="age"
         :field-state="$form.age"
       >
@@ -82,7 +82,7 @@
 
       <form-field
         class="submit-request-form__field-container"
-        label="Город проживания"
+        :label="$t('cityOfResidence')"
         field-id="city"
         :field-state="$form.city"
       >
@@ -93,7 +93,7 @@
     <div class="form-actions">
       <Button
         class="form-actions__next-button"
-        label="Далее"
+        :label="$t('next')"
         icon="pi pi-arrow-right"
         iconPos="right"
         type="submit"

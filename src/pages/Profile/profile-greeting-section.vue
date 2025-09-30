@@ -1,11 +1,11 @@
 <template>
   <section class="profile-greeting-section">
     <div>
-      <h1 class="profile-greeting-section__title">Личный кабинет</h1>
-      <p class="profile-greeting-section__greeting">Добро пожаловать, {{ fullUserName }}</p>
+      <h1 class="profile-greeting-section__title">{{ $t('personalAccount') }}</h1>
+      <p class="profile-greeting-section__greeting">{{ $t('welcome') }} {{ fullUserName }}</p>
     </div>
 
-    <Button label="Выбрать отель" @click="selectNewHotel" />
+    <Button :label="$t('selectAHotel')" @click="selectNewHotel" />
   </section>
 </template>
 

@@ -3,15 +3,15 @@
     <div class="profile-awards__info">
       <div class="profile-awards__info-header">
         <div>
-          <h3 class="profile-awards__title">Ваши награды</h3>
-          <p>Текущий уровень: {{ LOYALTY_STATUS_MAP[userStatus] }}</p>
+          <h3 class="profile-awards__title">{{ $t('yourRewards') }}</h3>
+          <p>{{ $t('currentLevel') }} {{ LOYALTY_STATUS_MAP[userStatus] }}</p>
         </div>
 
         <user-score :score="score" />
       </div>
 
       <div class="profile-awards__progress">
-        <p class="profile-awards__progress-info">Прогресс до следующего уровня</p>
+        <p class="profile-awards__progress-info">{{ $t('progressToTheNextLevel') }}</p>
 
         <ProgressBar :value="scorePercent"> {{ score }}/{{ maxScoreInCurrentStatus }} </ProgressBar>
       </div>

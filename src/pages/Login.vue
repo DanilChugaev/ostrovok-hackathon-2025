@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1 class="login__title">Вход</h1>
+    <h1 class="login__title">{{ $t('enter') }}</h1>
 
     <Form
       v-slot="$form"
@@ -11,7 +11,7 @@
     >
       <form-field
         class="login__field"
-        label="Никнейм"
+        :label="$t('username')"
         field-id="username"
         :field-state="$form.username"
       >
@@ -29,7 +29,7 @@
 
       <Button
         class="login__button"
-        label="Авторизоваться"
+        :label="$t('auth')"
         icon="pi pi-user"
         iconPos="left"
         type="submit"

@@ -10,20 +10,31 @@
             },
           ]"
         >
-          {{ trip.hasReport ? 'Отчет отправлен' : 'Ожидает отчета' }}
+          {{ trip.hasReport ? $t('reportSent') : $t('waitingForReport') }}
         </div>
       </template>
 
       <template #dates>
         <div>
-          <b>Дата поездки:</b>
-          <p class="profile-trips__dates">c {{ trip.startDate }} по {{ trip.endDate }}</p>
+          <b>{{ $t('travelDate') }}</b>
+          <p class="profile-trips__dates">
+            {{ $t('from') }} {{ trip.startDate }} {{ $t('to') }} {{ trip.endDate }}
+          </p>
         </div>
       </template>
 
       <template #actions>
-        <Button v-if="trip.hasReport" label="Подробнее" outlined @click="onReadMoreButtonClick" />
-        <Button v-else label="Заполнить отчет" @click="onReportButtonClick(trip.hotel.id)" />
+        <Button
+          v-if="trip.hasReport"
+          :label="$t('learnMore')"
+          outlined
+          @click="onReadMoreButtonClick"
+        />
+        <Button
+          v-else
+          :label="$t('fillOutTheReport')"
+          @click="onReportButtonClick(trip.hotel.id)"
+        />
       </template>
     </hotel-card>
   </div>
@@ -31,10 +42,10 @@
   <Dialog
     v-model:visible="isVisibleDialog"
     modal
-    header="Информация по отчету"
+    :header="$t('reportInformation')"
     :style="{ width: '25rem' }"
   >
-    Отчет
+    {{ $t('report') }}
   </Dialog>
 </template>
 

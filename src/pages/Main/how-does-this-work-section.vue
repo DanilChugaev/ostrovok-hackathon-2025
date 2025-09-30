@@ -1,6 +1,6 @@
 <template>
   <section id="how-does-this-work" class="how-does-this-work">
-    <h2>Как это работает</h2>
+    <h2>{{ $t('howDoesThisWork') }}</h2>
 
     <ul class="how-does-this-work__list">
       <li v-for="item in processList" :key="item.id" class="how-does-this-work__item">
@@ -16,8 +16,8 @@
 
     <Button
       class="how-does-this-work__button"
-      label="Стать секретным гостем"
       icon="pi pi-user"
+      :label="$t('becomeASecretGuest')"
       @click="submitRequest"
     />
   </section>
@@ -27,37 +27,36 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { PAGES } from '../../constants.ts';
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
+const { t } = useI18n();
 
 const processList = ref([
   {
     id: 1,
-    title: 'Подайте заявку',
-    description:
-      'Заполните анкету, указав свой опыт путешествий и почему вы хотите стать секретным гостем.',
+    title: t('submitAnApplication'),
+    description: t('fillOutTheFormDetailingYourTravelExperience'),
   },
   {
     id: 2,
-    title: 'Выберите отель',
-    description: 'После одобрения заявки выберите отель из списка доступных вариантов.',
+    title: t('selectAHotel'),
+    description: t('selectAHotelFromTheList'),
   },
   {
     id: 3,
-    title: 'Посетите отель',
-    description:
-      'Забронируйте и посетите выбранный отель, обращая внимание на все аспекты сервиса и удобства.',
+    title: t('visitTheHotel'),
+    description: t('bookAndVisitYourChosenHotel'),
   },
   {
     id: 4,
-    title: 'Оставьте отчет',
-    description: 'Заполните подробный отчет о своем пребывании, приложив фотографии и комментарии.',
+    title: t('submitAReport'),
+    description: t('completeADetailedReport'),
   },
   {
     id: 4,
-    title: 'Получите вознаграждение',
-    description:
-      'После проверки отчета получите компенсацию за проживание или бонусы для следующих поездок.',
+    title: t('claimYourReward'),
+    description: t('receiveCompensation'),
   },
 ]);
 

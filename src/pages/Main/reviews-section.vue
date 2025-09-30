@@ -1,12 +1,12 @@
 <template>
   <section class="reviews">
-    <h2>Отзывы участников программы</h2>
+    <h2>{{ $t('feedbackFromProgramParticipants') }}</h2>
 
     <info-card-list :items="reviews">
       <template #default="{ item }: { item: Review }">
         <div class="reviews__item">
           <div class="reviews__title-container">
-            <img class="reviews__img" :src="item.imageUrl" alt="Фото участника" />
+            <img class="reviews__img" :src="item.imageUrl" :alt="$t('participantPhoto')" />
 
             <div class="reviews__title">
               <h3>{{ item.name }}</h3>

@@ -1,13 +1,13 @@
 <template>
   <section class="are-you-ready">
-    <h2 class="are-you-ready__title">Готовы стать секретным гостем?</h2>
+    <h2 class="are-you-ready__title">{{ $t('readyToBecomeASecretGuest') }}</h2>
 
     <p class="are-you-ready__description">
-      Присоединяйтесь к программе сейчас и получите доступ к эксклюзивным предложениям от отелей.
+      {{ $t('joinTheProgramNowAndGainAccessToExclusiveHotelOffers') }}
     </p>
 
     <div class="are-you-ready__actions">
-      <Button label="Подать заявку" icon="pi pi-file" @click="submitRequest" />
+      <Button :label="$t('submitRequest')" icon="pi pi-file" @click="submitRequest" />
     </div>
   </section>
 </template>

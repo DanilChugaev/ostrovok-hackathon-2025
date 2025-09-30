@@ -30,21 +30,23 @@ import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
 import { LOYALTY_STATUS_MAP } from '../../constants.ts';
 import UserScore from '../../components/UserScore.vue';
+import { useI18n } from 'vue-i18n';
 
 const { fullUserName, user } = useUser();
+const { t } = useI18n();
 
 const requestStatusMap = {
   awaiting: {
     icon: 'pi pi-clock',
-    text: 'Заявка: На рассмотрении',
+    text: t('underReview'),
   },
   accepted: {
     icon: 'pi pi-check-square',
-    text: 'Заявка: Одобрена',
+    text: t('approved'),
   },
   rejected: {
     icon: 'pi pi-times',
-    text: 'Заявка: Отклонена',
+    text: t('rejected'),
   },
 };
 
@@ -59,7 +61,7 @@ const mappedStatusObj = computed(() => requestStatusMap[user.value?.status ?? 'a
 const requestStatusIcon = computed(() => mappedStatusObj.value.icon);
 const requestStatusText = computed(() => mappedStatusObj.value.text);
 const loyaltyStatus = computed(
-  () => `Уровень: ${LOYALTY_STATUS_MAP[user.value?.loyalty?.status ?? 'bronze']}`,
+  () => `${t('currentLevel')} ${LOYALTY_STATUS_MAP[user.value?.loyalty?.status ?? 'bronze']}`,
 );
 </script>
 

@@ -21,6 +21,7 @@ declare module 'vue' {
     InfoCardList: typeof import('./src/components/InfoCardList.vue')['default']
     InputGroup: typeof import('primevue/inputgroup')['default']
     InputText: typeof import('primevue/inputtext')['default']
+    LanguageSwitcher: typeof import('./src/components/LanguageSwitcher.vue')['default']
     Menubar: typeof import('primevue/menubar')['default']
     Message: typeof import('primevue/message')['default']
     ProgressBar: typeof import('primevue/progressbar')['default']

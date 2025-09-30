@@ -1,13 +1,13 @@
 <template>
   <div class="hotels">
-    <h1 class="hotels__title">Выберите отель для проверки</h1>
+    <h1 class="hotels__title">{{ $t('selectAHotelToCheck') }}</h1>
 
     <hotel-filters v-model="filters" :cities :categories />
 
     <div class="hotels__list">
       <hotel-card v-for="hotel in hotelsFiltered" :key="hotel.id" :hotel="hotel">
         <template #actions>
-          <Button label="Выбрать этот отель" @click="onSelectHotelButtonClick(hotel.id)" />
+          <Button :label="$t('selectAHotel')" @click="onSelectHotelButtonClick(hotel.id)" />
         </template>
       </hotel-card>
     </div>

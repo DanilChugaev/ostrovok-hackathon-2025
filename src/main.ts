@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { createI18n } from 'vue-i18n';
 import PrimeVue from 'primevue/config';
 import Lara from '@primeuix/themes/lara';
 import { definePreset } from '@primeuix/themes';
@@ -6,10 +7,11 @@ import ToastService from 'primevue/toastservice';
 import 'primeicons/primeicons.css';
 import './assets/css/index';
 import App from './App.vue';
-import { DARK_MODE_CLASS, STORAGE_MODE_KEY } from './constants.ts';
+import { DARK_MODE_CLASS, STORAGE_LANGUAGE_KEY, STORAGE_MODE_KEY } from './constants.ts';
 import { router } from './router.ts';
 import { users, hotels, trips } from './api/mocks/constants.ts';
 import ConfirmationService from 'primevue/confirmationservice';
+import { localizationMessages } from './localization';
 
 // todo: удалить, когда появится реальное апи
 /** -- mocks -- **/
@@ -21,6 +23,17 @@ await worker.start({
   onUnhandledRequest: 'bypass',
 });
 /** -- mocks -- **/
+
+type LocalizationMessagesKeys = keyof typeof localizationMessages;
+type MessageSchema = (typeof localizationMessages)['ru'];
+
+const locale = localStorage.getItem(STORAGE_LANGUAGE_KEY) || 'ru';
+
+const i18n = createI18n<[MessageSchema], LocalizationMessagesKeys>({
+  legacy: false,
+  locale,
+  messages: localizationMessages,
+});
 
 const app = createApp(App);
 
@@ -63,6 +76,7 @@ if (themes[currentTheme]) {
 app.provide('themes', themes);
 app.provide('currentTheme', currentTheme);
 
+app.use(i18n);
 app.use(ToastService);
 app.use(ConfirmationService);
 app.use(router);

@@ -17,33 +17,35 @@ import type { Summary, Trip } from '../../types.ts';
 import InfoCardList from '../../components/InfoCardList.vue';
 import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   trips: Trip[];
 }>();
 
 const { user } = useUser();
+const { t } = useI18n();
 
 const summary = computed<Summary[]>(() => [
   {
     id: 1,
     count: props.trips.length,
     icon: 'pi pi-calendar',
-    text: 'Всего поездок',
+    text: t('totalTrips'),
     className: 'profile-summary__item--calendar',
   },
   {
     id: 2,
     count: props.trips.reduce((acc, current) => (acc += current.hasReport ? 1 : 0), 0),
     icon: 'pi pi-check-circle',
-    text: 'Завершенных отчетов',
+    text: t('completedReports'),
     className: 'profile-summary__item--check',
   },
   {
     id: 3,
     count: user.value?.loyalty?.score ?? 0,
     icon: 'pi pi-trophy',
-    text: 'Накопленных баллов',
+    text: t('accumulatedPoints'),
     className: 'profile-summary__item--star',
   },
 ]);

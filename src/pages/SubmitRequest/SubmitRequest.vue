@@ -1,13 +1,15 @@
 <template>
   <div class="submit-request">
-    <h1 class="submit-request__title">Заявка на участие в программе<br />"Секретный гость"</h1>
+    <h1 class="submit-request__title">
+      {{ $t('requestForParticipationInTheProgram') }}<br />"{{ $t('secretGuest') }}"
+    </h1>
 
     <div class="submit-request__container">
       <Stepper :value="SUBMIT_REQUEST_FORM_STAGES.User" linear>
         <StepList>
-          <Step :value="SUBMIT_REQUEST_FORM_STAGES.User">Личные данные</Step>
-          <Step :value="SUBMIT_REQUEST_FORM_STAGES.Experience">Опыт</Step>
-          <Step :value="SUBMIT_REQUEST_FORM_STAGES.Preferences">Предпочтения</Step>
+          <Step :value="SUBMIT_REQUEST_FORM_STAGES.User">{{ $t('personalInformation') }}</Step>
+          <Step :value="SUBMIT_REQUEST_FORM_STAGES.Experience">{{ $t('experience') }}</Step>
+          <Step :value="SUBMIT_REQUEST_FORM_STAGES.Preferences">{{ $t('preferences') }}</Step>
         </StepList>
 
         <StepPanels>

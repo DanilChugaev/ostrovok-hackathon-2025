@@ -1,19 +1,19 @@
 <template>
   <div class="hotel-filters">
     <InputGroup>
-      <InputText v-model="model!.name" placeholder="Поиск по названию" />
+      <InputText v-model="model!.name" :placeholder="$t('searchByName')" />
       <Button label="Фильтры" icon="pi pi-filter" @click="toggleFilters" />
     </InputGroup>
 
     <div v-if="isVisibleFilters" class="hotel-filters__list">
       <div class="hotel-filters__item">
-        <b>Город</b>
+        <b>{{ $t('city') }}</b>
 
         <SelectButton v-model="model!.city" :options="cities" />
       </div>
 
       <div class="hotel-filters__item">
-        <b>Категория отеля</b>
+        <b>{{ $t('hotelCategory') }}</b>
 
         <SelectButton
           :model-value="model!.category.toString()"

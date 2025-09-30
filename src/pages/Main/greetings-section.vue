@@ -1,18 +1,17 @@
 <template>
   <section class="greetings">
-    <h1>Станьте секретным гостем Островка</h1>
+    <h1>{{ $t('becomeASecretGuestOfOstrovok') }}</h1>
 
     <p class="greetings__description">
-      Путешествуйте бесплатно, оценивайте отели и помогайте другим путешественникам делать
-      правильный выбор.
+      {{ $t('travelForFree') }}
     </p>
 
     <div class="greetings__actions">
-      <Button label="Подать заявку" icon="pi pi-file" @click="submitRequest" />
+      <Button :label="$t('submitRequest')" icon="pi pi-file" @click="submitRequest" />
       <Button
         outlined
-        label="Как это работает"
         icon="pi pi-question-circle"
+        :label="$t('howDoesThisWork')"
         @click="scrollToElement"
       />
     </div>

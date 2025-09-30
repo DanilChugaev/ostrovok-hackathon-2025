@@ -9,7 +9,7 @@
       preview
       width="400"
       :src="hotel.photo"
-      :alt="`Фото отеля ${hotel.name}`"
+      :alt="`${$t('hotelPhoto')} ${hotel.name}`"
     />
 
     <div class="hotel-card__info">
@@ -33,7 +33,7 @@
 
       <slot name="dates">
         <div class="hotel-card__dates">
-          <b>Доступные даты:</b>
+          <b>{{ $t('availableDates') }}</b>
 
           <div class="hotel-card__dates-list">
             <span v-for="date in hotel.availableDates" :key="date" class="hotel-card__date">
@@ -53,13 +53,18 @@
 <script setup lang="ts">
 import type { Hotel } from '../types.ts';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   hotel: Hotel;
 }>();
 
+const { t } = useI18n();
+
 const location = computed(() => `${props.hotel.city}, ${props.hotel.address}`);
-const price = computed(() => `${props.hotel.pricePerNight} ${props.hotel.currency} / ночь`);
+const price = computed(
+  () => `${props.hotel.pricePerNight} ${props.hotel.currency} / ${t('night')}`,
+);
 </script>
 
 <style scoped>

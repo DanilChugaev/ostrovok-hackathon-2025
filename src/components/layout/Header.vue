@@ -3,7 +3,7 @@
     <div class="container">
       <Menubar :model="navigationFiltered" class="container">
         <template #start>
-          <router-link to="/" class="layout-header__title"> Секретный гость </router-link>
+          <router-link to="/" class="layout-header__title">{{ $t('secretGuest') }}</router-link>
         </template>
 
         <template #item="{ item, props }">
@@ -17,6 +17,8 @@
 
         <template #end>
           <div class="layout-header__actions">
+            <language-switcher />
+
             <theme-switcher />
 
             <Button
@@ -27,7 +29,7 @@
 
             <Button
               v-if="isAuth"
-              v-tooltip.bottom="'Выйти'"
+              v-tooltip.bottom="$t('logout')"
               icon="pi pi-sign-out"
               @click="onLogoutButtonClick"
             />
@@ -45,50 +47,53 @@ import { PAGES } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useRouter } from 'vue-router';
 import type { HeaderNavigation } from '../../types.ts';
+import { useI18n } from 'vue-i18n';
+import LanguageSwitcher from '../LanguageSwitcher.vue';
 
 const { isAuth, user, isAdmin, isUser, isHotel } = useUser();
 const router = useRouter();
+const { t } = useI18n();
 
 const navigation = ref<HeaderNavigation[]>([
   {
-    label: 'Главная',
+    label: t('home'),
     icon: 'pi pi-home',
     route: PAGES.Main,
     permissions: ['user', 'admin', 'hotel'],
   },
   {
-    label: 'Подать заявку',
+    label: t('submitRequest'),
     icon: 'pi pi-file',
     route: PAGES.SubmitRequest,
     permissions: [],
   },
   {
-    label: 'Личный кабинет',
+    label: t('personalAccount'),
     icon: 'pi pi-user',
     route: PAGES.Profile,
     permissions: ['user'],
   },
   {
-    label: 'Админ панель',
+    label: t('adminPanel'),
     icon: 'pi pi-wrench',
     route: PAGES.Admin,
     permissions: ['admin'],
   },
   {
-    label: 'Отели',
+    label: t('hotels'),
     icon: 'pi pi-building',
     route: PAGES.Admin,
     permissions: ['hotel'],
   },
   {
-    label: 'Выбрать отель',
+    label: t('selectAHotel'),
     icon: 'pi pi-building',
     route: PAGES.Hotels,
     permissions: ['user'],
   },
 ]);
 
-const loginButtonTooltip = computed(() => (isAuth.value ? 'Профиль' : 'Войти'));
+const loginButtonTooltip = computed(() => (isAuth.value ? t('profile') : t('login')));
 const loginButtonIcon = computed(() => (isAuth.value ? 'pi pi-user' : 'pi pi-sign-in'));
 const navigationFiltered = computed(() => {
   return navigation.value.filter(item => {

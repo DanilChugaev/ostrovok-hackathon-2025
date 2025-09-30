@@ -3,45 +3,47 @@
     <div class="container">
       <div class="layout-footer__column-container">
         <div class="layout-footer__column">
-          <h2 class="layout-footer__title">Секретный гость</h2>
+          <h2 class="layout-footer__title">{{ $t('secretGuest') }}</h2>
           <p class="layout-footer__description">
-            Программа для улучшения качества отелей и повышения доверия пользователей к отзывам.
+            {{ $t('aProgramToImproveHotelQualityAndIncreaseUserTrustInReviews') }}
           </p>
         </div>
 
         <div class="layout-footer__column">
-          <h2 class="layout-footer__title">Ссылки</h2>
+          <h2 class="layout-footer__title">{{ $t('links') }}</h2>
 
           <ul class="layout-footer__list">
             <li class="layout-footer__item">
-              <router-link :to="PAGES.Main" class="layout-footer_link">Главная</router-link>
+              <router-link :to="PAGES.Main" class="layout-footer_link">
+                {{ $t('home') }}
+              </router-link>
             </li>
             <li class="layout-footer__item">
-              <router-link :to="PAGES.SubmitRequest" class="layout-footer_link"
-                >Стать гостем</router-link
-              >
+              <router-link :to="PAGES.SubmitRequest" class="layout-footer_link">
+                {{ $t('becomeAGuest') }}
+              </router-link>
             </li>
             <li class="layout-footer__item">
-              <a class="layout-footer_link" @click="scrollToElement">О программе</a>
+              <a class="layout-footer_link" @click="scrollToElement">{{ $t('aboutProgram') }}</a>
             </li>
           </ul>
         </div>
 
         <div class="layout-footer__column">
-          <h2 class="layout-footer__title">Контакты</h2>
+          <h2 class="layout-footer__title">{{ $t('contacts') }}</h2>
 
           <div>
             <p class="layout-footer__description">
-              Если у вас возникли вопросы, свяжитесь с нами по электронной почте:
+              {{ $t('ifYouHaveAnyQuestionsPleaseContactUsByEmail') }}
             </p>
-            <a href="mailto:secretguest@ostrovok.ru" target="_blank" class="layout-footer_link"
-              >secretguest@ostrovok.ru</a
-            >
+            <a href="mailto:secretguest@ostrovok.ru" target="_blank" class="layout-footer_link">
+              secretguest@ostrovok.ru
+            </a>
           </div>
         </div>
       </div>
 
-      <div class="layout-footer__copyright">© 2025 Островок. Все права защищены.</div>
+      <div class="layout-footer__copyright">{{ $t('allRightsReserved') }}</div>
     </div>
   </footer>
 </template>

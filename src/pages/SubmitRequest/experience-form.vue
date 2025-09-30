@@ -6,11 +6,11 @@
     :resolver="resolver"
     @submit="onValidateForm"
   >
-    <h2 class="submit-request-form__title">Опыт и мотивация</h2>
+    <h2 class="submit-request-form__title">{{ $t('experienceAndMotivation') }}</h2>
 
     <div class="submit-request-form__line">
       <div class="submit-request-form__field-container">
-        <label for="travel">Опыт путешествий</label>
+        <label for="travel">{{ $t('travelExperience') }}</label>
 
         <Textarea
           id="travel"
@@ -18,7 +18,7 @@
           name="travel"
           autoResize
           rows="5"
-          placeholder="Опишите свой опыт путешествий: как часто вы путешествуете, какие страны и города посетили"
+          :placeholder="$t('describeYourTravelExperience')"
         />
 
         <Message v-if="$form.travel?.invalid" severity="error" size="small" variant="simple">
@@ -29,7 +29,7 @@
 
     <div class="submit-request-form__line">
       <div class="submit-request-form__field-container">
-        <label for="writingReviews">Опыт написания отзывов</label>
+        <label for="writingReviews">{{ $t('reviewWritingExperience') }}</label>
 
         <Textarea
           id="writingReviews"
@@ -37,7 +37,7 @@
           name="writingReviews"
           autoResize
           rows="5"
-          placeholder="Опишите свой опыт написания отзывов об отелях или других услугах"
+          :placeholder="$t('describeYourExperienceWritingReviewsOfHotelsOrOtherServices')"
         />
 
         <Message
@@ -53,7 +53,7 @@
 
     <div class="submit-request-form__line">
       <div class="submit-request-form__field-container">
-        <label for="reason">Почему вы хотите стать секретным гостем?</label>
+        <label for="reason">{{ $t('whyDoYouWantToBecomeASecretGuest') }}</label>
 
         <Textarea
           id="reason"
@@ -61,7 +61,7 @@
           name="reason"
           autoResize
           rows="5"
-          placeholder="Опишите вашу мотивацию для участия в программе"
+          :placeholder="$t('describeYourMotivationForParticipatingInTheProgram')"
         />
 
         <Message v-if="$form.reason?.invalid" severity="error" size="small" variant="simple">
@@ -71,10 +71,10 @@
     </div>
 
     <div class="form-actions">
-      <Button label="Назад" outlined icon="pi pi-arrow-left" @click="$emit('back')" />
+      <Button :label="$t('back')" outlined icon="pi pi-arrow-left" @click="$emit('back')" />
       <Button
         class="form-actions__next-button"
-        label="Далее"
+        :label="$t('next')"
         icon="pi pi-arrow-right"
         iconPos="right"
         type="submit"

@@ -6,8 +6,8 @@
   <section class="profile-tabs">
     <Tabs :value="PROFILE_TABS.Trips">
       <TabList>
-        <Tab :value="PROFILE_TABS.Trips">Поездки</Tab>
-        <Tab :value="PROFILE_TABS.Awards">Награды</Tab>
+        <Tab :value="PROFILE_TABS.Trips">{{ $t('trips') }}</Tab>
+        <Tab :value="PROFILE_TABS.Awards">{{ $t('awards') }}</Tab>
       </TabList>
 
       <TabPanels>

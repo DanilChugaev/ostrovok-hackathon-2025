@@ -6,17 +6,17 @@
     :resolver="resolver"
     @submit="onValidateForm"
   >
-    <h2 class="submit-request-form__title">Предпочтения и доступность</h2>
+    <h2 class="submit-request-form__title">{{ $t('preferencesAndAvailability') }}</h2>
 
     <div class="submit-request-form__line">
       <div class="submit-request-form__field-container">
-        <label for="travelAccessibility">Ваша доступность для поездок</label>
+        <label for="travelAccessibility">{{ $t('yourTravelAvailability') }}</label>
 
         <Select
           :options="accessibilityListForTravel"
           label-id="travelAccessibility"
           name="travelAccessibility"
-          placeholder="Выберите вариант"
+          :placeholder="$t('selectAnOption')"
         />
 
         <Message
@@ -32,7 +32,7 @@
 
     <div class="submit-request-form__line">
       <div class="submit-request-form__field-container">
-        <label for="preferredDirections">Предпочтительные направления</label>
+        <label for="preferredDirections">{{ $t('preferredDestinations') }}</label>
 
         <Textarea
           id="preferredDirections"
@@ -40,7 +40,7 @@
           name="preferredDirections"
           autoResize
           rows="5"
-          placeholder="Укажите города или страны, которые вам интересны для посещения"
+          :placeholder="$t('indicateTheCitiesOrCountriesYouAreInterestedInVisiting')"
         />
 
         <Message
@@ -60,13 +60,12 @@
           <Checkbox inputId="agreeWithRules" name="agreeWithRules" binary />
 
           <div>
-            <label class="checkbox-container__label" for="agreeWithRules"
-              >Я согласен с условиями программы "Секретный гость"</label
-            >
+            <label class="checkbox-container__label" for="agreeWithRules">{{
+              $t('iAgreeToTheTermsOfTheSecretGuestProgram')
+            }}</label>
 
             <p class="checkbox-container__description">
-              Я обязуюсь предоставлять честные и объективные отзывы об отелях, соблюдать
-              конфиденциальность и следовать инструкциям программы.
+              {{ $t('iCommitToProvidingHonestAndObjectiveHotelReviews') }}
             </p>
           </div>
         </div>
@@ -83,10 +82,10 @@
     </div>
 
     <div class="form-actions">
-      <Button label="Назад" outlined icon="pi pi-arrow-left" @click="$emit('back')" />
+      <Button :label="$t('back')" outlined icon="pi pi-arrow-left" @click="$emit('back')" />
       <Button
         class="form-actions__next-button"
-        label="Отправить заявку"
+        :label="$t('submitApplication')"
         iconPos="right"
         type="submit"
       />
