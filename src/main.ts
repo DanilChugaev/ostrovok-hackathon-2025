@@ -9,7 +9,7 @@ import './assets/css/index';
 import App from './App.vue';
 import { DARK_MODE_CLASS, STORAGE_LANGUAGE_KEY, STORAGE_MODE_KEY } from './constants.ts';
 import { router } from './router.ts';
-import { users, hotels, trips, cities } from './api/mocks/constants.ts';
+import { users, hotels, trips, cities, loyalty } from './api/mocks/constants.ts';
 import ConfirmationService from 'primevue/confirmationservice';
 import { localizationMessages } from './localization';
 import type { LocalizationMessagesKeys } from './types.ts';
@@ -20,6 +20,7 @@ localStorage.setItem('users', JSON.stringify(users));
 localStorage.setItem('hotels', JSON.stringify(hotels));
 localStorage.setItem('trips', JSON.stringify(trips));
 localStorage.setItem('cities', JSON.stringify(cities));
+localStorage.setItem('loyalty', JSON.stringify(loyalty));
 const { worker } = await import('./api/mocks/browser');
 await worker.start({
   onUnhandledRequest: 'bypass',

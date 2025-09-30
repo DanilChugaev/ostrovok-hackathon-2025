@@ -1,5 +1,22 @@
-<template>ReportHotel</template>
+<template>
+  <div class="report-hotel">
+    <h1>{{ $t('hotelRating') }}</h1>
 
-<script setup lang="ts"></script>
+    <rating-progress :title="$t('overallProgress')" :percent="ratingPercent" />
+  </div>
+</template>
 
-<style scoped></style>
+<script setup lang="ts">
+import { computed } from 'vue';
+import RatingProgress from '../components/RatingProgress.vue';
+
+const ratingPercent = computed(() => 38);
+</script>
+
+<style scoped>
+.report-hotel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-d);
+}
+</style>

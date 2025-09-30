@@ -1,4 +1,4 @@
-import type { City, Hotel, Trip, User } from '../../types.ts';
+import type { City, Hotel, LoyaltyBase, Trip, User } from '../../types.ts';
 
 // начальный массив пользователей
 export const users: User[] = [
@@ -43,7 +43,7 @@ export const users: User[] = [
     programRequestStatus: 'pending',
     loyalty: {
       score: 100,
-      status: 'bronze',
+      code: 'bronze',
     },
   },
   {
@@ -61,7 +61,7 @@ export const users: User[] = [
     programRequestStatus: 'accepted',
     loyalty: {
       score: 600,
-      status: 'silver',
+      code: 'silver',
     },
   },
 ];
@@ -211,5 +211,36 @@ export const cities: City[] = [
     id: 5,
     code: 'kazan',
     name: { ru: 'Казань', en: 'Kazan' },
+  },
+];
+
+export const loyalty: LoyaltyBase[] = [
+  {
+    id: 1,
+    code: 'bronze',
+    name: { ru: 'Бронзовый', en: 'Bronze' },
+    minScore: 0,
+    maxScore: 500,
+  },
+  {
+    id: 2,
+    code: 'silver',
+    name: { ru: 'Серебряный', en: 'Silver' },
+    minScore: 501,
+    maxScore: 1000,
+  },
+  {
+    id: 3,
+    code: 'gold',
+    name: { ru: 'Золотой', en: 'Gold' },
+    minScore: 1001,
+    maxScore: 4000,
+  },
+  {
+    id: 4,
+    code: 'diamond',
+    name: { ru: 'Бриллиантовый', en: 'Diamond' },
+    minScore: 4001,
+    maxScore: Infinity,
   },
 ];

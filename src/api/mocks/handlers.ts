@@ -13,20 +13,28 @@ import type {
 } from '../../types.ts';
 import { API } from '../../constants.ts';
 
+function getData(key: string) {
+  return JSON.parse(localStorage.getItem(key) ?? '[]');
+}
+
 function getUsers(): User[] {
-  return JSON.parse(localStorage.getItem('users') ?? '[]');
+  return getData('users');
 }
 
 function getHotels(): Hotel[] {
-  return JSON.parse(localStorage.getItem('hotels') ?? '[]');
+  return getData('hotels');
 }
 
 function getTrips(): Trip[] {
-  return JSON.parse(localStorage.getItem('trips') ?? '[]');
+  return getData('trips');
 }
 
 function getCities(): City[] {
-  return JSON.parse(localStorage.getItem('cities') ?? '[]');
+  return getData('cities');
+}
+
+function getLoyalty(): LoyaltyBase[] {
+  return getData('loyalty');
 }
 
 export const handlers = [
@@ -104,28 +112,28 @@ export const handlers = [
           name: 'Скидка 10%',
           description: 'На любое бронирование на Островке',
           price: 100,
-          loyaltyStatuses: ['bronze', 'silver', 'gold', 'diamond'],
+          loyaltyCodes: ['bronze', 'silver', 'gold', 'diamond'],
         },
         {
           id: 2,
           name: 'Скидка 15%',
           description: 'На бронирование в отелях-партнерах',
           price: 250,
-          loyaltyStatuses: ['silver', 'gold', 'diamond'],
+          loyaltyCodes: ['silver', 'gold', 'diamond'],
         },
         {
           id: 3,
           name: 'Скидка 25%',
           description: 'На бронирование в отелях-партнерах',
           price: 500,
-          loyaltyStatuses: ['gold', 'diamond'],
+          loyaltyCodes: ['gold', 'diamond'],
         },
         {
           id: 4,
           name: 'Бесплатная ночь',
           description: 'В любом отеле до 4 звезд',
           price: 1000,
-          loyaltyStatuses: ['diamond'],
+          loyaltyCodes: ['diamond'],
         },
       ],
     });
@@ -136,32 +144,7 @@ export const handlers = [
       success: true,
       statusCode: 200,
       message: '',
-      data: [
-        {
-          id: 1,
-          minScore: 0,
-          maxScore: 500,
-          status: 'bronze',
-        },
-        {
-          id: 2,
-          minScore: 501,
-          maxScore: 1000,
-          status: 'silver',
-        },
-        {
-          id: 3,
-          minScore: 1001,
-          maxScore: 4000,
-          status: 'gold',
-        },
-        {
-          id: 4,
-          minScore: 4001,
-          maxScore: Infinity,
-          status: 'diamond',
-        },
-      ],
+      data: getLoyalty(),
     });
   }),
   /** GET запросы **/
@@ -186,7 +169,7 @@ export const handlers = [
       programRequestStatus: 'pending',
       loyalty: {
         score: 0,
-        status: 'bronze',
+        code: 'bronze',
       },
     };
     localStorage.setItem('users', JSON.stringify([...currentUsers, newUser]));

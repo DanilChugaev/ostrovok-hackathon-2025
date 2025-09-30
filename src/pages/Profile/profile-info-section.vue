@@ -38,7 +38,7 @@ const { t } = useLocale();
 const requestStatusMap = {
   pending: {
     icon: 'pi pi-clock',
-    text: t('underReview'),
+    text: t('pending'),
   },
   accepted: {
     icon: 'pi pi-check-square',
@@ -63,7 +63,7 @@ const mappedStatusObj = computed(
 const requestStatusIcon = computed(() => mappedStatusObj.value.icon);
 const requestStatusText = computed(() => mappedStatusObj.value.text);
 const loyaltyStatus = computed(
-  () => `${t('currentLevel')} ${LOYALTY_STATUS_MAP[user.value?.loyalty?.status ?? 'bronze']}`,
+  () => `${t('currentLevel')} ${LOYALTY_STATUS_MAP[user.value?.loyalty?.code ?? 'bronze']}`,
 );
 </script>
 

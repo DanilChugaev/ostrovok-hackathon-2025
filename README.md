@@ -22,7 +22,6 @@ docker compose up --build
 - YGB RAM
 
 - Postgres 16 (в `docker-compose.yml` как `db`)
-- Redis (опционально)
 
 - `APP_PORT` (по умолчанию `8080`)
 - `DB_URL` (пример: `postgres://app:app@db:5432/app`)
@@ -39,7 +38,8 @@ docker compose exec app bash -lc "python manage.py migrate && python manage.py l
 - `/` — UI
 - `/health` — 200 OK, JSON `{ "status": "ok" }`
 - Тестовые пользователи:
-  - user/user - секретный гость
+  - user/user - обычный пользователь
+  - secret_guest/secret_guest - секретный гость
   - admin/admin - администратор системы
   - hotel/hotel - представитель отелей
 

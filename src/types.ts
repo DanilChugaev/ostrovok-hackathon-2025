@@ -54,7 +54,7 @@ export interface RequestForm {
 }
 
 export type ProgramRequestStatus = 'pending' | 'accepted' | 'rejected';
-export type LoyaltyStatus = 'bronze' | 'silver' | 'gold' | 'diamond';
+export type LoyaltyCode = 'bronze' | 'silver' | 'gold' | 'diamond';
 export type UserRole = 'user' | 'secret_guest' | 'admin' | 'hotel';
 
 export interface User {
@@ -71,7 +71,7 @@ export interface User {
   programRequestStatus?: ProgramRequestStatus;
   loyalty?: {
     score: number;
-    status: LoyaltyStatus;
+    code: LoyaltyCode;
   };
   role: UserRole;
 }
@@ -116,14 +116,15 @@ export interface Award {
   name: string;
   description: string;
   price: number;
-  loyaltyStatuses: LoyaltyStatus[];
+  loyaltyCodes: LoyaltyCode[];
 }
 
 export interface LoyaltyBase {
   id: number;
+  code: string;
+  name: LocaleString;
   minScore: number;
   maxScore: number;
-  status: LoyaltyStatus;
 }
 
 export interface City {

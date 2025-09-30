@@ -10,11 +10,11 @@
         <user-score :score="score" />
       </div>
 
-      <div class="profile-awards__progress">
-        <p class="profile-awards__progress-info">{{ $t('progressToTheNextLevel') }}</p>
-
-        <ProgressBar :value="scorePercent"> {{ score }}/{{ maxScoreInCurrentStatus }} </ProgressBar>
-      </div>
+      <rating-progress
+        :title="$t('progressToTheNextLevel')"
+        :percent="scorePercent"
+        :custom-info="progressInfo"
+      />
     </div>
 
     <div>
@@ -33,8 +33,8 @@
               <span>{{ item.price }} баллов</span>
 
               <Button
-                v-tooltip.bottom="getTooltip(item.loyaltyStatuses)"
-                :disabled="!checkIsAvailableAwards(item.loyaltyStatuses)"
+                v-tooltip.bottom="getTooltip(item.loyaltyCodes)"
+                :disabled="!checkIsAvailableAwards(item.loyaltyCodes)"
                 label="Обменять"
                 @click="onExchangeButtonClick(item)"
               />
@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Award, LoyaltyBase, LoyaltyStatus } from '../../types.ts';
+import type { Award, LoyaltyBase, LoyaltyCode } from '../../types.ts';
 import InfoCardList from '../../components/InfoCardList.vue';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import { computed, onMounted, ref } from 'vue';
@@ -56,6 +56,7 @@ import { API, LOYALTY_STATUS_MAP } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useConfirm } from 'primevue/useconfirm';
 import UserScore from '../../components/UserScore.vue';
+import RatingProgress from '../../components/RatingProgress.vue';
 
 const { errorNotify, successNotify } = useNotifications();
 const { user } = useUser();
@@ -64,12 +65,13 @@ const confirm = useConfirm();
 const awards = ref<Award[]>([]);
 const loyalty = ref<LoyaltyBase[]>([]);
 
-const userStatus = computed(() => user.value?.loyalty?.status ?? 'bronze');
+const userStatus = computed(() => user.value?.loyalty?.code ?? 'bronze');
 const score = computed(() => user.value?.loyalty?.score ?? 0);
-const scorePercent = computed(() => (score.value / 500) * 100);
 const maxScoreInCurrentStatus = computed(
-  () => loyalty.value.find(item => item.status === userStatus.value)?.maxScore ?? 0,
+  () => loyalty.value.find(item => item.code === userStatus.value)?.maxScore ?? 0,
 );
+const scorePercent = computed(() => (score.value / maxScoreInCurrentStatus.value) * 100);
+const progressInfo = computed(() => `${score.value} / ${maxScoreInCurrentStatus.value}`);
 
 async function fetchAwards() {
   try {
@@ -89,16 +91,16 @@ async function fetchLoyalty() {
   }
 }
 
-function checkIsAvailableAwards(loyaltyStatuses: LoyaltyStatus[]) {
-  return loyaltyStatuses.includes(user.value?.loyalty?.status ?? 'bronze');
+function checkIsAvailableAwards(loyaltyCodes: LoyaltyCode[]) {
+  return loyaltyCodes.includes(user.value?.loyalty?.code ?? 'bronze');
 }
 
-function getTooltip(loyaltyStatuses: LoyaltyStatus[]) {
-  const isAvailableAward = checkIsAvailableAwards(loyaltyStatuses);
+function getTooltip(loyaltyCodes: LoyaltyCode[]) {
+  const isAvailableAward = checkIsAvailableAwards(loyaltyCodes);
 
   if (isAvailableAward) return;
 
-  const neededStatuses = loyaltyStatuses.map(item => LOYALTY_STATUS_MAP[item]).join(', ');
+  const neededStatuses = loyaltyCodes.map(item => LOYALTY_STATUS_MAP[item]).join(', ');
 
   return `Доступно в статусах: ${neededStatuses}`;
 }
@@ -188,13 +190,6 @@ onMounted(async () => {
   color: var(--p-sky-900);
 }
 
-.profile-awards__progress {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacer-b);
-}
-
-.profile-awards__progress-info,
 .profile-awards__description {
   text-align: start;
   font-size: 0.8rem;
