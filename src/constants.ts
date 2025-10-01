@@ -13,6 +13,7 @@ export const LOCALES = Object.keys(localizationMessages);
 
 export const PAGES = {
   Main: '/',
+  Health: '/health',
   Login: '/login',
   SubmitRequest: '/submit-request',
   Profile: '/profile', // todo: добавить /profile/:id для просмотра инфы о гостях
@@ -27,6 +28,7 @@ export const PAGES = {
 };
 
 export const API = {
+  Health: '/health',
   Login: '/api/v1/login',
   Reviews: '/api/v1/reviews',
   Cities: '/api/v1/cities',

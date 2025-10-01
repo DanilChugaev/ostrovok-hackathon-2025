@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 import { PAGES } from './constants.ts';
 
 import Main from './pages/Main/Main.vue';
+import HealthCheck from './pages/HealthCheck.vue';
 import Login from './pages/Login.vue';
 import SubmitRequest from './pages/SubmitRequest/SubmitRequest.vue';
 import Profile from './pages/Profile/Profile.vue';
@@ -15,6 +16,7 @@ import HotelReportCategories from './pages/HotelReport/HotelReportCategories.vue
 import HotelReportCriteria from './pages/HotelReport/HotelReportCriteria.vue';
 
 const routes = [
+  { path: PAGES.Health, component: HealthCheck },
   { path: PAGES.Main, component: Main },
   { path: PAGES.Login, component: Login },
   { path: PAGES.SubmitRequest, component: SubmitRequest },

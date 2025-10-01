@@ -72,6 +72,15 @@ function getStagesProgress(): HotelReportStageProgress[] {
 
 export const handlers = [
   /** GET запросы **/
+  http.get(API.Health, () => {
+    return HttpResponse.json<ApiServerResponse<Record<string, string>>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: { status: 'ok' },
+    });
+  }),
+
   http.get(API.Reviews, () => {
     return HttpResponse.json<ApiServerResponse<Review[]>>({
       success: true,

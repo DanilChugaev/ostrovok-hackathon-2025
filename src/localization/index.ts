@@ -29,6 +29,7 @@ export const localizationMessages = {
     hotelPhoto: 'Фото отеля',
     availableDates: 'Доступные даты:',
     night: 'ночь',
+    checkHealth: 'Проверить здоровье',
   },
   en: {
     ...main.en,
@@ -53,5 +54,6 @@ export const localizationMessages = {
     hotelPhoto: 'Фото отеля',
     availableDates: 'Available dates:',
     night: 'Night',
+    checkHealth: 'Check health',
   },
 };

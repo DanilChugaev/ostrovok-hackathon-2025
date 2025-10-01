@@ -10,7 +10,6 @@
 ```bash
 git clone git@github.com:ostrovok-hackathon-2025/doc.git doc
 cd doc
-#cp .env.example .env   # если нужно
 docker compose up --build
 # открыть http://localhost:8080
 ```
@@ -21,22 +20,16 @@ docker compose up --build
 - X CPU cores
 - YGB RAM
 
-- Postgres 16 (в `docker-compose.yml` как `db`)
-
 - `APP_PORT` (по умолчанию `8080`)
-- `DB_URL` (пример: `postgres://app:app@db:5432/app`)
 
 ## Сидирование
 
-```bash
-# пример: создаем таблицы/данные
-docker compose exec app bash -lc "python manage.py migrate && python manage.py loaddata seed.json"
-```
+В рамках данного проекта бэкенд и база данных не использовалась. Все данные замоканы и будут добавлены в localStorage при запуске приложения. Дополнительно ничего делать не нужно.
 
 ## Маршруты/доступ
 
 - `/` — UI
-- `/health` — 200 OK, JSON `{ "status": "ok" }`
+- `/health` — 200 OK, JSON `{ "status": "ok" }` - чтобы проверить, можно перейти по такому маршруту в UI и увидеть ожидаемый результат
 - Тестовые пользователи:
   - user/user - обычный пользователь
   - secret_guest/secret_guest - секретный гость
