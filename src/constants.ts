@@ -19,8 +19,11 @@ export const PAGES = {
   Admin: '/admin',
   HotelAccount: '/hotel-account',
   Hotels: '/hotels',
-  HotelReport: '/hotel-report',
   HotelReports: '/hotel-reports',
+  HotelReport: '/hotel-report',
+  HotelReportStages: '/hotel-report/stages',
+  HotelReportCategories: '/hotel-report/stages/categories',
+  HotelReportCriteria: '/hotel-report/stages/categories/criteria',
 };
 
 export const API = {
@@ -35,7 +38,10 @@ export const API = {
   Awards: '/api/v1/awards',
   Loyalty: '/api/v1/loyalty',
   HotelReports: '/api/v1/hotel-reports',
-  HotelReport: '/api/v1/hotel-report',
+  HotelReportById: '/api/v1/hotel-report',
+  HotelReportStagesByReportId: '/api/v1/hotel-report/stages',
+  HotelReportCategoriesByStageId: '/api/v1/hotel-report/categories',
+  HotelReportCriteriaByCategoryId: '/api/v1/hotel-report/criteria',
   HotelReportCreate: '/api/v1/hotel-report/create',
 };
 

@@ -15,6 +15,7 @@ declare module 'vue' {
     Dialog: typeof import('primevue/dialog')['default']
     Footer: typeof import('./src/components/layout/Footer.vue')['default']
     FormField: typeof import('./src/components/FormField.vue')['default']
+    GuestReportInfo: typeof import('./src/components/GuestReportInfo.vue')['default']
     Header: typeof import('./src/components/layout/Header.vue')['default']
     HotelCard: typeof import('./src/components/HotelCard.vue')['default']
     Image: typeof import('primevue/image')['default']

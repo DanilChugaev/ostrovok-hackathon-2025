@@ -1,22 +1,22 @@
 <template>
-  <div class="hotel-report">
+  <div class="hotel-reports">
     <h1>{{ $t('reports') }}</h1>
 
     <info-card-list :items="sortedReports" grid-type="grid">
       <template #default="{ item }: { item: HotelReportResponse }">
-        <div v-if="item.id" class="hotel-report__container">
-          <h2 class="hotel-report__title">{{ $t('reportFrom', { date: item.createdDate }) }}</h2>
+        <div v-if="item.id" class="hotel-reports__container">
+          <h2 class="hotel-reports__title">{{ $t('reportFrom', { date: item.createdDate }) }}</h2>
 
-          <p class="hotel-report__text">{{ $t('trip') }}: {{ item.trip.id }}</p>
-          <p class="hotel-report__text">
+          <p class="hotel-reports__text">{{ $t('trip') }}: {{ item.trip.id }}</p>
+          <p class="hotel-reports__text">
             {{ $t('reportStatus') }}: {{ item.totalScore ? $t('completed') : $t('inProgress') }}
           </p>
 
           <template v-if="item.totalScore">
-            <p class="hotel-report__text">{{ $t('totalScore') }}: {{ item.totalScore }}</p>
+            <p class="hotel-reports__text">{{ $t('totalScore') }}: {{ item.totalScore }}</p>
 
-            <div class="hotel-report__comment">
-              <p class="hotel-report__text">{{ $t('comment') }}:</p>
+            <div class="hotel-reports__comment">
+              <p class="hotel-reports__text">{{ $t('comment') }}:</p>
               <Button
                 icon="pi pi-info-circle"
                 size="small"
@@ -28,19 +28,21 @@
           </template>
 
           <Button
-            class="hotel-report__button"
+            class="hotel-reports__button"
             icon="pi pi-angle-right"
             icon-pos="right"
             size="small"
             :label="item.totalScore ? $t('show') : $t('continue')"
-            @click="goToHotelReportPage(item.id)"
+            @click="
+              item.totalScore ? goToHotelReportPage(item.id) : goToHotelReportStagesPage(item.id)
+            "
           />
         </div>
 
         <button
           v-else
           v-tooltip.bottom="$t('addNewReport')"
-          class="hotel-report__create-button"
+          class="hotel-reports__create-button"
           @click="onCreateButtonClick"
         >
           <i class="pi pi-plus"></i>
@@ -71,6 +73,8 @@
       <p v-else>{{ $t('oopsNoMoreRidesAvailable') }}</p>
     </div>
   </Dialog>
+
+  <router-view></router-view>
 </template>
 
 <script setup lang="ts">
@@ -87,7 +91,8 @@ import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
 const { user, isAuth } = useUser();
 const router = useRouter();
 const { fetchTrips } = useTrips();
-const { fetchHotelReports, createHotelReport, goToHotelReportPage } = useHotelReports();
+const { fetchHotelReports, createHotelReport, goToHotelReportPage, goToHotelReportStagesPage } =
+  useHotelReports();
 
 const popover = ref();
 const reports = ref<HotelReportResponse[]>([]);
@@ -133,49 +138,49 @@ onBeforeMount(async () => {
 </script>
 
 <style>
-.hotel-report {
+.hotel-reports {
   display: flex;
   flex-direction: column;
-  gap: var(--spacer-d);
+  gap: var(--spacer-e);
 }
 
-.hotel-report .card-list__item {
+.hotel-reports .card-list__item {
   padding: 0 !important;
 }
 
-.hotel-report__container {
+.hotel-reports__container {
   display: flex;
   flex-direction: column;
   padding: var(--spacer-d);
   height: 100%;
 }
 
-.hotel-report__title {
+.hotel-reports__title {
   font-size: 1rem;
   margin-bottom: var(--spacer-d);
   padding: 0;
 }
 
-.hotel-report__text {
+.hotel-reports__text {
   text-align: start;
 }
 
-.hotel-report__comment {
+.hotel-reports__comment {
   display: flex;
   align-items: center;
   gap: var(--spacer-b);
 }
 
-.hotel-report__comment :deep(.p-button) {
+.hotel-reports__comment :deep(.p-button) {
   padding: 0 !important;
 }
 
-.hotel-report__button {
+.hotel-reports__button {
   margin-left: auto;
   margin-top: auto;
 }
 
-.hotel-report__create-button {
+.hotel-reports__create-button {
   padding: 0;
   margin: 0;
   border: none;
@@ -187,7 +192,7 @@ onBeforeMount(async () => {
   transition: background-color 0.2s;
 }
 
-.hotel-report__create-button:hover {
+.hotel-reports__create-button:hover {
   background-color: var(--p-togglebutton-hover-background);
 }
 

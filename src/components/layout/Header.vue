@@ -56,12 +56,6 @@ const { t } = useLocale();
 
 const navigation = ref<HeaderNavigation[]>([
   {
-    label: t('home'),
-    icon: 'pi pi-home',
-    route: PAGES.Main,
-    permissions: ['user', 'secret_guest', 'admin', 'hotel'],
-  },
-  {
     label: t('submitRequest'),
     icon: 'pi pi-file',
     route: PAGES.SubmitRequest,
@@ -90,6 +84,12 @@ const navigation = ref<HeaderNavigation[]>([
     icon: 'pi pi-building',
     route: PAGES.Hotels,
     permissions: ['user', 'secret_guest'],
+  },
+  {
+    label: t('reports'),
+    icon: 'pi pi-file-check',
+    route: PAGES.HotelReports,
+    permissions: ['secret_guest'],
   },
 ]);
 

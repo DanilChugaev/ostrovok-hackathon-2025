@@ -18,7 +18,7 @@
 
         <template #dates>
           <div>
-            <b>{{ $t('travelDate') }}(id: {{ trip.id }})</b>
+            <b>{{ $t('travelDate') }}</b>
             <p class="profile-trips__dates">
               {{ $t('from') }} {{ trip.startDate }} {{ $t('to') }} {{ trip.endDate }}
             </p>

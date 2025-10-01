@@ -129,11 +129,11 @@ export const handlers = [
     });
   }),
 
-  http.get(API.HotelReport, ({ request }) => {
+  http.get(API.HotelReportById, ({ request }) => {
     const url = new URL(request.url);
 
-    const id = url.searchParams.get('id');
-    const report = getReports().find(report => report.id === Number(id));
+    const reportId = url.searchParams.get('reportId');
+    const report = getReports().find(report => report.id === Number(reportId));
 
     if (!report) {
       return HttpResponse.json<ApiServerResponse<HotelReportResponse | null>>({

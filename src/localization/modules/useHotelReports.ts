@@ -8,11 +8,14 @@ export function useHotelReports() {
   const { errorNotify } = useNotifications();
   const router = useRouter();
 
-  async function fetchHotelReportById(id: number): Promise<HotelReportResponse | null> {
+  async function fetchHotelReportById(reportId: number): Promise<HotelReportResponse | null> {
     try {
-      const result = await apiRequest<HotelReportResponse>(`${API.HotelReport}?id=${id}`, {
-        method: 'GET',
-      }).then(data => data.data);
+      const result = await apiRequest<HotelReportResponse>(
+        `${API.HotelReportById}?reportId=${reportId}`,
+        {
+          method: 'GET',
+        },
+      ).then(data => data.data);
 
       if (!result) {
         router.push(PAGES.HotelReports);
@@ -46,14 +49,30 @@ export function useHotelReports() {
         },
       }).then(data => data.data);
 
-      goToHotelReportPage(report.id);
+      goToHotelReportStagesPage(report.id);
     } catch (e: any) {
       errorNotify(e.message);
     }
   }
 
   function goToHotelReportPage(reportId: number) {
-    router.push(`${PAGES.HotelReport}/${reportId}`);
+    router.push({ path: PAGES.HotelReport, query: { reportId } });
+  }
+
+  function goToHotelReportStagesPage(reportId: number) {
+    router.push({ path: PAGES.HotelReportStages, query: { reportId } });
+  }
+
+  function goToHotelReportStageCategoriesPage(reportId: number, stageId: number) {
+    router.push({ path: PAGES.HotelReportStages, query: { reportId, stageId } });
+  }
+
+  function goToHotelReportStageCategoryCriteriaPage(
+    reportId: number,
+    stageId: number,
+    categoryId: number,
+  ) {
+    router.push({ path: PAGES.HotelReportStages, query: { reportId, stageId, categoryId } });
   }
 
   return {
@@ -61,5 +80,8 @@ export function useHotelReports() {
     fetchHotelReports,
     createHotelReport,
     goToHotelReportPage,
+    goToHotelReportStagesPage,
+    goToHotelReportStageCategoriesPage,
+    goToHotelReportStageCategoryCriteriaPage,
   };
 }

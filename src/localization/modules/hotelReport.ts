@@ -14,6 +14,10 @@ export const hotelReport = {
     continue: 'Продолжить',
     reports: 'Отчеты',
     oopsNoMoreRidesAvailable: 'Упс, больше доступных поездок нет',
+    reportInformation: 'Информация об отчете',
+    guestsOverallReview: 'Суммарный отзыв гостя:',
+    user: 'Пользователь',
+    published: 'Опубликовано',
   },
   en: {
     hotelRating: 'Hotel rating',
@@ -30,5 +34,9 @@ export const hotelReport = {
     continue: 'Continue',
     reports: 'Reports',
     oopsNoMoreRidesAvailable: 'Oops, no more rides available',
+    reportInformation: 'Report Information',
+    guestsOverallReview: "Guest's overall review:",
+    user: 'User',
+    published: 'Published',
   },
 };

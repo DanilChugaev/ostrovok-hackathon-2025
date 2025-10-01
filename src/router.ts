@@ -10,8 +10,8 @@ import HotelAccount from './pages/HotelAccount.vue';
 import Hotels from './pages/Hotels/Hotels.vue';
 import HotelReports from './pages/HotelReport/HotelReports.vue';
 import HotelReport from './pages/HotelReport/HotelReport.vue';
-import HotelReportCategories from './pages/HotelReport/HotelReportCategories.vue';
 import HotelReportStages from './pages/HotelReport/HotelReportStages.vue';
+import HotelReportCategories from './pages/HotelReport/HotelReportCategories.vue';
 import HotelReportCriteria from './pages/HotelReport/HotelReportCriteria.vue';
 
 const routes = [
@@ -23,32 +23,39 @@ const routes = [
   { path: PAGES.HotelAccount, component: HotelAccount },
   { path: PAGES.Hotels, component: Hotels },
   {
-    path: `${PAGES.HotelReports}`,
+    path: PAGES.HotelReports,
     component: HotelReports,
-    children: [
-      {
-        path: `/:id`, // id отчета
-        component: HotelReport,
-        children: [
-          {
-            path: `/stages`,
-            component: HotelReportStages,
-            children: [
-              {
-                path: `/:id/categories`, // id этапа
-                component: HotelReportCategories,
-                children: [
-                  {
-                    path: `/:id/criteria`, // id категории
-                    component: HotelReportCriteria,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
+  },
+  {
+    path: PAGES.HotelReport,
+    component: HotelReport,
+    props: (route: any) => ({
+      reportId: route.query.reportId,
+    }),
+  },
+  {
+    path: PAGES.HotelReportStages,
+    component: HotelReportStages,
+    props: (route: any) => ({
+      reportId: route.query.reportId,
+    }),
+  },
+  {
+    path: PAGES.HotelReportCategories,
+    component: HotelReportCategories,
+    props: (route: any) => ({
+      reportId: route.query.reportId,
+      stageId: route.query.stageId,
+    }),
+  },
+  {
+    path: PAGES.HotelReportCriteria,
+    component: HotelReportCriteria,
+    props: (route: any) => ({
+      reportId: route.query.reportId,
+      stageId: route.query.stageId,
+      categoryId: route.query.categoryId,
+    }),
   },
 ];
 
