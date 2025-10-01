@@ -30,6 +30,9 @@ export const localizationMessages = {
     availableDates: 'Доступные даты:',
     night: 'ночь',
     checkHealth: 'Проверить здоровье',
+    error404: 'Ошибка 404',
+    pageNotFound: 'Кажется, такой страницы не существует...',
+    returnToHomePage: 'Вернуться на главную',
   },
   en: {
     ...main.en,
@@ -55,5 +58,8 @@ export const localizationMessages = {
     availableDates: 'Available dates:',
     night: 'Night',
     checkHealth: 'Check health',
+    error404: 'Error 404',
+    pageNotFound: "It looks like this page doesn't exist",
+    returnToHomePage: 'Return to home page',
   },
 };

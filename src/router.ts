@@ -3,6 +3,7 @@ import { PAGES } from './constants.ts';
 
 import Main from './pages/Main/Main.vue';
 import HealthCheck from './pages/HealthCheck.vue';
+import NotFound from './pages/NotFound.vue';
 import Login from './pages/Login.vue';
 import SubmitRequest from './pages/SubmitRequest/SubmitRequest.vue';
 import Profile from './pages/Profile/Profile.vue';
@@ -58,6 +59,14 @@ const routes = [
       stageId: route.query.stageId,
       categoryId: route.query.categoryId,
     }),
+  },
+  {
+    path: '/404',
+    component: NotFound,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404',
   },
 ];
 
