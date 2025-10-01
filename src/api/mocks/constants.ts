@@ -11,6 +11,7 @@ import type {
   Review,
   AccessibilityItemForTravel,
   Award,
+  HotelReportStageProgress,
 } from '../../types.ts';
 
 // пользователи
@@ -239,7 +240,7 @@ export const trips: Trip[] = [
     hotel: sibir_star,
     startDate: '2025-02-01',
     endDate: '2025-02-02',
-    hasReport: false,
+    hasReport: true,
   },
   {
     // поездка была, ожидает отчета
@@ -1204,6 +1205,16 @@ export const reports: HotelReport[] = [
     totalScore: 5,
     comment: 'Супер отель, приеду еще!',
     createdDate: '2025-03-02',
+    progress: 100,
+  },
+  {
+    id: 2,
+    userId: 4,
+    tripId: 8,
+    totalScore: 0,
+    comment: '',
+    createdDate: '2025-03-02',
+    progress: 70,
   },
 ];
 
@@ -1294,5 +1305,33 @@ export const awards: Award[] = [
     description: { ru: 'В любом отеле до 4 звезд', en: 'Any hotel up to 4 stars' },
     price: 1000,
     loyaltyCodes: ['diamond'],
+  },
+];
+
+export const stagesProgress: HotelReportStageProgress[] = [
+  {
+    stageId: 1, // прогресс для этапа бронирования
+    current: 0,
+    max: 2,
+  },
+  {
+    stageId: 2, // прогресс для этапа заселение
+    current: 1,
+    max: 2,
+  },
+  {
+    stageId: 3, // прогресс для этапа проживание
+    current: 1,
+    max: 3,
+  },
+  {
+    stageId: 4, // прогресс для этапа питание
+    current: 2,
+    max: 2,
+  },
+  {
+    stageId: 5, // прогресс для этапа выезд
+    current: 0,
+    max: 2,
   },
 ];

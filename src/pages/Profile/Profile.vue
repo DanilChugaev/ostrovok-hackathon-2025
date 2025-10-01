@@ -12,9 +12,9 @@
 
       <TabPanels>
         <TabPanel :value="PROFILE_TABS.Trips">
-          <profile-summary :trips />
+          <profile-summary :trips :reports />
 
-          <profile-trips :trips />
+          <profile-trips :trips :reports />
         </TabPanel>
 
         <TabPanel :value="PROFILE_TABS.Awards">
@@ -34,15 +34,18 @@ import ProfileGreetingSection from './profile-greeting-section.vue';
 import ProfileInfoSection from './profile-info-section.vue';
 import ProfileTrips from './profile-trips.vue';
 import ProfileAwards from './profile-awards.vue';
-import type { Trip } from '../../types.ts';
+import type { HotelReportResponse, Trip } from '../../types.ts';
 import ProfileSummary from './profile-summary.vue';
 import { useTrips } from '../../composables/useTrips.ts';
+import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
 
 const { isAuth, isAdmin, isHotel, user } = useUser();
 const router = useRouter();
 const { fetchTrips } = useTrips();
+const { fetchHotelReports } = useHotelReports();
 
 const trips = ref<Trip[]>([]);
+const reports = ref<HotelReportResponse[]>([]);
 
 onBeforeMount(() => {
   if (!isAuth.value) {
@@ -62,6 +65,7 @@ onBeforeMount(() => {
 
 onMounted(async () => {
   trips.value = await fetchTrips(user.value!.id);
+  reports.value = await fetchHotelReports(user.value!.id);
 });
 </script>
 

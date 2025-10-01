@@ -9,6 +9,9 @@ import type {
   Hotel,
   HotelReport,
   HotelReportResponse,
+  HotelReportStage,
+  HotelReportStageProgress,
+  HotelReportStageResponse,
   LoginForm,
   LoyaltyBase,
   RequestForm,
@@ -57,6 +60,14 @@ function getAccessibilityListForTravel(): AccessibilityItemForTravel[] {
 
 function getAwards(): Award[] {
   return getData('awards');
+}
+
+function getStages(): HotelReportStage[] {
+  return getData('stages');
+}
+
+function getStagesProgress(): HotelReportStageProgress[] {
+  return getData('stagesProgress');
 }
 
 export const handlers = [
@@ -129,6 +140,30 @@ export const handlers = [
     });
   }),
 
+  http.get(API.HotelReports, ({ request }) => {
+    const url = new URL(request.url);
+
+    const userId = url.searchParams.get('userId');
+    const reports = getReports();
+    const filteredReports = [...reports].filter(report => report.userId === Number(userId));
+    const trips = getTrips();
+
+    return HttpResponse.json<ApiServerResponse<HotelReportResponse[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: filteredReports.map(report => ({
+        id: report.id,
+        userId: report.userId,
+        trip: trips.find(trip => trip.id === report.tripId)!,
+        totalScore: report.totalScore,
+        comment: report.comment,
+        createdDate: report.createdDate,
+        progress: report.progress,
+      })),
+    });
+  }),
+
   http.get(API.HotelReportById, ({ request }) => {
     const url = new URL(request.url);
 
@@ -157,29 +192,38 @@ export const handlers = [
         totalScore: report.totalScore,
         comment: report.comment,
         createdDate: report.createdDate,
+        progress: report.progress,
       },
     });
   }),
 
-  http.get(API.HotelReports, ({ request }) => {
+  http.get(API.HotelReportStagesByReportId, ({ request }) => {
     const url = new URL(request.url);
 
-    const userId = url.searchParams.get('userId');
-    const reports = getReports();
-    const filteredReports = [...reports].filter(report => report.userId === Number(userId));
-    const trips = getTrips();
+    const reportId = url.searchParams.get('reportId');
+    const report = getReports().find(report => report.id === Number(reportId));
 
-    return HttpResponse.json<ApiServerResponse<HotelReportResponse[]>>({
+    if (!report) {
+      return HttpResponse.json<ApiServerResponse<HotelReportStageResponse[]>>({
+        success: true,
+        statusCode: 200,
+        message: '',
+        data: [],
+      });
+    }
+
+    const stages = getStages();
+    const stagesProgress = getStagesProgress();
+
+    return HttpResponse.json<ApiServerResponse<HotelReportStageResponse[]>>({
       success: true,
       statusCode: 200,
       message: '',
-      data: filteredReports.map(report => ({
-        id: report.id,
-        userId: report.userId,
-        trip: trips.find(trip => trip.id === report.tripId)!,
-        totalScore: report.totalScore,
-        comment: report.comment,
-        createdDate: report.createdDate,
+      data: stages.map(stage => ({
+        ...stage,
+        // сюда подмешиваем данные о прогрессе по данному этапу на основе данных из таблицы scores
+        // подсчитываем сколько оценок критериев есть по категориям данного этапа
+        progress: stagesProgress.find(progress => progress.stageId === stage.id),
       })),
     });
   }),

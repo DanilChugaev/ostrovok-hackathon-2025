@@ -5,14 +5,9 @@
         <template #badge>
           <div
             v-if="isSecretGuestProgramAccepted"
-            :class="[
-              'profile-trips__badge',
-              {
-                'profile-trips__badge--has-report': trip.hasReport,
-              },
-            ]"
+            :class="['profile-trips__badge', `profile-trips__badge--${getBadgeColor(trip)}`]"
           >
-            {{ trip.hasReport ? $t('reportSent') : $t('waitingForReport') }}
+            {{ getBadge(trip) }}
           </div>
         </template>
 
@@ -75,19 +70,22 @@
 </template>
 
 <script setup lang="ts">
-import type { Trip } from '../../types.ts';
+import type { HotelReportResponse, Trip } from '../../types.ts';
 import { computed, ref } from 'vue';
 import HotelCard from '../../components/HotelCard.vue';
 import { useUser } from '../../composables/useUser.ts';
 import dayjs from 'dayjs';
 import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
+import { useLocale } from '../../composables/useLocale.ts';
 
 const props = defineProps<{
   trips: Trip[];
+  reports: HotelReportResponse[];
 }>();
 
 const { isSecretGuestProgramAccepted, user } = useUser();
 const { createHotelReport } = useHotelReports();
+const { t } = useLocale();
 
 const isVisibleReportDialog = ref(false);
 const isVisibleTripDialog = ref(false);
@@ -110,6 +108,34 @@ function onReadMoreButtonClick() {
 
 async function onReportButtonClick(tripId: number) {
   await createHotelReport(user.value!.id, tripId);
+}
+
+function getBadge(trip: Trip) {
+  if (trip.hasReport) {
+    const progress = props.reports.find(report => report.trip.id === trip.id)?.progress;
+
+    if (progress && progress === 100) {
+      return t('reportSent');
+    }
+
+    return t('reportPending');
+  }
+
+  return t('waitingForReport');
+}
+
+function getBadgeColor(trip: Trip) {
+  if (trip.hasReport) {
+    const progress = props.reports.find(report => report.trip.id === trip.id)?.progress;
+
+    if (progress && progress === 100) {
+      return 'green';
+    }
+
+    return 'blue';
+  }
+
+  return 'yellow';
 }
 </script>
 
@@ -135,12 +161,20 @@ async function onReportButtonClick(tripId: number) {
   padding: var(--spacer-a) var(--spacer-c);
   border-radius: 1rem;
   margin-top: var(--spacer-c);
+}
+
+.profile-trips__badge--green {
+  background-color: var(--p-emerald-200);
+  color: var(--p-emerald-900);
+}
+
+.profile-trips__badge--yellow {
   background-color: var(--p-amber-200);
   color: var(--p-amber-900);
 }
 
-.profile-trips__badge--has-report {
-  background-color: var(--p-emerald-200);
-  color: var(--p-emerald-900);
+.profile-trips__badge--blue {
+  background-color: var(--p-blue-200);
+  color: var(--p-blue-900);
 }
 </style>

@@ -10,7 +10,7 @@
         <user-score :score="score" />
       </div>
 
-      <rating-progress
+      <info-progress
         :title="$t('progressToTheNextLevel')"
         :percent="scorePercent"
         :custom-info="progressInfo"
@@ -58,7 +58,7 @@ import { API, LOYALTY_STATUS_MAP } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useConfirm } from 'primevue/useconfirm';
 import UserScore from '../../components/UserScore.vue';
-import RatingProgress from '../../components/RatingProgress.vue';
+import InfoProgress from '../../components/InfoProgress.vue';
 import { useLocale } from '../../composables/useLocale.ts';
 
 const { errorNotify, successNotify } = useNotifications();

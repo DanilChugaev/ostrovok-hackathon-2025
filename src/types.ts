@@ -142,6 +142,19 @@ export interface HotelReportStage {
   description: LocaleString;
 }
 
+export interface HotelReportStageProgress {
+  stageId: number;
+  current: number;
+  max: number;
+}
+
+export interface HotelReportStageResponse {
+  id: number;
+  code: string;
+  name: LocaleString;
+  description: LocaleString;
+}
+
 export interface HotelReportCategory {
   id: number;
   stageId: number;
@@ -166,6 +179,7 @@ export interface HotelReport {
   totalScore: number;
   comment: string;
   createdDate: string;
+  progress?: number; // прогресс заполненности отчета, собирается по таблице scores
 }
 
 export interface HotelReportResponse {
@@ -175,6 +189,7 @@ export interface HotelReportResponse {
   totalScore: number;
   comment: string;
   createdDate: string;
+  progress?: number; // прогресс заполненности отчета, собирается по таблице scores
 }
 
 export interface CreateHotelReportForm {
