@@ -136,7 +136,7 @@ function scrollToElement() {
   }
   .layout-footer__column-container {
     flex-direction: column;
-    gap: var(--spacer-e);
+    gap: var(--spacer-c);
   }
   .layout-footer .container {
     gap: var(--spacer-e);

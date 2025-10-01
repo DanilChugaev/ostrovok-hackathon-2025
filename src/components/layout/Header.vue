@@ -153,4 +153,20 @@ function onLogoutButtonClick() {
   display: flex;
   gap: var(--spacer-c);
 }
+
+@media (max-width: 399px) {
+  .layout-header:deep(.p-menubar) {
+    flex-direction: column;
+    align-items: center;
+  }
+  .layout-header:deep(.p-menubar-button) {
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+  }
+  .layout-header:deep(.p-menubar-start),
+  .layout-header:deep(.p-menubar-end) {
+    margin: 0;
+  }
+}
 </style>

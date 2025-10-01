@@ -7,12 +7,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useLocale } from '../composables/useLocale.ts';
 
 const props = defineProps<{
   score?: number;
 }>();
 
-const scoreLabel = computed(() => `${props.score ?? 0} баллов`);
+const { t } = useLocale();
+
+const scoreLabel = computed(() => `${props.score ?? 0} ${t('score')}`);
 </script>
 
 <style scoped>
