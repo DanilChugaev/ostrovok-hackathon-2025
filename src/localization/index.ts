@@ -3,7 +3,7 @@ import { submitRequest } from './modules/submitRequest.ts';
 import { login } from './modules/login.ts';
 import { hotels } from './modules/hotels.ts';
 import { profile } from './modules/profile.ts';
-import { reportHotel } from './modules/reportHotel.ts';
+import { hotelReport } from './modules/hotelReport.ts';
 
 export const localizationMessages = {
   ru: {
@@ -12,7 +12,7 @@ export const localizationMessages = {
     ...login.ru,
     ...hotels.ru,
     ...profile.ru,
-    ...reportHotel.ru,
+    ...hotelReport.ru,
 
     secretGuest: 'Секретный гость',
     home: 'Главная',
@@ -36,7 +36,7 @@ export const localizationMessages = {
     ...login.en,
     ...hotels.en,
     ...profile.en,
-    ...reportHotel.en,
+    ...hotelReport.en,
 
     secretGuest: 'Secret guest',
     home: 'Home',

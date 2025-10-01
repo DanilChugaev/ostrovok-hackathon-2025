@@ -96,7 +96,8 @@ function onReadMoreButtonClick() {
 }
 
 function onReportButtonClick(id: number) {
-  router.push(`${PAGES.ReportHotel}/${id}`);
+  // todo сначала создаем отчет, потом переходим по нему
+  router.push(`${PAGES.HotelReport}/${id}`);
 }
 </script>
 

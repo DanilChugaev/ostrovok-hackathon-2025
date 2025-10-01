@@ -3,7 +3,10 @@ import type {
   ApiServerResponse,
   Award,
   City,
+  CreateHotelReportForm,
   Hotel,
+  HotelReport,
+  HotelReportResponse,
   LoginForm,
   LoyaltyBase,
   RequestForm,
@@ -12,6 +15,7 @@ import type {
   User,
 } from '../../types.ts';
 import { API } from '../../constants.ts';
+import dayjs from 'dayjs';
 
 function getData(key: string) {
   return JSON.parse(localStorage.getItem(key) ?? '[]');
@@ -35,6 +39,10 @@ function getCities(): City[] {
 
 function getLoyalty(): LoyaltyBase[] {
   return getData('loyalty');
+}
+
+function getReports(): HotelReport[] {
+  return getData('reports');
 }
 
 export const handlers = [
@@ -147,6 +155,60 @@ export const handlers = [
       data: getLoyalty(),
     });
   }),
+
+  http.get(API.HotelReport, ({ request }) => {
+    const url = new URL(request.url);
+
+    const id = url.searchParams.get('id');
+    const report = getReports().find(report => report.id === Number(id));
+
+    if (!report) {
+      return HttpResponse.json<ApiServerResponse<HotelReportResponse | null>>({
+        success: true,
+        statusCode: 200,
+        message: '',
+        data: null,
+      });
+    }
+
+    const trip = getTrips().find(trip => trip.id === report.tripId)!;
+
+    return HttpResponse.json<ApiServerResponse<HotelReportResponse>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: {
+        id: report.id,
+        userId: report.userId,
+        trip,
+        totalScore: report.totalScore,
+        comment: report.comment,
+        createdDate: report.createdDate,
+      },
+    });
+  }),
+
+  http.get(API.HotelReports, ({ request }) => {
+    const url = new URL(request.url);
+
+    const userId = url.searchParams.get('userId');
+    const reports = getReports().filter(report => report.userId === Number(userId));
+    const trips = getTrips();
+
+    return HttpResponse.json<ApiServerResponse<HotelReportResponse[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: reports.map(report => ({
+        id: report.id,
+        userId: report.userId,
+        trip: trips.find(trip => trip.id === report.tripId)!,
+        totalScore: report.totalScore,
+        comment: report.comment,
+        createdDate: report.createdDate,
+      })),
+    });
+  }),
   /** GET запросы **/
 
   /** POST запросы **/
@@ -210,6 +272,36 @@ export const handlers = [
       statusCode: 200,
       message: '',
       data: user,
+    });
+  }),
+
+  http.post(API.HotelReportCreate, async ({ request }) => {
+    const body = (await request.json()) as CreateHotelReportForm;
+    const reports = getReports();
+    const lastId = reports[reports.length - 1]!.id;
+    const newReport = {
+      id: lastId + 1,
+      userId: body.userId,
+      tripId: body.tripId,
+      totalScore: 0,
+      comment: '',
+      createdDate: dayjs().format('YYYY-MM-DD'),
+    };
+    const trips = getTrips();
+    const selectedTrip = trips.find(trip => trip.id === body.tripId)!;
+    selectedTrip.hasReport = true;
+
+    localStorage.setItem(
+      'trips',
+      JSON.stringify([...trips.filter(trip => trip.id !== body.tripId), selectedTrip]),
+    );
+    localStorage.setItem('reports', JSON.stringify([...reports, newReport]));
+
+    return HttpResponse.json<ApiServerResponse<HotelReport>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: newReport,
     });
   }),
   /** POST запросы **/

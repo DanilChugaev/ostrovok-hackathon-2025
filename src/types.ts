@@ -109,6 +109,7 @@ export interface Summary {
   icon: string;
   text: string;
   className: string;
+  to?: string;
 }
 
 export interface Award {
@@ -131,4 +132,51 @@ export interface City {
   id: number;
   code: string;
   name: LocaleString;
+}
+
+export interface HotelReportStage {
+  id: number;
+  code: string;
+  name: LocaleString;
+  description: LocaleString;
+}
+
+export interface HotelReportCategory {
+  id: number;
+  stageId: number;
+  code: string;
+  name: LocaleString;
+  description: LocaleString;
+}
+
+export interface HotelReportCriterion {
+  id: number;
+  categoryId: number;
+  code: string;
+  name: LocaleString;
+  description: LocaleString;
+  is_basic: boolean;
+}
+
+export interface HotelReport {
+  id: number;
+  userId: number;
+  tripId: number;
+  totalScore: number;
+  comment: string;
+  createdDate: string;
+}
+
+export interface HotelReportResponse {
+  id: number;
+  userId: number;
+  trip: Trip;
+  totalScore: number;
+  comment: string;
+  createdDate: string;
+}
+
+export interface CreateHotelReportForm {
+  userId: number;
+  tripId: number;
 }

@@ -70,7 +70,7 @@ const selectHotelButtonLabel = computed(() =>
   isSecretGuestProgramAccepted.value ? t('selectAHotel') : t('hotelInformation'),
 );
 
-async function fetchTrips() {
+async function fetchHotels() {
   try {
     hotels.value = await apiRequest<Hotel[]>(API.Hotels, { method: 'GET' }).then(data => data.data);
   } catch (e: any) {
@@ -80,14 +80,15 @@ async function fetchTrips() {
 
 function onSelectHotelButtonClick(id: number) {
   if (isSecretGuestProgramAccepted.value) {
-    router.push(`${PAGES.ReportHotel}/${id}`);
+    // todo сначала создаем отчет, потом переходим по нему
+    router.push(`${PAGES.HotelReport}/${id}`);
   } else {
     isVisibleInfoAboutHotelDialog.value = true;
   }
 }
 
 onMounted(async () => {
-  await fetchTrips();
+  await fetchHotels();
 });
 </script>
 

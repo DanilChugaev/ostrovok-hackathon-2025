@@ -9,18 +9,33 @@ import './assets/css/index';
 import App from './App.vue';
 import { DARK_MODE_CLASS, STORAGE_LANGUAGE_KEY, STORAGE_MODE_KEY } from './constants.ts';
 import { router } from './router.ts';
-import { users, hotels, trips, cities, loyalty } from './api/mocks/constants.ts';
+import {
+  users,
+  hotels,
+  trips,
+  cities,
+  loyalty,
+  stages,
+  categories,
+  criteria,
+  reports,
+} from './api/mocks/constants.ts';
 import ConfirmationService from 'primevue/confirmationservice';
 import { localizationMessages } from './localization';
 import type { LocalizationMessagesKeys } from './types.ts';
 
 // todo: удалить, когда появится реальное апи
 /** -- mocks -- **/
-localStorage.setItem('users', JSON.stringify(users));
-localStorage.setItem('hotels', JSON.stringify(hotels));
-localStorage.setItem('trips', JSON.stringify(trips));
-localStorage.setItem('cities', JSON.stringify(cities));
-localStorage.setItem('loyalty', JSON.stringify(loyalty));
+!localStorage.getItem('users') && localStorage.setItem('users', JSON.stringify(users));
+!localStorage.getItem('hotels') && localStorage.setItem('hotels', JSON.stringify(hotels));
+!localStorage.getItem('trips') && localStorage.setItem('trips', JSON.stringify(trips));
+!localStorage.getItem('cities') && localStorage.setItem('cities', JSON.stringify(cities));
+!localStorage.getItem('loyalty') && localStorage.setItem('loyalty', JSON.stringify(loyalty));
+!localStorage.getItem('stages') && localStorage.setItem('stages', JSON.stringify(stages));
+!localStorage.getItem('categories') &&
+  localStorage.setItem('categories', JSON.stringify(categories));
+!localStorage.getItem('criteria') && localStorage.setItem('criteria', JSON.stringify(criteria));
+!localStorage.getItem('reports') && localStorage.setItem('reports', JSON.stringify(reports));
 const { worker } = await import('./api/mocks/browser');
 await worker.start({
   onUnhandledRequest: 'bypass',

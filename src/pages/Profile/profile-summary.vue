@@ -1,13 +1,18 @@
 <template>
   <info-card-list :items="summary" class="profile-summary">
     <template #default="{ item }: { item: Summary }">
-      <div class="profile-summary__item" :class="item.className">
+      <component
+        :is="item.to ? 'router-link' : 'div'"
+        :to="item.to"
+        class="profile-summary__item"
+        :class="item.className"
+      >
         <i class="profile-summary__icon" :class="item.icon"></i>
 
         <b>{{ item.count }}</b>
 
         <p>{{ item.text }}</p>
-      </div>
+      </component>
     </template>
   </info-card-list>
 </template>
@@ -18,6 +23,7 @@ import InfoCardList from '../../components/InfoCardList.vue';
 import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
 import { useLocale } from '../../composables/useLocale.ts';
+import { PAGES } from '../../constants.ts';
 
 const props = defineProps<{
   trips: Trip[];
@@ -40,6 +46,7 @@ const summary = computed<Summary[]>(() => [
     icon: 'pi pi-check-circle',
     text: t('completedReports'),
     className: 'profile-summary__item--check',
+    to: PAGES.HotelReports,
   },
   {
     id: 3,
@@ -64,6 +71,8 @@ const summary = computed<Summary[]>(() => [
   flex-direction: column;
   align-items: center;
   gap: var(--spacer-d);
+  text-decoration: none;
+  color: var(--color-text);
 }
 
 .profile-summary__icon {

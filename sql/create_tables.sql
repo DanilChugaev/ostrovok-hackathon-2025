@@ -146,7 +146,7 @@ CREATE TABLE trips (
 
 -- Отчеты пользователей об отелях
 -- чтобы данные были достоверными, пользователь обязан посетить этот отель
-CREATE TABLE user_reports (
+CREATE TABLE hotel_reports (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     trips_id INTEGER NOT NULL REFERENCES trips(id) ON DELETE CASCADE,

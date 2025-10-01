@@ -1,5 +1,5 @@
 <template>
-  <ul class="card-list">
+  <ul class="card-list" :class="`card-list--${gridType}`">
     <li v-for="item in items" :key="item.id" class="card-list__item">
       <slot v-bind:item="item" />
     </li>
@@ -7,16 +7,30 @@
 </template>
 
 <script setup lang="ts" generic="T extends { id: number | string }">
-defineProps<{
-  items: T[];
-}>();
+withDefaults(
+  defineProps<{
+    items: T[];
+    gridType?: 'flex' | 'grid';
+  }>(),
+  {
+    gridType: 'flex',
+  },
+);
 </script>
 
-<style scoped>
+<style>
 .card-list {
+  gap: var(--spacer-e);
+}
+
+.card-list--flex {
   display: flex;
   justify-content: space-between;
-  gap: var(--spacer-e);
+}
+
+.card-list--grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .card-list__item {

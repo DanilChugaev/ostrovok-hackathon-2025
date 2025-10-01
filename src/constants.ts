@@ -19,19 +19,23 @@ export const PAGES = {
   Admin: '/admin',
   HotelAccount: '/hotel-account',
   Hotels: '/hotels',
-  ReportHotel: '/report-hotel',
+  HotelReport: '/hotel-report',
+  HotelReports: '/hotel-reports',
 };
 
 export const API = {
-  Login: '/api/login',
-  Reviews: '/api/reviews',
-  Cities: '/api/cities',
-  AccessibilityListForTravel: '/api/accessibility-list-for-travel',
-  SendRequestForm: '/api/send-request-form',
-  Trips: '/api/trips',
-  Hotels: '/api/hotels',
-  Awards: '/api/awards',
-  Loyalty: '/api/loyalty',
+  Login: '/api/v1/login',
+  Reviews: '/api/v1/reviews',
+  Cities: '/api/v1/cities',
+  AccessibilityListForTravel: '/api/v1/accessibility-list-for-travel',
+  SendRequestForm: '/api/v1/send-request-form',
+  Trips: '/api/v1/trips',
+  Hotels: '/api/v1/hotels',
+  Awards: '/api/v1/awards',
+  Loyalty: '/api/v1/loyalty',
+  HotelReports: '/api/v1/hotel-reports',
+  HotelReport: '/api/v1/hotel-report',
+  HotelReportCreate: '/api/v1/hotel-report/create',
 };
 
 export const SUBMIT_REQUEST_FORM_STAGES = {
