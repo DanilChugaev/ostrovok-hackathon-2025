@@ -153,6 +153,7 @@ export interface HotelReportStageResponse {
   code: string;
   name: LocaleString;
   description: LocaleString;
+  progress: HotelReportStageProgress;
 }
 
 export interface HotelReportCategory {

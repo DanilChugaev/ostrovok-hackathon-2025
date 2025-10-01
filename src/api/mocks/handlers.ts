@@ -223,7 +223,7 @@ export const handlers = [
         ...stage,
         // сюда подмешиваем данные о прогрессе по данному этапу на основе данных из таблицы scores
         // подсчитываем сколько оценок критериев есть по категориям данного этапа
-        progress: stagesProgress.find(progress => progress.stageId === stage.id),
+        progress: stagesProgress.find(progress => progress.stageId === stage.id)!,
       })),
     });
   }),

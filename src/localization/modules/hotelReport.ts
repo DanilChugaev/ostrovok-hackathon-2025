@@ -2,6 +2,7 @@ export const hotelReport = {
   ru: {
     hotelRating: 'Оценка отеля',
     overallProgress: 'Общий прогресс',
+    progress: 'Прогресс',
     reportFrom: 'Отчет от {date}',
     reportStatus: 'Статус',
     completed: 'Завершен',
@@ -18,10 +19,13 @@ export const hotelReport = {
     guestsOverallReview: 'Суммарный отзыв гостя:',
     user: 'Пользователь',
     published: 'Опубликовано',
+    view: 'Просмотреть',
+    start: 'Начать',
   },
   en: {
     hotelRating: 'Hotel rating',
     overallProgress: 'Overall progress',
+    progress: 'Progress',
     reportFrom: 'Report from {date}',
     reportStatus: 'Status',
     completed: 'Completed',
@@ -38,5 +42,7 @@ export const hotelReport = {
     guestsOverallReview: "Guest's overall review:",
     user: 'User',
     published: 'Published',
+    view: 'View',
+    start: 'Start',
   },
 };
