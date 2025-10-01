@@ -142,6 +142,7 @@ onBeforeMount(async () => {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-e);
+  padding-top: var(--spacer-e);
 }
 
 .hotel-reports__container {

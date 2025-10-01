@@ -148,11 +148,7 @@ export interface HotelReportStageProgress {
   max: number;
 }
 
-export interface HotelReportStageResponse {
-  id: number;
-  code: string;
-  name: LocaleString;
-  description: LocaleString;
+export interface HotelReportStageResponse extends HotelReportStage {
   progress: HotelReportStageProgress;
 }
 
@@ -170,12 +166,7 @@ export interface HotelReportCategoryProgress {
   max: number;
 }
 
-export interface HotelReportCategoryResponse {
-  id: number;
-  stageId: number;
-  code: string;
-  name: LocaleString;
-  description: LocaleString;
+export interface HotelReportCategoryResponse extends HotelReportCategory {
   progress: HotelReportCategoryProgress;
 }
 
@@ -186,6 +177,22 @@ export interface HotelReportCriterion {
   name: LocaleString;
   description: LocaleString;
   is_basic: boolean;
+}
+
+export interface HotelReportCriterionForm extends HotelReportCriterion {
+  score: number;
+  comment: string;
+  media: Blob[];
+  isSaved: boolean;
+}
+
+export interface HotelReportCriterionFormForServer {
+  userId: number;
+  reportId: number;
+  criterionId: number;
+  comment: string;
+  score: number;
+  media: Blob[];
 }
 
 export interface HotelReport {

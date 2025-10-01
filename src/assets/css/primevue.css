@@ -10,3 +10,7 @@
 .p-togglebutton:hover {
     background-color: var(--p-togglebutton-hover-background)!important;
 }
+.p-rating-option-active .p-rating-icon,
+.p-rating:not(.p-disabled):not(.p-readonly) .p-rating-option:hover .p-rating-icon {
+    color: var(--p-yellow-500)!important;
+}

@@ -13,6 +13,7 @@ import type {
   Award,
   HotelReportStageProgress,
   HotelReportCategoryProgress,
+  HotelReportCriterionFormForServer,
 } from '../../types.ts';
 
 // пользователи
@@ -1393,4 +1394,15 @@ export const categoriesProgress: HotelReportCategoryProgress[] = [
     current: 0,
     max: 2,
   },
+];
+
+export const scores: HotelReportCriterionFormForServer[] = [
+  {
+    userId: 4,
+    reportId: 8,
+    criterionId: 1,
+    comment: 'супер',
+    score: 5,
+    media: [],
+  }
 ];

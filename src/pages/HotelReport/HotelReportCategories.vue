@@ -1,5 +1,5 @@
 <template>
-  <div class="hotel-report-stages">
+  <div class="hotel-report-categories">
     <h1>{{ $t('hotelRating') }} - категории</h1>
 
     <info-card-list :items="categories" grid-type="grid">
@@ -15,7 +15,7 @@
               :label="getButtonLabel(item.progress)"
               icon="pi pi-angle-right"
               icon-pos="right"
-              @click="() => {}"
+              @click="goToHotelReportCriteriaPage(reportId, stageId, item.id)"
             />
           </template>
         </hotel-report-card>
@@ -35,11 +35,13 @@ import InfoCardList from '../../components/InfoCardList.vue';
 import HotelReportCard from '../../components/HotelReportCard.vue';
 
 const props = defineProps<{
+  reportId: number;
   stageId: number;
 }>();
 
 const { isAuth } = useUser();
-const { fetchHotelReportCategoriesByStageId, getButtonLabel } = useHotelReports();
+const { fetchHotelReportCategoriesByStageId, getButtonLabel, goToHotelReportCriteriaPage } =
+  useHotelReports();
 const router = useRouter();
 
 const categories = ref<HotelReportCategoryResponse[]>([]);
@@ -54,14 +56,15 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.hotel-report-stages {
+.hotel-report-categories {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-e);
+  padding-top: var(--spacer-e);
   margin-bottom: var(--spacer-e);
 }
 
-.hotel-report-stages__text {
+.hotel-report-categories__text {
   text-align: start;
   font-size: 0.8rem;
   color: var(--p-button-text-secondary-color);

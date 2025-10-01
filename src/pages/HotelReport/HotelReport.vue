@@ -58,6 +58,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-e);
+  padding-top: var(--spacer-e);
 }
 
 .hotel-report__text {

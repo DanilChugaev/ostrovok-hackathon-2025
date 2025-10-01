@@ -4,6 +4,7 @@ import { apiRequest } from '../../api/request.ts';
 import type {
   HotelReportCategoryProgress,
   HotelReportCategoryResponse,
+  HotelReportCriterion,
   HotelReportResponse,
   HotelReportStageProgress,
   HotelReportStageResponse,
@@ -80,6 +81,28 @@ export function useHotelReports() {
     }
   }
 
+  async function fetchHotelReportCriteriaByCategoryId(
+    categoryId: number,
+  ): Promise<HotelReportCriterion[]> {
+    try {
+      const result = await apiRequest<HotelReportCriterion[]>(
+        `${API.HotelReportCriteriaByCategoryId}?categoryId=${categoryId}`,
+        {
+          method: 'GET',
+        },
+      ).then(data => data.data);
+
+      if (!result) {
+        router.push(PAGES.HotelReports);
+      }
+
+      return result;
+    } catch (e: any) {
+      errorNotify(e.message);
+      return [];
+    }
+  }
+
   async function fetchHotelReports(userId: number) {
     try {
       return await apiRequest<HotelReportResponse[]>(`${API.HotelReports}?userId=${userId}`, {
@@ -115,12 +138,12 @@ export function useHotelReports() {
     router.push({ path: PAGES.HotelReportStages, query: { reportId } });
   }
 
-  function goToHotelReportCategoriesPage(stageId: number) {
-    router.push({ path: PAGES.HotelReportCategories, query: { stageId } });
+  function goToHotelReportCategoriesPage(reportId: number, stageId: number) {
+    router.push({ path: PAGES.HotelReportCategories, query: { reportId, stageId } });
   }
 
-  function goToHotelReportCriteriaPage(categoryId: number) {
-    router.push({ path: PAGES.HotelReportCriteria, query: { categoryId } });
+  function goToHotelReportCriteriaPage(reportId: number, stageId: number, categoryId: number) {
+    router.push({ path: PAGES.HotelReportCriteria, query: { reportId, stageId, categoryId } });
   }
 
   function getButtonLabel(progress: HotelReportStageProgress | HotelReportCategoryProgress) {
@@ -146,5 +169,6 @@ export function useHotelReports() {
     getButtonLabel,
     fetchHotelReportStagesByReportId,
     fetchHotelReportCategoriesByStageId,
+    fetchHotelReportCriteriaByCategoryId,
   };
 }

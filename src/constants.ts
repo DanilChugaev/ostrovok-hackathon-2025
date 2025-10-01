@@ -45,6 +45,7 @@ export const API = {
   HotelReportCategoriesByStageId: '/api/v1/hotel-report/categories',
   HotelReportCriteriaByCategoryId: '/api/v1/hotel-report/criteria',
   HotelReportCreate: '/api/v1/hotel-report/create',
+  HotelReportCriteriaSave: '/api/v1/hotel-report/criteria/save',
 };
 
 export const SUBMIT_REQUEST_FORM_STAGES = {

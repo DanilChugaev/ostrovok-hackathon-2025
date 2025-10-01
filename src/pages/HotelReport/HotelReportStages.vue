@@ -32,7 +32,7 @@
               :label="getButtonLabel(item.progress)"
               icon="pi pi-angle-right"
               icon-pos="right"
-              @click="goToHotelReportCategoriesPage(item.id)"
+              @click="goToHotelReportCategoriesPage(reportId, item.id)"
             />
           </template>
         </hotel-report-card>
@@ -84,6 +84,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-e);
+  padding-top: var(--spacer-e);
   margin-bottom: var(--spacer-e);
 }
 

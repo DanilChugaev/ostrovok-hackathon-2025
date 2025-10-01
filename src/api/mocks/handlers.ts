@@ -11,6 +11,8 @@ import type {
   HotelReportCategory,
   HotelReportCategoryProgress,
   HotelReportCategoryResponse,
+  HotelReportCriterion,
+  HotelReportCriterionFormForServer,
   HotelReportResponse,
   HotelReportStage,
   HotelReportStageProgress,
@@ -79,6 +81,14 @@ function getCategories(): HotelReportCategory[] {
 
 function getCategoriesProgress(): HotelReportCategoryProgress[] {
   return getData('categoriesProgress');
+}
+
+function getCriteria(): HotelReportCriterion[] {
+  return getData('criteria');
+}
+
+function getScores(): HotelReportCriterionFormForServer[] {
+  return getData('scores');
 }
 
 export const handlers = [
@@ -280,6 +290,31 @@ export const handlers = [
         })),
     });
   }),
+
+  http.get(API.HotelReportCriteriaByCategoryId, ({ request }) => {
+    const url = new URL(request.url);
+
+    const categoryId = url.searchParams.get('categoryId');
+    const category = getCategories().find(category => category.id === Number(categoryId));
+
+    if (!category) {
+      return HttpResponse.json<ApiServerResponse<HotelReportCriterion[]>>({
+        success: true,
+        statusCode: 200,
+        message: '',
+        data: [],
+      });
+    }
+
+    const criteria = getCriteria();
+
+    return HttpResponse.json<ApiServerResponse<HotelReportCriterion[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: criteria.filter(criterion => criterion.categoryId === Number(categoryId)),
+    });
+  }),
   /** GET запросы **/
 
   /** POST запросы **/
@@ -399,6 +434,29 @@ export const handlers = [
       statusCode: 200,
       message: '',
       data: newTrip,
+    });
+  }),
+
+  http.post(API.HotelReportCriteriaSave, async ({ request }) => {
+    const body = (await request.json()) as HotelReportCriterionFormForServer;
+    const scores = getScores();
+
+    const newScore: HotelReportCriterionFormForServer = {
+      userId: body.userId,
+      reportId: body.reportId,
+      criterionId: body.criterionId,
+      comment: body.comment,
+      score: body.score,
+      media: body.media,
+    };
+
+    localStorage.setItem('trips', JSON.stringify([...scores, newScore]));
+
+    return HttpResponse.json<ApiServerResponse<HotelReportCriterionFormForServer>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: newScore,
     });
   }),
   /** POST запросы **/
