@@ -4,8 +4,13 @@
       <component
         :is="item.to ? 'router-link' : 'div'"
         :to="item.to"
-        class="profile-summary__item"
-        :class="item.className"
+        :class="[
+          'profile-summary__item',
+          item.className,
+          {
+            'profile-summary__item--link': item.to,
+          },
+        ]"
       >
         <i class="profile-summary__icon" :class="item.icon"></i>
 
@@ -97,6 +102,16 @@ onMounted(async () => {
   padding: var(--spacer-d);
   border-radius: 50%;
   font-size: 1.5rem;
+}
+
+.profile-summary__item--link {
+  transition: background-color 0.2s;
+  margin: -1.778rem;
+  padding: var(--spacer-e);
+}
+
+.profile-summary__item--link:hover {
+  background-color: var(--p-togglebutton-hover-background);
 }
 
 .profile-summary__item--calendar .pi {

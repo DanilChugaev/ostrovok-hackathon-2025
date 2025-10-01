@@ -4,3 +4,9 @@
 .p-progressbar {
     height: 8px !important;
 }
+.p-togglebutton {
+    background-color: var(--p-select-filled-background)!important;
+}
+.p-togglebutton:hover {
+    background-color: var(--p-togglebutton-hover-background)!important;
+}

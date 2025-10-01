@@ -14,10 +14,12 @@ body {
 
 html {
     background-color: var(--p-gray-100);
+
 }
 
 html.dark-mode {
     background-color: var(--p-surface-950);
+    --p-togglebutton-hover-background: var(--p-surface-900);
 }
 
 .container {
