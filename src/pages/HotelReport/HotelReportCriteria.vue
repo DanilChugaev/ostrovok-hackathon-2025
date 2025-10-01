@@ -1,6 +1,16 @@
 <template>
   <div class="hotel-report-criteria">
-    <h1>Критерии оценки</h1>
+    <div class="hotel-report-criteria__header">
+      <Button
+        class="hotel-report-criteria__back"
+        v-tooltip.bottom="$t('backToCategories')"
+        icon="pi pi-chevron-left"
+        outlined
+        rounded
+        @click="goToHotelReportCategoriesPage(reportId, stageId)"
+      />
+      <h1>{{ $t('hotelReportCriteria') }}</h1>
+    </div>
 
     <div class="hotel-report-criteria__form">
       <Tabs :value="currentTabValue">
@@ -98,7 +108,7 @@ const props = defineProps<{
 }>();
 
 const { isAuth, user } = useUser();
-const { fetchHotelReportCriteriaByCategoryId } = useHotelReports();
+const { fetchHotelReportCriteriaByCategoryId, goToHotelReportCategoriesPage } = useHotelReports();
 const router = useRouter();
 const { localeKey } = useLocale();
 const { errorNotify } = useNotifications();
@@ -159,6 +169,17 @@ onMounted(async () => {
   align-items: center;
   gap: var(--spacer-e);
   padding-top: var(--spacer-e);
+}
+
+.hotel-report-criteria__header {
+  display: flex;
+  position: relative;
+}
+
+.hotel-report-criteria__back {
+  position: absolute !important;
+  left: -4rem;
+  top: 0;
 }
 
 .hotel-report-criteria__form {

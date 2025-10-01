@@ -1,6 +1,16 @@
 <template>
   <div class="hotel-report-categories">
-    <h1>{{ $t('hotelRating') }} - категории</h1>
+    <div class="hotel-report-categories__header">
+      <Button
+        class="hotel-report-categories__back"
+        v-tooltip.bottom="$t('backToStages')"
+        icon="pi pi-chevron-left"
+        outlined
+        rounded
+        @click="goToHotelReportStagesPage(reportId)"
+      />
+      <h1>{{ $t('hotelRating') }} - {{ $t('hotelReportCategories') }}</h1>
+    </div>
 
     <info-card-list :items="categories" grid-type="grid">
       <template #default="{ item }: { item: HotelReportCategoryResponse }">
@@ -40,8 +50,12 @@ const props = defineProps<{
 }>();
 
 const { isAuth } = useUser();
-const { fetchHotelReportCategoriesByStageId, getButtonLabel, goToHotelReportCriteriaPage } =
-  useHotelReports();
+const {
+  fetchHotelReportCategoriesByStageId,
+  getButtonLabel,
+  goToHotelReportCriteriaPage,
+  goToHotelReportStagesPage,
+} = useHotelReports();
 const router = useRouter();
 
 const categories = ref<HotelReportCategoryResponse[]>([]);
@@ -62,6 +76,19 @@ onMounted(async () => {
   gap: var(--spacer-e);
   padding-top: var(--spacer-e);
   margin-bottom: var(--spacer-e);
+}
+
+.hotel-report-categories__header {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+}
+
+.hotel-report-categories__back {
+  position: absolute !important;
+  left: -4rem;
+  top: 0;
 }
 
 .hotel-report-categories__text {

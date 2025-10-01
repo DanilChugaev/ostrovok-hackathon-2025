@@ -1404,5 +1404,5 @@ export const scores: HotelReportCriterionFormForServer[] = [
     comment: 'супер',
     score: 5,
     media: [],
-  }
+  },
 ];
