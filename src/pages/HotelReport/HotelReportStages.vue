@@ -21,13 +21,18 @@
 
     <info-card-list :items="stages" grid-type="grid">
       <template #default="{ item }: { item: HotelReportStageResponse }">
-        <hotel-report-card :code="item.code" :name="item.name" :progress="item.progress">
+        <hotel-report-card
+          :code="item.code"
+          :name="item.name"
+          :progress="item.progress"
+          :description="item.description"
+        >
           <template #footer>
             <Button
               :label="getButtonLabel(item.progress)"
               icon="pi pi-angle-right"
               icon-pos="right"
-              @click="() => {}"
+              @click="goToHotelReportCategoriesPage(item.id)"
             />
           </template>
         </hotel-report-card>
@@ -42,40 +47,27 @@ import { PAGES } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
 import { useRouter } from 'vue-router';
-import type {
-  HotelReportResponse,
-  HotelReportStageProgress,
-  HotelReportStageResponse,
-} from '../../types.ts';
+import type { HotelReportResponse, HotelReportStageResponse } from '../../types.ts';
 import HotelCard from '../../components/HotelCard.vue';
 import InfoCardList from '../../components/InfoCardList.vue';
 import InfoProgress from '../../components/InfoProgress.vue';
 import HotelReportCard from '../../components/HotelReportCard.vue';
-import { useLocale } from '../../composables/useLocale.ts';
 
 const props = defineProps<{
   reportId: number;
 }>();
 
 const { isAuth } = useUser();
-const { fetchHotelReportById, fetchHotelReportStagesByReportId } = useHotelReports();
+const {
+  fetchHotelReportById,
+  fetchHotelReportStagesByReportId,
+  getButtonLabel,
+  goToHotelReportCategoriesPage,
+} = useHotelReports();
 const router = useRouter();
-const { t } = useLocale();
 
 const report = ref<HotelReportResponse | null>(null);
 const stages = ref<HotelReportStageResponse[]>([]);
-
-function getButtonLabel(progress: HotelReportStageProgress) {
-  if (progress.current === progress.max) {
-    return t('view');
-  }
-
-  if (progress.current === 0) {
-    return t('start');
-  }
-
-  return t('continue');
-}
 
 onMounted(async () => {
   if (isAuth.value) {

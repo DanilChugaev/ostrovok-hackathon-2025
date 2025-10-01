@@ -8,6 +8,9 @@ import type {
   CreateTripForm,
   Hotel,
   HotelReport,
+  HotelReportCategory,
+  HotelReportCategoryProgress,
+  HotelReportCategoryResponse,
   HotelReportResponse,
   HotelReportStage,
   HotelReportStageProgress,
@@ -68,6 +71,14 @@ function getStages(): HotelReportStage[] {
 
 function getStagesProgress(): HotelReportStageProgress[] {
   return getData('stagesProgress');
+}
+
+function getCategories(): HotelReportCategory[] {
+  return getData('categories');
+}
+
+function getCategoriesProgress(): HotelReportCategoryProgress[] {
+  return getData('categoriesProgress');
 }
 
 export const handlers = [
@@ -231,9 +242,42 @@ export const handlers = [
       data: stages.map(stage => ({
         ...stage,
         // сюда подмешиваем данные о прогрессе по данному этапу на основе данных из таблицы scores
-        // подсчитываем сколько оценок критериев есть по категориям данного этапа
+        // необходимо подсчитывать сколько оценок критериев есть относящиеся к данному этапу
         progress: stagesProgress.find(progress => progress.stageId === stage.id)!,
       })),
+    });
+  }),
+
+  http.get(API.HotelReportCategoriesByStageId, ({ request }) => {
+    const url = new URL(request.url);
+
+    const stageId = url.searchParams.get('stageId');
+    const stage = getStages().find(stage => stage.id === Number(stageId));
+
+    if (!stage) {
+      return HttpResponse.json<ApiServerResponse<HotelReportCategoryResponse[]>>({
+        success: true,
+        statusCode: 200,
+        message: '',
+        data: [],
+      });
+    }
+
+    const categories = getCategories();
+    const categoriesProgress = getCategoriesProgress();
+
+    return HttpResponse.json<ApiServerResponse<HotelReportCategoryResponse[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: categories
+        .filter(category => category.stageId === Number(stageId))
+        .map(category => ({
+          ...category,
+          // сюда подмешиваем данные о прогрессе по данному категории на основе данных из таблицы scores
+          // необходимо подсчитывать сколько оценок критериев есть относящиеся к данной категории
+          progress: categoriesProgress.find(progress => progress.categoryId === category.id)!,
+        })),
     });
   }),
   /** GET запросы **/

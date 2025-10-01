@@ -23,6 +23,7 @@ import {
   accessibilityListForTravel,
   awards,
   stagesProgress,
+  categoriesProgress,
 } from './api/mocks/constants.ts';
 import ConfirmationService from 'primevue/confirmationservice';
 import { localizationMessages } from './localization';
@@ -46,6 +47,8 @@ import type { LocalizationMessagesKeys } from './types.ts';
   localStorage.setItem('accessibilityListForTravel', JSON.stringify(accessibilityListForTravel));
 !localStorage.getItem('stagesProgress') &&
   localStorage.setItem('stagesProgress', JSON.stringify(stagesProgress));
+!localStorage.getItem('categoriesProgress') &&
+  localStorage.setItem('categoriesProgress', JSON.stringify(categoriesProgress));
 const { worker } = await import('./api/mocks/browser');
 await worker.start({
   onUnhandledRequest: 'bypass',

@@ -2,7 +2,17 @@
   <div class="hotel-report-card">
     <div class="hotel-report-card__header">
       <i class="hotel-report-card__icon" :class="HOTEL_REPORT_CODE_ICON_MAP[code]"></i>
+
       <b class="hotel-report-card__title">{{ name[localeKey] }}</b>
+
+      <Button
+        class="hotel-report-card__info"
+        icon="pi pi-info-circle"
+        size="small"
+        rounded
+        variant="text"
+        @click="toggle"
+      />
     </div>
 
     <info-progress :title="$t('progress')" :percent :custom-info="progressInfo" />
@@ -11,25 +21,38 @@
       <slot name="footer" />
     </div>
   </div>
+
+  <Popover ref="popover">{{ description[localeKey] }}</Popover>
 </template>
 
 <script setup lang="ts">
-import type { HotelReportStageProgress, LocaleString } from '../types.ts';
+import type {
+  HotelReportCategoryProgress,
+  HotelReportStageProgress,
+  LocaleString,
+} from '../types.ts';
 import { HOTEL_REPORT_CODE_ICON_MAP } from '../constants.ts';
 import { useLocale } from '../composables/useLocale.ts';
 import InfoProgress from './InfoProgress.vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
   code: string;
   name: LocaleString;
-  progress: HotelReportStageProgress;
+  progress: HotelReportStageProgress | HotelReportCategoryProgress;
+  description: LocaleString;
 }>();
 
 const { localeKey } = useLocale();
 
+const popover = ref();
+
 const percent = computed(() => (props.progress.current / props.progress.max) * 100);
 const progressInfo = computed(() => `${props.progress.current} / ${props.progress.max}`);
+
+function toggle(event: any) {
+  popover.value.toggle(event);
+}
 </script>
 
 <style scoped>
@@ -43,6 +66,14 @@ const progressInfo = computed(() => `${props.progress.current} / ${props.progres
   align-items: center;
   gap: var(--spacer-d);
   margin-bottom: var(--spacer-d);
+  height: 54px;
+  position: relative;
+}
+
+.hotel-report-card__info {
+  position: absolute;
+  top: -1.333rem;
+  right: -1.333rem;
 }
 
 .hotel-report-card__title {

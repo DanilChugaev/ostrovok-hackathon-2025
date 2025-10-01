@@ -12,6 +12,7 @@ import type {
   AccessibilityItemForTravel,
   Award,
   HotelReportStageProgress,
+  HotelReportCategoryProgress,
 } from '../../types.ts';
 
 // пользователи
@@ -1331,6 +1332,64 @@ export const stagesProgress: HotelReportStageProgress[] = [
   },
   {
     stageId: 5, // прогресс для этапа выезд
+    current: 0,
+    max: 2,
+  },
+];
+
+export const categoriesProgress: HotelReportCategoryProgress[] = [
+  {
+    categoryId: 1, // прогресс для категории Онлайн-бронирование
+    current: 0,
+    max: 5,
+  },
+  {
+    categoryId: 2, // прогресс для категории Бронирование по телефону/почте
+    current: 0,
+    max: 4,
+  },
+  {
+    categoryId: 3, // прогресс для категории Процесс регистрации
+    current: 3,
+    max: 5,
+  },
+  {
+    categoryId: 4, // прогресс для категории Первое впечатление
+    current: 3,
+    max: 3,
+  },
+  {
+    categoryId: 5, // прогресс для категории Номер
+    current: 0,
+    max: 3,
+  },
+  {
+    categoryId: 6, // прогресс для категории Обслуживание в номере
+    current: 1,
+    max: 4,
+  },
+  {
+    categoryId: 7, // прогресс для категории Общественные зоны
+    current: 3,
+    max: 4,
+  },
+  {
+    categoryId: 8, // прогресс для категории Качество еды
+    current: 2,
+    max: 5,
+  },
+  {
+    categoryId: 9, // прогресс для категории Обслуживание
+    current: 4,
+    max: 4,
+  },
+  {
+    categoryId: 10, // прогресс для категории Процесс выселения
+    current: 0,
+    max: 5,
+  },
+  {
+    categoryId: 11, // прогресс для категории Финальное впечатление
     current: 0,
     max: 2,
   },

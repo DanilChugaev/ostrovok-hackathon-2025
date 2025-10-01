@@ -43,6 +43,10 @@ withDefaults(
   transition: box-shadow 0.3s;
 }
 
+.card-list--grid .card-list__item {
+  padding: var(--spacer-de);
+}
+
 .card-list__item:hover {
   box-shadow: 0 0.6rem 0.9rem rgba(0, 0, 0, 0.09);
 }

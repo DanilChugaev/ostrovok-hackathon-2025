@@ -47,7 +47,6 @@ const routes = [
     path: PAGES.HotelReportCategories,
     component: HotelReportCategories,
     props: (route: any) => ({
-      reportId: route.query.reportId,
       stageId: route.query.stageId,
     }),
   },
@@ -55,8 +54,6 @@ const routes = [
     path: PAGES.HotelReportCriteria,
     component: HotelReportCriteria,
     props: (route: any) => ({
-      reportId: route.query.reportId,
-      stageId: route.query.stageId,
       categoryId: route.query.categoryId,
     }),
   },

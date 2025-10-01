@@ -164,6 +164,21 @@ export interface HotelReportCategory {
   description: LocaleString;
 }
 
+export interface HotelReportCategoryProgress {
+  categoryId: number;
+  current: number;
+  max: number;
+}
+
+export interface HotelReportCategoryResponse {
+  id: number;
+  stageId: number;
+  code: string;
+  name: LocaleString;
+  description: LocaleString;
+  progress: HotelReportCategoryProgress;
+}
+
 export interface HotelReportCriterion {
   id: number;
   categoryId: number;

@@ -144,14 +144,9 @@ onBeforeMount(async () => {
   gap: var(--spacer-e);
 }
 
-.hotel-reports .card-list__item {
-  padding: 0 !important;
-}
-
 .hotel-reports__container {
   display: flex;
   flex-direction: column;
-  padding: var(--spacer-d);
   height: 100%;
 }
 

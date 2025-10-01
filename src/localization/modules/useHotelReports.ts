@@ -1,12 +1,20 @@
 import { useNotifications } from '../../composables/useNotifications.ts';
 import { useRouter } from 'vue-router';
 import { apiRequest } from '../../api/request.ts';
-import type { HotelReportResponse, HotelReportStageResponse } from '../../types.ts';
+import type {
+  HotelReportCategoryProgress,
+  HotelReportCategoryResponse,
+  HotelReportResponse,
+  HotelReportStageProgress,
+  HotelReportStageResponse,
+} from '../../types.ts';
 import { API, PAGES } from '../../constants.ts';
+import { useLocale } from '../../composables/useLocale.ts';
 
 export function useHotelReports() {
   const { errorNotify } = useNotifications();
   const router = useRouter();
+  const { t } = useLocale();
 
   async function fetchHotelReportById(reportId: number): Promise<HotelReportResponse | null> {
     try {
@@ -34,6 +42,28 @@ export function useHotelReports() {
     try {
       const result = await apiRequest<HotelReportStageResponse[]>(
         `${API.HotelReportStagesByReportId}?reportId=${reportId}`,
+        {
+          method: 'GET',
+        },
+      ).then(data => data.data);
+
+      if (!result) {
+        router.push(PAGES.HotelReports);
+      }
+
+      return result;
+    } catch (e: any) {
+      errorNotify(e.message);
+      return [];
+    }
+  }
+
+  async function fetchHotelReportCategoriesByStageId(
+    stageId: number,
+  ): Promise<HotelReportCategoryResponse[]> {
+    try {
+      const result = await apiRequest<HotelReportCategoryResponse[]>(
+        `${API.HotelReportCategoriesByStageId}?stageId=${stageId}`,
         {
           method: 'GET',
         },
@@ -85,16 +115,24 @@ export function useHotelReports() {
     router.push({ path: PAGES.HotelReportStages, query: { reportId } });
   }
 
-  function goToHotelReportStageCategoriesPage(reportId: number, stageId: number) {
-    router.push({ path: PAGES.HotelReportStages, query: { reportId, stageId } });
+  function goToHotelReportCategoriesPage(stageId: number) {
+    router.push({ path: PAGES.HotelReportCategories, query: { stageId } });
   }
 
-  function goToHotelReportStageCategoryCriteriaPage(
-    reportId: number,
-    stageId: number,
-    categoryId: number,
-  ) {
-    router.push({ path: PAGES.HotelReportStages, query: { reportId, stageId, categoryId } });
+  function goToHotelReportCriteriaPage(categoryId: number) {
+    router.push({ path: PAGES.HotelReportCriteria, query: { categoryId } });
+  }
+
+  function getButtonLabel(progress: HotelReportStageProgress | HotelReportCategoryProgress) {
+    if (progress.current === progress.max) {
+      return t('view');
+    }
+
+    if (progress.current === 0) {
+      return t('start');
+    }
+
+    return t('continue');
   }
 
   return {
@@ -103,8 +141,10 @@ export function useHotelReports() {
     createHotelReport,
     goToHotelReportPage,
     goToHotelReportStagesPage,
-    goToHotelReportStageCategoriesPage,
-    goToHotelReportStageCategoryCriteriaPage,
+    goToHotelReportCategoriesPage,
+    goToHotelReportCriteriaPage,
+    getButtonLabel,
     fetchHotelReportStagesByReportId,
+    fetchHotelReportCategoriesByStageId,
   };
 }
