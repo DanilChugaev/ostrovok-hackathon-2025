@@ -9,37 +9,20 @@
 <script setup lang="ts">
 import type { HotelReportResponse } from '../../types.ts';
 import { onMounted, ref } from 'vue';
-import { apiRequest } from '../../api/request.ts';
-import { API, PAGES } from '../../constants.ts';
-import { useNotifications } from '../../composables/useNotifications.ts';
+import { PAGES } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
 
-const { errorNotify } = useNotifications();
 const { isAuth } = useUser();
 const router = useRouter();
-const route = useRoute();
+const { fetchHotelReportById } = useHotelReports();
 
 const report = ref<HotelReportResponse | null>(null);
 
-async function fetchHotelReportById() {
-  try {
-    report.value = await apiRequest<HotelReportResponse>(
-      `${API.HotelReport}?id=${route.params.id}`,
-      { method: 'GET' },
-    ).then(data => data.data);
-
-    if (!report.value) {
-      router.push(PAGES.HotelReports);
-    }
-  } catch (e: any) {
-    errorNotify(e.message);
-  }
-}
-
 onMounted(async () => {
   if (isAuth.value) {
-    await fetchHotelReportById();
+    report.value = await fetchHotelReportById(5);
   } else {
     router.push(PAGES.Login);
   }

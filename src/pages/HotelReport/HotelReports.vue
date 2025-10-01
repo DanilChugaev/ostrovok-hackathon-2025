@@ -33,7 +33,7 @@
             icon-pos="right"
             size="small"
             :label="item.totalScore ? $t('show') : $t('continue')"
-            @click="goToReportPage(item.id)"
+            @click="goToHotelReportPage(item.id)"
           />
         </div>
 
@@ -64,7 +64,7 @@
         <Button
           :label="$t('addNewReport')"
           :disabled="!selectedTrip"
-          @click="createHotelReport(selectedTrip!.id)"
+          @click="createHotelReport(user!.id, selectedTrip!.id)"
         />
       </template>
 
@@ -77,18 +77,17 @@
 import type { HotelReportResponse, Trip } from '../../types.ts';
 import InfoCardList from '../../components/InfoCardList.vue';
 import { computed, onBeforeMount, ref } from 'vue';
-import { apiRequest } from '../../api/request.ts';
-import { API, PAGES } from '../../constants.ts';
-import { useNotifications } from '../../composables/useNotifications.ts';
+import { PAGES } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
 import { useTrips } from '../../localization/modules/useTrips.ts';
+import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
 
-const { errorNotify } = useNotifications();
 const { user, isAuth } = useUser();
 const router = useRouter();
 const { fetchTrips } = useTrips();
+const { fetchHotelReports, createHotelReport, goToHotelReportPage } = useHotelReports();
 
 const popover = ref();
 const reports = ref<HotelReportResponse[]>([]);
@@ -114,35 +113,8 @@ const sortedReports = computed<HotelReportResponse[]>(() => {
 });
 const filteredTrips = computed(() => trips.value.filter(trip => !trip.hasReport));
 
-async function fetchHotelReports() {
-  try {
-    reports.value = await apiRequest<HotelReportResponse[]>(
-      `${API.HotelReports}?userId=${user.value!.id}`,
-      { method: 'GET' },
-    ).then(data => data.data);
-  } catch (e: any) {
-    errorNotify(e.message);
-  }
-}
-
 async function onCreateButtonClick() {
   isVisibleCreateHotelReportDialog.value = true;
-}
-
-async function createHotelReport(tripId: number) {
-  try {
-    const report = await apiRequest<HotelReportResponse>(`${API.HotelReportCreate}`, {
-      method: 'POST',
-      body: {
-        userId: user.value!.id,
-        tripId,
-      },
-    }).then(data => data.data);
-
-    goToReportPage(report.id);
-  } catch (e: any) {
-    errorNotify(e.message);
-  }
 }
 
 function toggle(event: any, comment: string) {
@@ -150,13 +122,9 @@ function toggle(event: any, comment: string) {
   selectedComment.value = comment;
 }
 
-function goToReportPage(reportId: number) {
-  router.push(`${PAGES.HotelReport}/${reportId}`);
-}
-
 onBeforeMount(async () => {
   if (isAuth.value) {
-    await fetchHotelReports();
+    reports.value = await fetchHotelReports(user.value!.id);
     trips.value = await fetchTrips();
   } else {
     router.push(PAGES.Login);
