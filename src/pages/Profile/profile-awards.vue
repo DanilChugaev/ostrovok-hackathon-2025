@@ -18,7 +18,7 @@
     </div>
 
     <div>
-      <h3 class="profile-awards__title">Доступные награды</h3>
+      <h3 class="profile-awards__title">{{ $t('availableRewards') }}</h3>
 
       <info-card-list :items="awards" class="profile-awards__list">
         <template #default="{ item }: { item: Award }">
@@ -30,14 +30,14 @@
             <p class="profile-awards__description">{{ item.description[localeKey] }}</p>
 
             <div class="profile-awards__footer">
-              <span>{{ item.price }} баллов</span>
+              <span>{{ item.price }} {{ $t('score') }}</span>
 
               <Button
                 v-tooltip.bottom="getTooltip(item)"
                 :disabled="
                   !checkIsAvailableAwards(item.loyaltyCodes) || !checkLoyaltyScore(item.price)
                 "
-                label="Обменять"
+                :label="$t('exchange')"
                 @click="onExchangeButtonClick(item)"
               />
             </div>
@@ -124,12 +124,12 @@ function onExchangeButtonClick(award: Award) {
     message: t('youExchangeScore', { score: award.price, award: award.name[localeKey.value] }),
     header: t('confirmTheExchange'),
     rejectProps: {
-      label: 'Отмена',
-      severity: t('cancel'),
+      label: t('cancel'),
+      severity: 'secondary',
       outlined: true,
     },
     acceptProps: {
-      label: 'Обменять',
+      label: t('exchange'),
     },
     accept: () => {
       successNotify(t('successfulExchange'));

@@ -33,6 +33,9 @@ export const profile = {
     confirmTheExchange: `Подтвердите обмен`,
     cancel: `Отмена`,
     successfulExchange: `Вы успешно обменяли баллы, награда уже зачислена на ваш счет`,
+    exchange: `Обменять`,
+    availableRewards: 'Доступные награды',
+    score: 'баллов',
   },
   en: {
     trips: 'Trips',
@@ -68,5 +71,8 @@ export const profile = {
     confirmTheExchange: `Confirm the exchange`,
     cancel: `Cancel`,
     successfulExchange: `You have successfully redeemed your points and the reward has already been credited to your account.`,
+    exchange: `Exchange`,
+    availableRewards: 'Available rewards',
+    score: 'score',
   },
 };
