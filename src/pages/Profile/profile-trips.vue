@@ -41,7 +41,7 @@
       </hotel-card>
     </template>
 
-    <p>
+    <p v-else>
       {{
         isSecretGuestProgramAccepted
           ? $t('youDontHaveAnyTripsYetSelectHotel')

@@ -4,7 +4,7 @@
       <div class="profile-awards__info-header">
         <div>
           <h3 class="profile-awards__title">{{ $t('yourRewards') }}</h3>
-          <p>{{ $t('currentLevel') }} {{ LOYALTY_STATUS_MAP[userStatus] }}</p>
+          <p>{{ $t('currentLevel') }} {{ loyaltyCurrentStatus?.name[localeKey] }}</p>
         </div>
 
         <user-score :score="score" />
@@ -54,12 +54,16 @@ import InfoCardList from '../../components/InfoCardList.vue';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import { computed, onMounted, ref } from 'vue';
 import { apiRequest } from '../../api/request.ts';
-import { API, LOYALTY_STATUS_MAP } from '../../constants.ts';
+import { API } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useConfirm } from 'primevue/useconfirm';
 import UserScore from '../../components/UserScore.vue';
 import InfoProgress from '../../components/InfoProgress.vue';
 import { useLocale } from '../../composables/useLocale.ts';
+
+const props = defineProps<{
+  loyalty: LoyaltyBase[];
+}>();
 
 const { errorNotify, successNotify } = useNotifications();
 const { user } = useUser();
@@ -67,29 +71,19 @@ const confirm = useConfirm();
 const { t, localeKey } = useLocale();
 
 const awards = ref<Award[]>([]);
-const loyalty = ref<LoyaltyBase[]>([]);
 
-const userStatus = computed(() => user.value?.loyalty?.code ?? 'bronze');
 const score = computed(() => user.value?.loyalty?.score ?? 0);
-const maxScoreInCurrentStatus = computed(
-  () => loyalty.value.find(item => item.code === userStatus.value)?.maxScore ?? 0,
+const userStatusCode = computed(() => user.value?.loyalty?.code ?? 'bronze');
+const loyaltyCurrentStatus = computed(
+  () => props.loyalty.find(item => item.code === userStatusCode.value)!,
 );
+const maxScoreInCurrentStatus = computed(() => loyaltyCurrentStatus.value?.maxScore ?? 0);
 const scorePercent = computed(() => (score.value / maxScoreInCurrentStatus.value) * 100);
 const progressInfo = computed(() => `${score.value} / ${maxScoreInCurrentStatus.value}`);
 
 async function fetchAwards() {
   try {
     awards.value = await apiRequest<Award[]>(API.Awards, { method: 'GET' }).then(data => data.data);
-  } catch (e: any) {
-    errorNotify(e.message);
-  }
-}
-
-async function fetchLoyalty() {
-  try {
-    loyalty.value = await apiRequest<LoyaltyBase[]>(API.Loyalty, { method: 'GET' }).then(
-      data => data.data,
-    );
   } catch (e: any) {
     errorNotify(e.message);
   }
@@ -114,7 +108,11 @@ function getTooltip(award: Award) {
     return;
   }
 
-  const neededStatuses = award.loyaltyCodes.map(item => LOYALTY_STATUS_MAP[item]).join(', ');
+  const neededStatuses = award.loyaltyCodes
+    .map(
+      item => props.loyalty.find(loyaltyItem => loyaltyItem.code === item)!.name[localeKey.value],
+    )
+    .join(', ');
 
   return `${t('availableInStatuses')} ${neededStatuses}`;
 }
@@ -139,7 +137,6 @@ function onExchangeButtonClick(award: Award) {
 
 onMounted(async () => {
   await fetchAwards();
-  await fetchLoyalty();
 });
 </script>
 

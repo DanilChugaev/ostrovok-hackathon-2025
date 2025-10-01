@@ -28,12 +28,16 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
-import { LOYALTY_STATUS_MAP } from '../../constants.ts';
 import UserScore from '../../components/UserScore.vue';
 import { useLocale } from '../../composables/useLocale.ts';
+import type { LoyaltyBase } from '../../types.ts';
+
+const props = defineProps<{
+  loyalty: LoyaltyBase[];
+}>();
 
 const { fullUserName, user } = useUser();
-const { t } = useLocale();
+const { t, localeKey } = useLocale();
 
 const requestStatusMap = {
   pending: {
@@ -62,8 +66,12 @@ const mappedStatusObj = computed(
 );
 const requestStatusIcon = computed(() => mappedStatusObj.value.icon);
 const requestStatusText = computed(() => mappedStatusObj.value.text);
+const userStatusCode = computed(() => user.value?.loyalty?.code ?? 'bronze');
+const loyaltyCurrentStatus = computed(
+  () => props.loyalty.find(item => item.code === userStatusCode.value)!,
+);
 const loyaltyStatus = computed(
-  () => `${t('currentLevel')} ${LOYALTY_STATUS_MAP[user.value?.loyalty?.code ?? 'bronze']}`,
+  () => `${t('currentLevel')} ${loyaltyCurrentStatus.value?.name[localeKey.value]}`,
 );
 </script>
 
