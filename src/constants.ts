@@ -30,6 +30,7 @@ export const API = {
   AccessibilityListForTravel: '/api/v1/accessibility-list-for-travel',
   SendRequestForm: '/api/v1/send-request-form',
   Trips: '/api/v1/trips',
+  TripCreate: '/api/v1/trip/create',
   Hotels: '/api/v1/hotels',
   Awards: '/api/v1/awards',
   Loyalty: '/api/v1/loyalty',

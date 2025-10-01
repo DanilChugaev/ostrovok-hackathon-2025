@@ -86,7 +86,7 @@
         field-id="city"
         :field-state="$form.city"
       >
-        <Select :options="cities" label-id="city" name="city" />
+        <Select :options="mappedCities" label-id="city" name="city" />
       </form-field>
     </div>
 
@@ -106,12 +106,13 @@
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
 import { Form, type FormSubmitEvent } from '@primevue/forms';
-import type { RequestForm } from '../../types.ts';
-import { onMounted, ref } from 'vue';
+import type { City, RequestForm } from '../../types.ts';
+import { computed, onMounted, ref } from 'vue';
 import { API } from '../../constants.ts';
 import { apiRequest } from '../../api/request.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import { useAppForm } from '../../composables/useAppForm.ts';
+import { useLocale } from '../../composables/useLocale.ts';
 
 type UserRequestForm = RequestForm['user'];
 
@@ -132,6 +133,7 @@ const {
   ageValidation,
   cityValidation,
 } = useAppForm();
+const { localeKey } = useLocale();
 
 const initialValues = ref<UserRequestForm>({
   username: '',
@@ -158,7 +160,9 @@ const resolver = ref(
     }),
   ),
 );
-const cities = ref<string[]>([]);
+const cities = ref<City[]>([]);
+
+const mappedCities = computed<string[]>(() => cities.value.map(item => item.name[localeKey.value]));
 
 function onValidateForm({ valid, values }: FormSubmitEvent<Record<string, any>>) {
   if (valid) {
@@ -169,9 +173,7 @@ function onValidateForm({ valid, values }: FormSubmitEvent<Record<string, any>>)
 
 async function fetchCities() {
   try {
-    cities.value = await apiRequest<string[]>(API.Cities, { method: 'GET' }).then(
-      data => data.data,
-    );
+    cities.value = await apiRequest<City[]>(API.Cities, { method: 'GET' }).then(data => data.data);
   } catch (e: any) {
     errorNotify(e.message);
   }

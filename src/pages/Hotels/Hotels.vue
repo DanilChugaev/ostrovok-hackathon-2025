@@ -30,15 +30,17 @@ import type { Hotel, HotelFiltersType } from '../../types.ts';
 import HotelCard from '../../components/HotelCard.vue';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import { apiRequest } from '../../api/request.ts';
-import { API, PAGES } from '../../constants.ts';
-import { useRouter } from 'vue-router';
+import { API } from '../../constants.ts';
 import { useLocale } from '../../composables/useLocale.ts';
 import { useUser } from '../../composables/useUser.ts';
+import { useTrips } from '../../composables/useTrips.ts';
+import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
 
 const { errorNotify } = useNotifications();
-const router = useRouter();
 const { t, localeKey } = useLocale();
-const { isSecretGuestProgramAccepted } = useUser();
+const { isSecretGuestProgramAccepted, user } = useUser();
+const { createTrip } = useTrips();
+const { createHotelReport } = useHotelReports();
 
 const filters = reactive<HotelFiltersType>({
   name: '',
@@ -78,10 +80,11 @@ async function fetchHotels() {
   }
 }
 
-function onSelectHotelButtonClick(id: number) {
+async function onSelectHotelButtonClick(hotelId: number) {
   if (isSecretGuestProgramAccepted.value) {
-    // todo сначала создаем отчет, потом переходим по нему
-    router.push(`${PAGES.HotelReport}/${id}`);
+    // для упрощения mvp просто создаем поездку и потом переходим в созданный отчет по этой поездке
+    const trip = await createTrip(user.value!.id, hotelId);
+    await createHotelReport(user.value!.id, trip!.id);
   } else {
     isVisibleInfoAboutHotelDialog.value = true;
   }

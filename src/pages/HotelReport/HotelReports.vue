@@ -81,7 +81,7 @@ import { PAGES } from '../../constants.ts';
 import { useUser } from '../../composables/useUser.ts';
 import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
-import { useTrips } from '../../localization/modules/useTrips.ts';
+import { useTrips } from '../../composables/useTrips.ts';
 import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
 
 const { user, isAuth } = useUser();
@@ -125,7 +125,7 @@ function toggle(event: any, comment: string) {
 onBeforeMount(async () => {
   if (isAuth.value) {
     reports.value = await fetchHotelReports(user.value!.id);
-    trips.value = await fetchTrips();
+    trips.value = await fetchTrips(user.value!.id);
   } else {
     router.push(PAGES.Login);
   }

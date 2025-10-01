@@ -29,29 +29,20 @@
 import { useUser } from '../../composables/useUser.ts';
 import { onBeforeMount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { API, PAGES, PROFILE_TABS } from '../../constants.ts';
+import { PAGES, PROFILE_TABS } from '../../constants.ts';
 import ProfileGreetingSection from './profile-greeting-section.vue';
 import ProfileInfoSection from './profile-info-section.vue';
 import ProfileTrips from './profile-trips.vue';
 import ProfileAwards from './profile-awards.vue';
 import type { Trip } from '../../types.ts';
-import { apiRequest } from '../../api/request.ts';
-import { useNotifications } from '../../composables/useNotifications.ts';
 import ProfileSummary from './profile-summary.vue';
+import { useTrips } from '../../composables/useTrips.ts';
 
-const { errorNotify } = useNotifications();
-const { isAuth, isAdmin, isHotel } = useUser();
+const { isAuth, isAdmin, isHotel, user } = useUser();
 const router = useRouter();
+const { fetchTrips } = useTrips();
 
 const trips = ref<Trip[]>([]);
-
-async function fetchTrips() {
-  try {
-    trips.value = await apiRequest<Trip[]>(API.Trips, { method: 'GET' }).then(data => data.data);
-  } catch (e: any) {
-    errorNotify(e.message);
-  }
-}
 
 onBeforeMount(() => {
   if (!isAuth.value) {
@@ -70,7 +61,7 @@ onBeforeMount(() => {
 });
 
 onMounted(async () => {
-  await fetchTrips();
+  trips.value = await fetchTrips(user.value!.id);
 });
 </script>
 

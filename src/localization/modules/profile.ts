@@ -24,6 +24,11 @@ export const profile = {
     reportSent: 'Отчет отправлен',
     waitingForReport: 'Ожидает отчета',
     upcomingTrip: 'Предстоящая поездка',
+    youDontHaveAnyTripsYet: 'У вас еще нет поездок',
+    youDontHaveAnyTripsYetSelectHotel:
+      'У вас еще нет поездок. Выберите отель из списка, чтобы создать поездку',
+    availableInStatuses: 'Доступно в статусах:',
+    notEnoughScore: 'Не хватает баллов',
   },
   en: {
     trips: 'Trips',
@@ -50,5 +55,10 @@ export const profile = {
     reportSent: 'Report sent',
     waitingForReport: 'Waiting for report',
     upcomingTrip: 'Upcoming trip',
+    youDontHaveAnyTripsYet: "You don't have any trips yet",
+    youDontHaveAnyTripsYetSelectHotel:
+      "You don't have any trips yet. Select a hotel from the list to create a trip",
+    availableInStatuses: 'Available in statuses:',
+    notEnoughScore: 'Not enough score',
   },
 };

@@ -18,12 +18,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Summary, Trip } from '../../types.ts';
+import type { HotelReportResponse, Summary, Trip } from '../../types.ts';
 import InfoCardList from '../../components/InfoCardList.vue';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useUser } from '../../composables/useUser.ts';
 import { useLocale } from '../../composables/useLocale.ts';
 import { PAGES } from '../../constants.ts';
+import { useHotelReports } from '../../localization/modules/useHotelReports.ts';
 
 const props = defineProps<{
   trips: Trip[];
@@ -31,31 +32,45 @@ const props = defineProps<{
 
 const { user } = useUser();
 const { t } = useLocale();
+const { fetchHotelReports } = useHotelReports();
 
-const summary = computed<Summary[]>(() => [
-  {
-    id: 1,
-    count: props.trips.length,
-    icon: 'pi pi-calendar',
-    text: t('totalTrips'),
-    className: 'profile-summary__item--calendar',
-  },
-  {
-    id: 2,
-    count: props.trips.reduce((acc, current) => (acc += current.hasReport ? 1 : 0), 0),
-    icon: 'pi pi-check-circle',
-    text: t('completedReports'),
-    className: 'profile-summary__item--check',
-    to: PAGES.HotelReports,
-  },
-  {
-    id: 3,
-    count: user.value?.loyalty?.score ?? 0,
-    icon: 'pi pi-trophy',
-    text: t('accumulatedPoints'),
-    className: 'profile-summary__item--star',
-  },
-]);
+const reports = ref<HotelReportResponse[]>([]);
+
+const summary = computed<Summary[]>(() =>
+  [
+    {
+      id: 1,
+      count: props.trips.length,
+      icon: 'pi pi-calendar',
+      text: t('totalTrips'),
+      className: 'profile-summary__item--calendar',
+    },
+    {
+      id: 2,
+      count: reports.value.filter(report => report.userId === user.value!.id && report.totalScore)
+        .length,
+      icon: 'pi pi-check-circle',
+      text: t('completedReports'),
+      className: 'profile-summary__item--check',
+      to: PAGES.HotelReports,
+    },
+    {
+      id: 3,
+      count: user.value?.loyalty?.score ?? 0,
+      icon: 'pi pi-trophy',
+      text: t('accumulatedPoints'),
+      className: 'profile-summary__item--star',
+    },
+  ].filter(item => {
+    if (item.id === 2 && user.value?.role === 'user') return false;
+
+    return true;
+  }),
+);
+
+onMounted(async () => {
+  reports.value = await fetchHotelReports(user.value!.id);
+});
 </script>
 
 <style scoped>

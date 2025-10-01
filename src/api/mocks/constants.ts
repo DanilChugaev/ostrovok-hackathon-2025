@@ -169,6 +169,7 @@ export const trips: Trip[] = [
   {
     // предстоящая поездка
     id: 1,
+    userId: 3,
     hotel: grand_moscow,
     startDate: '2025-11-01',
     endDate: '2025-11-02',
@@ -177,6 +178,7 @@ export const trips: Trip[] = [
   {
     // поездка была, ожидает отчета
     id: 2,
+    userId: 3,
     hotel: neva_palace,
     startDate: '2025-01-01',
     endDate: '2025-01-02',
@@ -185,6 +187,7 @@ export const trips: Trip[] = [
   {
     // поездка была, ожидает отчета
     id: 3,
+    userId: 3,
     hotel: sibir_star,
     startDate: '2025-02-01',
     endDate: '2025-02-02',
@@ -193,6 +196,7 @@ export const trips: Trip[] = [
   {
     // поездка была, ожидает отчета
     id: 4,
+    userId: 3,
     hotel: ural_comfort,
     startDate: '2025-03-01',
     endDate: '2025-03-02',
@@ -201,6 +205,52 @@ export const trips: Trip[] = [
   {
     // поездка была, есть отчет
     id: 5,
+    userId: 3,
+    hotel: kazan_riviera,
+    startDate: '2025-03-01',
+    endDate: '2025-03-02',
+    hasReport: false,
+  },
+  {
+    // предстоящая поездка
+    id: 6,
+    userId: 4,
+    hotel: grand_moscow,
+    startDate: '2025-11-01',
+    endDate: '2025-11-02',
+    hasReport: false,
+  },
+  {
+    // поездка была, ожидает отчета
+    id: 7,
+    userId: 4,
+    hotel: neva_palace,
+    startDate: '2025-01-01',
+    endDate: '2025-01-02',
+    hasReport: false,
+  },
+  {
+    // поездка была, ожидает отчета
+    id: 8,
+    userId: 4,
+    hotel: sibir_star,
+    startDate: '2025-02-01',
+    endDate: '2025-02-02',
+    hasReport: false,
+  },
+  {
+    // поездка была, ожидает отчета
+    id: 9,
+    userId: 4,
+    hotel: ural_comfort,
+    startDate: '2025-03-01',
+    endDate: '2025-03-02',
+    hasReport: false,
+  },
+  {
+    // поездка была, есть отчет
+    id: 10,
+    userId: 4,
     hotel: kazan_riviera,
     startDate: '2025-03-01',
     endDate: '2025-03-02',
@@ -1146,7 +1196,7 @@ export const reports: HotelReport[] = [
   {
     id: 1,
     userId: 4,
-    tripId: 5,
+    tripId: 10,
     totalScore: 5,
     comment: 'Супер отель, приеду еще!',
     createdDate: '2025-03-02',

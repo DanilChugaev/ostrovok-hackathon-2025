@@ -96,6 +96,7 @@ export interface HotelFiltersType {
 
 export interface Trip {
   id: number;
+  userId: number;
   hotel: Hotel;
   startDate: string;
   endDate: string;
@@ -179,4 +180,9 @@ export interface HotelReportResponse {
 export interface CreateHotelReportForm {
   userId: number;
   tripId: number;
+}
+
+export interface CreateTripForm {
+  userId: number;
+  hotelId: number;
 }

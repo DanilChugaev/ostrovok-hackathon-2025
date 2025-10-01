@@ -4,6 +4,7 @@ import type {
   Award,
   City,
   CreateHotelReportForm,
+  CreateTripForm,
   Hotel,
   HotelReport,
   HotelReportResponse,
@@ -100,12 +101,17 @@ export const handlers = [
     });
   }),
 
-  http.get(API.Trips, () => {
+  http.get(API.Trips, ({ request }) => {
+    const url = new URL(request.url);
+
+    const userId = url.searchParams.get('userId');
+    const trips = getTrips();
+
     return HttpResponse.json<ApiServerResponse<Trip[]>>({
       success: true,
       statusCode: 200,
       message: '',
-      data: getTrips(),
+      data: [...trips].filter(trip => trip.userId === Number(userId)),
     });
   }),
 
@@ -192,14 +198,15 @@ export const handlers = [
     const url = new URL(request.url);
 
     const userId = url.searchParams.get('userId');
-    const reports = getReports().filter(report => report.userId === Number(userId));
+    const reports = getReports();
+    const filteredReports = [...reports].filter(report => report.userId === Number(userId));
     const trips = getTrips();
 
     return HttpResponse.json<ApiServerResponse<HotelReportResponse[]>>({
       success: true,
       statusCode: 200,
       message: '',
-      data: reports.map(report => ({
+      data: filteredReports.map(report => ({
         id: report.id,
         userId: report.userId,
         trip: trips.find(trip => trip.id === report.tripId)!,
@@ -302,6 +309,32 @@ export const handlers = [
       statusCode: 200,
       message: '',
       data: newReport,
+    });
+  }),
+
+  http.post(API.TripCreate, async ({ request }) => {
+    const body = (await request.json()) as CreateTripForm;
+    const trips = getTrips();
+    const lastId = trips.sort((a, b) => a.id - b.id)[trips.length - 1]!.id;
+    debugger;
+    const hotel = getHotels().find(hotel => hotel.id === body.hotelId)!;
+    const newTrip: Trip = {
+      id: lastId + 1,
+      userId: body.userId,
+      hotel: hotel,
+      startDate: dayjs().add(10, 'day').format('YYYY-MM-DD'),
+      endDate: dayjs().add(15, 'day').format('YYYY-MM-DD'),
+      hasReport: false,
+      totalScore: 0,
+    };
+
+    localStorage.setItem('trips', JSON.stringify([...trips, newTrip]));
+
+    return HttpResponse.json<ApiServerResponse<Trip>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: newTrip,
     });
   }),
   /** POST запросы **/

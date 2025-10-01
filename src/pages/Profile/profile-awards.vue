@@ -33,8 +33,10 @@
               <span>{{ item.price }} баллов</span>
 
               <Button
-                v-tooltip.bottom="getTooltip(item.loyaltyCodes)"
-                :disabled="!checkIsAvailableAwards(item.loyaltyCodes)"
+                v-tooltip.bottom="getTooltip(item)"
+                :disabled="
+                  !checkIsAvailableAwards(item.loyaltyCodes) || !checkLoyaltyScore(item.price)
+                "
                 label="Обменять"
                 @click="onExchangeButtonClick(item)"
               />
@@ -57,10 +59,12 @@ import { useUser } from '../../composables/useUser.ts';
 import { useConfirm } from 'primevue/useconfirm';
 import UserScore from '../../components/UserScore.vue';
 import RatingProgress from '../../components/RatingProgress.vue';
+import { useLocale } from '../../composables/useLocale.ts';
 
 const { errorNotify, successNotify } = useNotifications();
 const { user } = useUser();
 const confirm = useConfirm();
+const { t } = useLocale();
 
 const awards = ref<Award[]>([]);
 const loyalty = ref<LoyaltyBase[]>([]);
@@ -95,14 +99,24 @@ function checkIsAvailableAwards(loyaltyCodes: LoyaltyCode[]) {
   return loyaltyCodes.includes(user.value?.loyalty?.code ?? 'bronze');
 }
 
-function getTooltip(loyaltyCodes: LoyaltyCode[]) {
-  const isAvailableAward = checkIsAvailableAwards(loyaltyCodes);
+function checkLoyaltyScore(price: number) {
+  return (user.value?.loyalty?.score ?? 0) >= price;
+}
 
-  if (isAvailableAward) return;
+function getTooltip(award: Award) {
+  const isAvailableAward = checkIsAvailableAwards(award.loyaltyCodes);
 
-  const neededStatuses = loyaltyCodes.map(item => LOYALTY_STATUS_MAP[item]).join(', ');
+  if (isAvailableAward) {
+    if (!checkLoyaltyScore(award.price)) {
+      return t('notEnoughScore');
+    }
 
-  return `Доступно в статусах: ${neededStatuses}`;
+    return;
+  }
+
+  const neededStatuses = award.loyaltyCodes.map(item => LOYALTY_STATUS_MAP[item]).join(', ');
+
+  return `${t('availableInStatuses')} ${neededStatuses}`;
 }
 
 function onExchangeButtonClick(award: Award) {
