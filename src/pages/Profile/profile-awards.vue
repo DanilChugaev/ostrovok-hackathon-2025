@@ -25,9 +25,9 @@
           <div class="profile-awards__item">
             <i class="profile-awards__icon pi pi-star"></i>
 
-            <b>{{ item.name }}</b>
+            <b>{{ item.name[localeKey] }}</b>
 
-            <p class="profile-awards__description">{{ item.description }}</p>
+            <p class="profile-awards__description">{{ item.description[localeKey] }}</p>
 
             <div class="profile-awards__footer">
               <span>{{ item.price }} баллов</span>
@@ -64,7 +64,7 @@ import { useLocale } from '../../composables/useLocale.ts';
 const { errorNotify, successNotify } = useNotifications();
 const { user } = useUser();
 const confirm = useConfirm();
-const { t } = useLocale();
+const { t, localeKey } = useLocale();
 
 const awards = ref<Award[]>([]);
 const loyalty = ref<LoyaltyBase[]>([]);
@@ -121,18 +121,18 @@ function getTooltip(award: Award) {
 
 function onExchangeButtonClick(award: Award) {
   confirm.require({
-    message: `Вы обмениваете ${award.price} баллов на награду: ${award.name}`,
-    header: 'Подтвердите обмен',
+    message: t('youExchangeScore', { score: award.price, award: award.name[localeKey.value] }),
+    header: t('confirmTheExchange'),
     rejectProps: {
       label: 'Отмена',
-      severity: 'secondary',
+      severity: t('cancel'),
       outlined: true,
     },
     acceptProps: {
       label: 'Обменять',
     },
     accept: () => {
-      successNotify('Вы успешно обменяли баллы, награда уже зачислена на ваш счет');
+      successNotify(t('successfulExchange'));
     },
   });
 }

@@ -20,9 +20,9 @@ export interface HeaderNavigation {
 export interface Review {
   id: number;
   imageUrl: string;
-  name: string;
-  city: string;
-  text: string;
+  name: LocaleString;
+  city: LocaleString;
+  text: LocaleString;
 }
 
 export interface LoginForm {
@@ -115,8 +115,8 @@ export interface Summary {
 
 export interface Award {
   id: number;
-  name: string;
-  description: string;
+  name: LocaleString;
+  description: LocaleString;
   price: number;
   loyaltyCodes: LoyaltyCode[];
 }
@@ -185,4 +185,9 @@ export interface CreateHotelReportForm {
 export interface CreateTripForm {
   userId: number;
   hotelId: number;
+}
+
+export interface AccessibilityItemForTravel {
+  id: number;
+  name: LocaleString;
 }

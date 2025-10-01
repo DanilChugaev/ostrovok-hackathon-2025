@@ -8,6 +8,9 @@ import type {
   Trip,
   User,
   HotelReport,
+  Review,
+  AccessibilityItemForTravel,
+  Award,
 } from '../../types.ts';
 
 // пользователи
@@ -1192,6 +1195,7 @@ export const criteria: HotelReportCriterion[] = [
   },
 ];
 
+// отчеты пользователей
 export const reports: HotelReport[] = [
   {
     id: 1,
@@ -1200,5 +1204,95 @@ export const reports: HotelReport[] = [
     totalScore: 5,
     comment: 'Супер отель, приеду еще!',
     createdDate: '2025-03-02',
+  },
+];
+
+// отзывы
+export const reviews: Review[] = [
+  {
+    id: 1,
+    imageUrl:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyBjzh3CD95BfqICMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC',
+    name: { ru: 'Анна К.', en: 'Anna K.' },
+    city: { ru: 'Москва', en: 'Moscow' },
+    text: {
+      ru: "Участие в программе 'Секретный гость' позволило мне посетить прекрасный отель в Сочи, который я бы не смогла себе позволить. Процесс оценки был простым и интуитивно понятным.",
+      en: "Participating in the Secret Guest program allowed me to visit a wonderful hotel in Sochi that I otherwise wouldn't have been able to afford. The evaluation process was simple and intuitive.",
+    },
+  },
+  {
+    id: 2,
+    imageUrl:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyBjzh3CD95BfqICMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC',
+    name: { ru: 'Дмитрий Л.', en: 'Dmitry L.' },
+    city: { ru: 'Санкт-Петербург', en: 'Saint Petersburg' },
+    text: {
+      ru: 'Благодаря программе я смог совместить приятное с полезным - отдохнуть в хорошем отеле и помочь другим путешественникам получить честную информацию о нем.',
+      en: 'Thanks to the program, I was able to combine business with pleasure - relax in a good hotel and help other travelers get honest information about it.',
+    },
+  },
+];
+
+// возможности для поездок
+export const accessibilityListForTravel: AccessibilityItemForTravel[] = [
+  {
+    id: 1,
+    name: {
+      ru: 'Только выходные',
+      en: 'Weekends only',
+    },
+  },
+  {
+    id: 2,
+    name: {
+      ru: 'Только будни',
+      en: 'Weekdays only',
+    },
+  },
+  {
+    id: 3,
+    name: {
+      ru: 'В любое время',
+      en: 'Anytime',
+    },
+  },
+  {
+    id: 4,
+    name: {
+      ru: 'Только праздники и отпуск',
+      en: 'Holidays and vacations only',
+    },
+  },
+];
+
+// награды
+export const awards: Award[] = [
+  {
+    id: 1,
+    name: { ru: 'Скидка 10%', en: '10% off' },
+    description: { ru: 'На любое бронирование на Островке', en: 'For any booking on Ostrovok' },
+    price: 100,
+    loyaltyCodes: ['bronze', 'silver', 'gold', 'diamond'],
+  },
+  {
+    id: 2,
+    name: { ru: 'Скидка 15%', en: '15% off' },
+    description: { ru: 'На бронирование в отелях-партнерах', en: 'For bookings at partner hotels' },
+    price: 250,
+    loyaltyCodes: ['silver', 'gold', 'diamond'],
+  },
+  {
+    id: 3,
+    name: { ru: 'Скидка 25%', en: '25% off' },
+    description: { ru: 'На бронирование в отелях-партнерах', en: 'For bookings at partner hotels' },
+    price: 500,
+    loyaltyCodes: ['gold', 'diamond'],
+  },
+  {
+    id: 4,
+    name: { ru: 'Бесплатная ночь', en: 'Free night' },
+    description: { ru: 'В любом отеле до 4 звезд', en: 'Any hotel up to 4 stars' },
+    price: 1000,
+    loyaltyCodes: ['diamond'],
   },
 ];

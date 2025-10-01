@@ -29,6 +29,10 @@ export const profile = {
       'У вас еще нет поездок. Выберите отель из списка, чтобы создать поездку',
     availableInStatuses: 'Доступно в статусах:',
     notEnoughScore: 'Не хватает баллов',
+    youExchangeScore: `Вы обмениваете {score} баллов на награду: {award}`,
+    confirmTheExchange: `Подтвердите обмен`,
+    cancel: `Отмена`,
+    successfulExchange: `Вы успешно обменяли баллы, награда уже зачислена на ваш счет`,
   },
   en: {
     trips: 'Trips',
@@ -60,5 +64,9 @@ export const profile = {
       "You don't have any trips yet. Select a hotel from the list to create a trip",
     availableInStatuses: 'Available in statuses:',
     notEnoughScore: 'Not enough score',
+    youExchangeScore: `You exchange {score} score for a reward: {award}`,
+    confirmTheExchange: `Confirm the exchange`,
+    cancel: `Cancel`,
+    successfulExchange: `You have successfully redeemed your points and the reward has already been credited to your account.`,
   },
 };

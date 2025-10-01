@@ -13,7 +13,7 @@
         <label for="travelAccessibility">{{ $t('yourTravelAvailability') }}</label>
 
         <Select
-          :options="accessibilityListForTravel"
+          :options="mappedAccessibilityListForTravel"
           label-id="travelAccessibility"
           name="travelAccessibility"
           :placeholder="$t('selectAnOption')"
@@ -96,13 +96,14 @@
 <script setup lang="ts">
 import { Form, type FormSubmitEvent } from '@primevue/forms';
 import { apiRequest } from '../../api/request.ts';
-import { onMounted, ref } from 'vue';
-import type { RequestForm } from '../../types.ts';
+import { computed, onMounted, ref } from 'vue';
+import type { AccessibilityItemForTravel, RequestForm } from '../../types.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
 import { API } from '../../constants.ts';
 import { useAppForm } from '../../composables/useAppForm.ts';
+import { useLocale } from '../../composables/useLocale.ts';
 
 type PreferencesRequestForm = RequestForm['preferences'] & Pick<RequestForm, 'agreeWithRules'>;
 
@@ -116,6 +117,7 @@ const emit = defineEmits<{
 
 const { errorNotify } = useNotifications();
 const { descriptionValidation, booleanValidation, travelAccessibilityValidation } = useAppForm();
+const { localeKey } = useLocale();
 
 const initialValues = ref<PreferencesRequestForm>({
   travelAccessibility: '',
@@ -133,7 +135,11 @@ const resolver = ref(
   ),
 );
 
-const accessibilityListForTravel = ref<string[]>([]);
+const accessibilityListForTravel = ref<AccessibilityItemForTravel[]>([]);
+
+const mappedAccessibilityListForTravel = computed(() =>
+  accessibilityListForTravel.value.map(item => item.name[localeKey.value]),
+);
 
 function onValidateForm({ valid, values }: FormSubmitEvent<Record<string, any>>) {
   if (valid) {
@@ -149,9 +155,12 @@ function onValidateForm({ valid, values }: FormSubmitEvent<Record<string, any>>)
 // accessibility for travel
 async function fetchAccessibilityListForTravel() {
   try {
-    accessibilityListForTravel.value = await apiRequest<string[]>(API.AccessibilityListForTravel, {
-      method: 'GET',
-    }).then(data => data.data);
+    accessibilityListForTravel.value = await apiRequest<AccessibilityItemForTravel[]>(
+      API.AccessibilityListForTravel,
+      {
+        method: 'GET',
+      },
+    ).then(data => data.data);
   } catch (e: any) {
     errorNotify(e.message);
   }

@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import type {
+  AccessibilityItemForTravel,
   ApiServerResponse,
   Award,
   City,
@@ -46,6 +47,18 @@ function getReports(): HotelReport[] {
   return getData('reports');
 }
 
+function getReviews(): Review[] {
+  return getData('reviews');
+}
+
+function getAccessibilityListForTravel(): AccessibilityItemForTravel[] {
+  return getData('accessibilityListForTravel');
+}
+
+function getAwards(): Award[] {
+  return getData('awards');
+}
+
 export const handlers = [
   /** GET запросы **/
   http.get(API.Reviews, () => {
@@ -53,24 +66,7 @@ export const handlers = [
       success: true,
       statusCode: 200,
       message: '',
-      data: [
-        {
-          id: 1,
-          imageUrl:
-            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyBjzh3CD95BfqICMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC',
-          name: 'Анна К.',
-          city: 'Москва',
-          text: "Участие в программе 'Секретный гость' позволило мне посетить прекрасный отель в Сочи, который я бы не смогла себе позволить. Процесс оценки был простым и интуитивно понятным.",
-        },
-        {
-          id: 2,
-          imageUrl:
-            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyBjzh3CD95BfqICMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC',
-          name: 'Дмитрий Л.',
-          city: 'Санкт-Петербург',
-          text: 'Благодаря программе я смог совместить приятное с полезным - отдохнуть в хорошем отеле и помочь другим путешественникам получить честную информацию о нем.',
-        },
-      ],
+      data: getReviews(),
     });
   }),
 
@@ -84,11 +80,11 @@ export const handlers = [
   }),
 
   http.get(API.AccessibilityListForTravel, () => {
-    return HttpResponse.json<ApiServerResponse<string[]>>({
+    return HttpResponse.json<ApiServerResponse<AccessibilityItemForTravel[]>>({
       success: true,
       statusCode: 200,
       message: '',
-      data: ['Только выходные', 'Только будни', 'В любое время', 'Только праздники и отпуск'],
+      data: getAccessibilityListForTravel(),
     });
   }),
 
@@ -120,36 +116,7 @@ export const handlers = [
       success: true,
       statusCode: 200,
       message: '',
-      data: [
-        {
-          id: 1,
-          name: 'Скидка 10%',
-          description: 'На любое бронирование на Островке',
-          price: 100,
-          loyaltyCodes: ['bronze', 'silver', 'gold', 'diamond'],
-        },
-        {
-          id: 2,
-          name: 'Скидка 15%',
-          description: 'На бронирование в отелях-партнерах',
-          price: 250,
-          loyaltyCodes: ['silver', 'gold', 'diamond'],
-        },
-        {
-          id: 3,
-          name: 'Скидка 25%',
-          description: 'На бронирование в отелях-партнерах',
-          price: 500,
-          loyaltyCodes: ['gold', 'diamond'],
-        },
-        {
-          id: 4,
-          name: 'Бесплатная ночь',
-          description: 'В любом отеле до 4 звезд',
-          price: 1000,
-          loyaltyCodes: ['diamond'],
-        },
-      ],
+      data: getAwards(),
     });
   }),
 

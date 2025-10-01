@@ -9,12 +9,12 @@
             <img class="reviews__img" :src="item.imageUrl" :alt="$t('participantPhoto')" />
 
             <div class="reviews__title">
-              <h3>{{ item.name }}</h3>
-              <h4 class="reviews__title--secondary">{{ item.city }}</h4>
+              <h3>{{ item.name[localeKey] }}</h3>
+              <h4 class="reviews__title--secondary">{{ item.city[localeKey] }}</h4>
             </div>
           </div>
 
-          <p>"{{ item.text }}"</p>
+          <p>"{{ item.text[localeKey] }}"</p>
         </div>
       </template>
     </info-card-list>
@@ -28,8 +28,10 @@ import type { Review } from '../../types.ts';
 import { useNotifications } from '../../composables/useNotifications.ts';
 import InfoCardList from '../../components/InfoCardList.vue';
 import { API } from '../../constants.ts';
+import { useLocale } from '../../composables/useLocale.ts';
 
 const { errorNotify } = useNotifications();
+const { localeKey } = useLocale();
 
 const reviews = ref<Review[]>([]);
 
