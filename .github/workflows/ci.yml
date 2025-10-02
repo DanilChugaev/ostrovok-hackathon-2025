@@ -19,9 +19,7 @@ jobs:
         run: docker compose version
 
       - name: Build Docker image
-        run: docker compose build --platform linux/amd64
+        run: docker compose build
 
       - name: Run lint
-        run: |
-          # Запускаем линтер в контейнере dev (из вашего Dockerfile)
-          docker compose --profile dev run --rm app-dev yarn lint
+        run: docker compose --profile dev run --rm app-dev yarn lint
