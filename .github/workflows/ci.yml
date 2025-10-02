@@ -11,9 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Verify Docker Compose version
+        run: docker compose version
+
       - name: Build Docker image
-        run: docker-compose build --platform linux/amd64
+        run: docker compose build --platform linux/amd64
+
       - name: Run lint
-        run: docker run --rm $(docker-compose config | grep image | awk '{print $2}' | head -n 1) yarn lint
+        run: |
+          # Запускаем линтер в контейнере dev (из вашего Dockerfile)
+          docker compose --profile dev run --rm app-dev yarn lint
