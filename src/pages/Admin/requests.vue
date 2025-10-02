@@ -2,6 +2,7 @@
   <DataTable :value="mappedRequests" resizableColumns columnResizeMode="expand" showGridlines>
     <Column field="id" header="ID"></Column>
     <Column field="status" :header="$t('status')"></Column>
+    <Column field="userId" header="userId"></Column>
     <Column field="username" :header="$t('username')"></Column>
     <Column field="firstName" :header="$t('firstName')"></Column>
     <Column field="lastName" :header="$t('lastName')"></Column>
@@ -39,7 +40,7 @@ import { computed, onMounted, ref } from 'vue';
 import { API } from '../../constants.ts';
 import { apiRequest } from '../../api/request.ts';
 
-const { errorNotify } = useNotifications();
+const { errorNotify, successNotify } = useNotifications();
 
 const requests = ref<RequestForm[]>([]);
 
@@ -47,6 +48,7 @@ const mappedRequests = computed(() =>
   requests.value.map(request => ({
     id: request.id,
     status: request.status,
+    userId: request.user.userId,
     username: request.user.username,
     firstName: request.user.firstName,
     lastName: request.user.lastName,
@@ -63,8 +65,18 @@ const mappedRequests = computed(() =>
   })),
 );
 
-function accepted(requestId: number) {
-  console.log(requestId);
+async function accepted(requestId: number) {
+  const response = await apiRequest<{ requestId: number }>(API.RequestAccepted, {
+    method: 'POST',
+    body: {
+      requestId,
+    },
+  });
+
+  if (response.success) {
+    successNotify(response.message);
+    window.location.reload();
+  }
 }
 
 function rejected(requestId: number) {

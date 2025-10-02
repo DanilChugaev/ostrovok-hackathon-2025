@@ -454,3 +454,11 @@
     "media": []
   }
 }
+
+[POST] /api/v1/request-accepted - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": []
+}

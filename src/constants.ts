@@ -48,6 +48,7 @@ export const API = {
   HotelReportCreate: '/api/v1/hotel-report/create',
   HotelReportCriteriaSave: '/api/v1/hotel-report/criteria/save',
   Requests: '/api/v1/requests',
+  RequestAccepted: '/api/v1/request-accepted',
 };
 
 export const SUBMIT_REQUEST_FORM_STAGES = {

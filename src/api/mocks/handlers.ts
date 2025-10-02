@@ -494,5 +494,34 @@ export const handlers = [
       data: newScore,
     });
   }),
+
+  http.post(API.RequestAccepted, async ({ request }) => {
+    const { requestId } = (await request.json()) as { requestId: number };
+
+    const requests = getRequests();
+    const requestItem = requests.find(item => item.id === requestId)!;
+    requestItem.status = 'accepted';
+
+    const users = getUsers();
+    const user = users.find(user => user.id === requestItem.user.userId)!;
+    user.programRequestStatus = 'accepted';
+    user.role = 'secret_guest';
+
+    localStorage.setItem(
+      'requestForms',
+      JSON.stringify([...requests.filter(item => item.id !== requestId), requestItem]),
+    );
+    localStorage.setItem(
+      'users',
+      JSON.stringify([...users.filter(item => item.id !== user.id), user]),
+    );
+
+    return HttpResponse.json<ApiServerResponse<[]>>({
+      success: true,
+      statusCode: 200,
+      message: 'Заявка одобрена',
+      data: [],
+    });
+  }),
   /** POST запросы **/
 ];

@@ -110,7 +110,7 @@ function getTooltip(award: Award) {
 
   const neededStatuses = award.loyaltyCodes
     .map(
-      item => props.loyalty.find(loyaltyItem => loyaltyItem.code === item)!.name[localeKey.value],
+      item => props.loyalty.find(loyaltyItem => loyaltyItem.code === item)?.name[localeKey.value],
     )
     .join(', ');
 
