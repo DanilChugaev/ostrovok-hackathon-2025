@@ -14,6 +14,7 @@ import type {
   HotelReportStageProgress,
   HotelReportCategoryProgress,
   HotelReportCriterionFormForServer,
+  RequestForm,
 } from '../../types.ts';
 
 // пользователи
@@ -1404,5 +1405,33 @@ export const scores: HotelReportCriterionFormForServer[] = [
     comment: 'супер',
     score: 5,
     media: [],
+  },
+];
+
+export const requestForms: RequestForm[] = [
+  {
+    id: 1,
+    user: {
+      userId: 3,
+      username: 'user',
+      password: 'user',
+      firstName: 'Михаил',
+      lastName: 'Петров',
+      email: 'mikhail.petrov@example.com',
+      phone: '+79992222222',
+      age: 22,
+      city: 'Москва',
+    },
+    experience: {
+      travel: 'есть опыт путешествий',
+      writingReviews: 'есть опыт написания отзывов',
+      reason: 'хоxe стать секретным гостем',
+    },
+    preferences: {
+      travelAccessibility: 'Только выходные',
+      preferredDirections: 'Любое',
+    },
+    agreeWithRules: true,
+    status: 'pending',
   },
 ];

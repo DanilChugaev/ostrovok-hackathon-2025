@@ -7,7 +7,7 @@ import NotFound from './pages/NotFound.vue';
 import Login from './pages/Login.vue';
 import SubmitRequest from './pages/SubmitRequest/SubmitRequest.vue';
 import Profile from './pages/Profile/Profile.vue';
-import Admin from './pages/Admin.vue';
+import Admin from './pages/Admin/Admin.vue';
 import HotelAccount from './pages/HotelAccount.vue';
 import Hotels from './pages/Hotels/Hotels.vue';
 import HotelReports from './pages/HotelReport/HotelReports.vue';

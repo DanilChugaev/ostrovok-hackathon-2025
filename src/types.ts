@@ -31,7 +31,9 @@ export interface LoginForm {
 }
 
 export interface RequestForm {
+  id?: number;
   user: {
+    userId?: number;
     username: string;
     password: string;
     firstName: string;
@@ -51,6 +53,7 @@ export interface RequestForm {
     preferredDirections: string; // предпочтительные направления
   };
   agreeWithRules: boolean; // согласен с условиями
+  status?: ProgramRequestStatus;
 }
 
 export type ProgramRequestStatus = 'pending' | 'accepted' | 'rejected';

@@ -1,0 +1,28 @@
+export const admin = {
+  ru: {
+    systemControlPanel: 'Панель управления системой',
+    requestsForParticipation: 'Заявки на участие',
+    reportsList: 'Список отчетов',
+    hotelsList: 'Список отелей',
+    accept: 'Принять',
+    reject: 'Отклонить',
+    status: 'Статус',
+    reason: 'Причина',
+    travelAccessibility: 'Доступность для туристов',
+    preferredDirections: 'Предпочтительные маршруты',
+    agreeWithRules: 'Согласен с правилами',
+  },
+  en: {
+    systemControlPanel: 'System control panel',
+    requestsForParticipation: 'Requests for participation',
+    reportsList: 'Reports list',
+    hotelsList: 'Hotels list',
+    accept: 'Accept',
+    reject: 'Reject',
+    status: 'Status',
+    reason: 'Reason',
+    travelAccessibility: 'Travel accessibility',
+    preferredDirections: 'Preferred directions',
+    agreeWithRules: 'Agree with rules',
+  },
+};

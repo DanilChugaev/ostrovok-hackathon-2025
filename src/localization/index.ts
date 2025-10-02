@@ -4,6 +4,7 @@ import { login } from './modules/login.ts';
 import { hotels } from './modules/hotels.ts';
 import { profile } from './modules/profile.ts';
 import { hotelReport } from './modules/hotelReport.ts';
+import { admin } from './modules/admin.ts';
 
 export const localizationMessages = {
   ru: {
@@ -13,6 +14,7 @@ export const localizationMessages = {
     ...hotels.ru,
     ...profile.ru,
     ...hotelReport.ru,
+    ...admin.ru,
 
     secretGuest: 'Секретный гость',
     home: 'Главная',
@@ -33,6 +35,7 @@ export const localizationMessages = {
     error404: 'Ошибка 404',
     pageNotFound: 'Кажется, такой страницы не существует...',
     returnToHomePage: 'Вернуться на главную',
+    hotelManagement: 'Управление отелями',
   },
   en: {
     ...main.en,
@@ -41,6 +44,7 @@ export const localizationMessages = {
     ...hotels.en,
     ...profile.en,
     ...hotelReport.en,
+    ...admin.en,
 
     secretGuest: 'Secret guest',
     home: 'Home',
@@ -61,5 +65,6 @@ export const localizationMessages = {
     error404: 'Error 404',
     pageNotFound: "It looks like this page doesn't exist",
     returnToHomePage: 'Return to home page',
+    hotelManagement: 'Hotel management',
   },
 };

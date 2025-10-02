@@ -165,6 +165,74 @@
   ]
 }
 
+[GET] /api/v1/admin-hotel-reports - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "userId": 1,
+      "trip": {
+        "id": 1,
+        "userId": 1,
+        "hotel": {
+          "id": 1,
+          "name": { "ru": "Отель Гранд", "en": "Grand Hotel" },
+          "photo": "https://example.com/photo.jpg",
+          "city": { "ru": "Москва", "en": "Moscow" },
+          "address": { "ru": "ул. Тверская, 1", "en": "Tverskaya St, 1" },
+          "description": { "ru": "Роскошный отель", "en": "Luxury hotel" },
+          "stars": 5,
+          "pricePerNight": 15000,
+          "availableDates": ["2025-11-01"]
+        },
+        "startDate": "2025-10-01",
+        "endDate": "2025-10-03",
+        "hasReport": true,
+        "totalScore": 4
+      },
+      "totalScore": 4,
+      "comment": "Хороший отель",
+      "createdDate": "2025-10-02",
+      "progress": 0.8
+    }
+  ]
+}
+
+[GET] /api/v1/requests - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": {
+    id: 1,
+    user: {
+      userId: 3,
+      username: 'user',
+      password: 'user',
+      firstName: 'Михаил',
+      lastName: 'Петров',
+      email: 'mikhail.petrov@example.com',
+      phone: '+79992222222',
+      age: 22,
+      city: 'Москва',
+    },
+    experience: {
+      travel: 'есть опыт путешествий',
+      writingReviews: 'есть опыт написания отзывов',
+      reason: 'хоxe стать секретным гостем',
+    },
+    preferences: {
+      travelAccessibility: 'Только выходные',
+      preferredDirections: 'Любое',
+    },
+    agreeWithRules: true,
+    status: 'pending',
+  }
+}
+
 [GET] /api/v1/hotel-report?reportId=<number> - 200
 {
   "success": true,

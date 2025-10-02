@@ -1,5 +1,20 @@
-<template>HotelAccount</template>
+<template>
+  <div class="hotel-account">
+    <h1>{{ $t('hotelManagement') }}</h1>
 
-<script setup lang="ts"></script>
+    <hotels-list />
+  </div>
+</template>
 
-<style scoped></style>
+<script setup lang="ts">
+import HotelsList from './Admin/hotels-list.vue';
+</script>
+
+<style scoped>
+.hotel-account {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-e);
+  padding: var(--spacer-d) 0;
+}
+</style>

@@ -91,6 +91,10 @@ function getScores(): HotelReportCriterionFormForServer[] {
   return getData('scores');
 }
 
+function getRequests(): RequestForm[] {
+  return getData('requestForms');
+}
+
 export const handlers = [
   /** GET запросы **/
   http.get(API.Health, () => {
@@ -183,6 +187,26 @@ export const handlers = [
       statusCode: 200,
       message: '',
       data: filteredReports.map(report => ({
+        id: report.id,
+        userId: report.userId,
+        trip: trips.find(trip => trip.id === report.tripId)!,
+        totalScore: report.totalScore,
+        comment: report.comment,
+        createdDate: report.createdDate,
+        progress: report.progress,
+      })),
+    });
+  }),
+
+  http.get(API.AdminHotelReports, () => {
+    const reports = getReports();
+    const trips = getTrips();
+
+    return HttpResponse.json<ApiServerResponse<HotelReportResponse[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: reports.map(report => ({
         id: report.id,
         userId: report.userId,
         trip: trips.find(trip => trip.id === report.tripId)!,
@@ -315,11 +339,21 @@ export const handlers = [
       data: criteria.filter(criterion => criterion.categoryId === Number(categoryId)),
     });
   }),
+
+  http.get(API.Requests, () => {
+    return HttpResponse.json<ApiServerResponse<RequestForm[]>>({
+      success: true,
+      statusCode: 200,
+      message: '',
+      data: getRequests(),
+    });
+  }),
   /** GET запросы **/
 
   /** POST запросы **/
   http.post(API.SendRequestForm, async ({ request }) => {
     const body = (await request.json()) as RequestForm;
+
     const currentUsers = getUsers();
     const countCurrentUsers = currentUsers.length;
     const newUser: User = {
