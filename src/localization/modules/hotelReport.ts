@@ -11,6 +11,7 @@ export const hotelReport = {
     comment: 'Комментарий',
     show: 'Показать',
     addNewReport: 'Добавить новый отчет',
+    new: 'Новый',
     selectTrip: 'Выберите поездку',
     continue: 'Продолжить',
     reports: 'Отчеты',
@@ -35,6 +36,7 @@ export const hotelReport = {
     hotelReportStages: 'этапы',
     hotelReportCategories: 'категории',
     hotelReportCriteria: 'Критерии оценки',
+    createdDate: 'Дата создания',
   },
   en: {
     hotelRating: 'Hotel rating',
@@ -48,6 +50,7 @@ export const hotelReport = {
     comment: 'Comment',
     show: 'Show',
     addNewReport: 'Add new report',
+    new: 'New',
     selectTrip: 'Select trip',
     continue: 'Continue',
     reports: 'Reports',
@@ -72,5 +75,6 @@ export const hotelReport = {
     hotelReportStages: 'stages',
     hotelReportCategories: 'categories',
     hotelReportCriteria: 'Criteria',
+    createdDate: 'Created date',
   },
 };

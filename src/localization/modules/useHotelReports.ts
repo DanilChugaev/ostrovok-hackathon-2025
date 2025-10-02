@@ -17,6 +17,10 @@ export function useHotelReports() {
   const router = useRouter();
   const { t } = useLocale();
 
+  function goToHotelReportsPage() {
+    router.push(PAGES.HotelReports);
+  }
+
   async function fetchHotelReportById(reportId: number): Promise<HotelReportResponse | null> {
     try {
       const result = await apiRequest<HotelReportResponse>(
@@ -27,7 +31,7 @@ export function useHotelReports() {
       ).then(data => data.data);
 
       if (!result) {
-        router.push(PAGES.HotelReports);
+        goToHotelReportsPage();
       }
 
       return result;
@@ -49,7 +53,7 @@ export function useHotelReports() {
       ).then(data => data.data);
 
       if (!result) {
-        router.push(PAGES.HotelReports);
+        goToHotelReportsPage();
       }
 
       return result;
@@ -71,7 +75,7 @@ export function useHotelReports() {
       ).then(data => data.data);
 
       if (!result) {
-        router.push(PAGES.HotelReports);
+        goToHotelReportsPage();
       }
 
       return result;
@@ -93,7 +97,7 @@ export function useHotelReports() {
       ).then(data => data.data);
 
       if (!result) {
-        router.push(PAGES.HotelReports);
+        goToHotelReportsPage();
       }
 
       return result;
@@ -159,6 +163,7 @@ export function useHotelReports() {
   }
 
   return {
+    goToHotelReportsPage,
     fetchHotelReportById,
     fetchHotelReports,
     createHotelReport,
