@@ -112,7 +112,7 @@ async function onReportButtonClick(tripId: number) {
 
 function getBadge(trip: Trip) {
   if (trip.hasReport) {
-    const progress = props.reports.find(report => report.trip.id === trip.id)?.progress;
+    const progress = props.reports?.find(report => report?.trip?.id === trip.id)?.progress ?? 0;
 
     if (progress && progress === 100) {
       return t('reportSent');
@@ -126,7 +126,7 @@ function getBadge(trip: Trip) {
 
 function getBadgeColor(trip: Trip) {
   if (trip.hasReport) {
-    const progress = props.reports.find(report => report.trip.id === trip.id)?.progress;
+    const progress = props.reports?.find(report => report?.trip?.id === trip.id)?.progress ?? 0;
 
     if (progress && progress === 100) {
       return 'green';

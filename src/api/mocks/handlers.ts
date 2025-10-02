@@ -450,7 +450,6 @@ export const handlers = [
     const body = (await request.json()) as CreateTripForm;
     const trips = getTrips();
     const lastId = trips.sort((a, b) => a.id - b.id)[trips.length - 1]!.id;
-    debugger;
     const hotel = getHotels().find(hotel => hotel.id === body.hotelId)!;
     const newTrip: Trip = {
       id: lastId + 1,
@@ -485,7 +484,7 @@ export const handlers = [
       media: body.media,
     };
 
-    localStorage.setItem('trips', JSON.stringify([...scores, newScore]));
+    localStorage.setItem('scores', JSON.stringify([...scores, newScore]));
 
     return HttpResponse.json<ApiServerResponse<HotelReportCriterionFormForServer>>({
       success: true,

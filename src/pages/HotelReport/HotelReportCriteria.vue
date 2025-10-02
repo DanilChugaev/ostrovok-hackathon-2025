@@ -184,6 +184,7 @@ onMounted(async () => {
 
 .hotel-report-criteria__form {
   max-width: 800px;
+  width: 100%;
 }
 
 .form {
