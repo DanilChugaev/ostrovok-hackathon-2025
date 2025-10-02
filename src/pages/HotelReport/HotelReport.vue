@@ -12,7 +12,7 @@
       <h1>{{ $t('reportInformation') }}</h1>
     </div>
 
-    <hotel-card v-if="report" :hotel="report.trip.hotel">
+    <hotel-card v-if="report?.trip?.hotel" :hotel="report.trip.hotel">
       <template #dates>
         <div>
           <b>{{ $t('travelDate') }}</b>

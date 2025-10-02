@@ -2,6 +2,8 @@
   <div class="hotel-reports">
     <h1>{{ $t('reports') }}</h1>
 
+    <p>Тут можно описать правила заполнения отчетов, чтобы всегда перед глазами было</p>
+
     <DataTable :value="reports" resizableColumns columnResizeMode="expand" showGridlines>
       <Column field="status" :header="$t('reportStatus')">
         <template #body="{ data }">
@@ -11,9 +13,9 @@
 
       <Column field="createdDate" :header="$t('createdDate')"></Column>
 
-      <Column field="hotelName" :header="$t('hotel')">
+      <Column field="trip" :header="$t('hotel')">
         <template #body="{ data }">
-          {{ data.trip.hotel.name[localeKey] }}
+          {{ data.trip?.hotel?.name[localeKey] }}
         </template>
       </Column>
 

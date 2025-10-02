@@ -385,17 +385,18 @@ export const handlers = [
     const body = (await request.json()) as CreateHotelReportForm;
     const reports = getReports();
     const lastId = reports[reports.length - 1]!.id;
+    const trips = getTrips();
+    const selectedTrip = trips.find(trip => trip.id === body.tripId)!;
+    selectedTrip.hasReport = true;
+
     const newReport = {
       id: lastId + 1,
       userId: body.userId,
-      tripId: body.tripId,
+      trip: selectedTrip,
       totalScore: 0,
       comment: '',
       createdDate: dayjs().format('YYYY-MM-DD'),
     };
-    const trips = getTrips();
-    const selectedTrip = trips.find(trip => trip.id === body.tripId)!;
-    selectedTrip.hasReport = true;
 
     localStorage.setItem(
       'trips',
@@ -403,7 +404,7 @@ export const handlers = [
     );
     localStorage.setItem('reports', JSON.stringify([...reports, newReport]));
 
-    return HttpResponse.json<ApiServerResponse<HotelReport>>({
+    return HttpResponse.json<ApiServerResponse<HotelReportResponse>>({
       success: true,
       statusCode: 200,
       message: '',
