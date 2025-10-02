@@ -56,5 +56,5 @@ docker compose up --build или make up
 
 ## Проверка healthcheck
 
-curl http://localhost:8080/health  # Продакшен
-curl http://localhost:8081/health  # Разработка
+- curl http://localhost:8080/health  # Продакшен
+- curl http://localhost:8081/health  # Разработка
