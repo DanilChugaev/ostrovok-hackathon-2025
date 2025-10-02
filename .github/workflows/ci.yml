@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker image
+        run: docker-compose build --platform linux/amd64
+      - name: Run lint
+        run: docker run --rm $(docker-compose config | grep image | awk '{print $2}' | head -n 1) yarn lint

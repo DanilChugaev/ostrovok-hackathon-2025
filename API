@@ -1,0 +1,388 @@
+[GET] /health - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": { "status": "ok" }
+}
+
+[GET] /api/v1/reviews - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "imageUrl": "https://example.com/photo.jpg",
+      "name": { "ru": "Отель Гранд", "en": "Grand Hotel" },
+      "city": { "ru": "Москва", "en": "Moscow" },
+      "text": { "ru": "Отличный отель", "en": "Great hotel" }
+    }
+  ]
+}
+
+[GET] /api/v1/cities - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "code": "moscow",
+      "name": { "ru": "Москва", "en": "Moscow" }
+    }
+  ]
+}
+
+[GET] /api/v1/accessibility-list-for-travel - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "name": { "ru": "Гибкий график", "en": "Flexible schedule" }
+    }
+  ]
+}
+
+[GET] /api/v1/hotels - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "name": { "ru": "Отель Гранд", "en": "Grand Hotel" },
+      "photo": "https://example.com/photo.jpg",
+      "city": { "ru": "Москва", "en": "Moscow" },
+      "address": { "ru": "ул. Тверская, 1", "en": "Tverskaya St, 1" },
+      "description": { "ru": "Роскошный отель", "en": "Luxury hotel" },
+      "stars": 5,
+      "pricePerNight": 15000,
+      "availableDates": ["2025-11-01", "2025-11-02"]
+    }
+  ]
+}
+
+[GET] /api/v1/trips?userId=<number> - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "userId": 1,
+      "hotel": {
+        "id": 1,
+        "name": { "ru": "Отель Гранд", "en": "Grand Hotel" },
+        "photo": "https://example.com/photo.jpg",
+        "city": { "ru": "Москва", "en": "Moscow" },
+        "address": { "ru": "ул. Тверская, 1", "en": "Tverskaya St, 1" },
+        "description": { "ru": "Роскошный отель", "en": "Luxury hotel" },
+        "stars": 5,
+        "pricePerNight": 15000,
+        "availableDates": ["2025-11-01"]
+      },
+      "startDate": "2025-10-01",
+      "endDate": "2025-10-03",
+      "hasReport": false,
+      "totalScore": 0
+    }
+  ]
+}
+
+[GET] /api/v1/awards - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "name": { "ru": "Награда", "en": "Award" },
+      "description": { "ru": "За активность", "en": "For activity" },
+      "price": 100,
+      "loyaltyCodes": ["gold", "diamond"]
+    }
+  ]
+}
+
+[GET] /api/v1/loyalty - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "code": "bronze",
+      "name": { "ru": "Бронза", "en": "Bronze" },
+      "minScore": 0,
+      "maxScore": 500
+    }
+  ]
+}
+
+[GET] /api/v1/hotel-reports?userId=<number> - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "userId": 1,
+      "trip": {
+        "id": 1,
+        "userId": 1,
+        "hotel": {
+          "id": 1,
+          "name": { "ru": "Отель Гранд", "en": "Grand Hotel" },
+          "photo": "https://example.com/photo.jpg",
+          "city": { "ru": "Москва", "en": "Moscow" },
+          "address": { "ru": "ул. Тверская, 1", "en": "Tverskaya St, 1" },
+          "description": { "ru": "Роскошный отель", "en": "Luxury hotel" },
+          "stars": 5,
+          "pricePerNight": 15000,
+          "availableDates": ["2025-11-01"]
+        },
+        "startDate": "2025-10-01",
+        "endDate": "2025-10-03",
+        "hasReport": true,
+        "totalScore": 4
+      },
+      "totalScore": 4,
+      "comment": "Хороший отель",
+      "createdDate": "2025-10-02",
+      "progress": 0.8
+    }
+  ]
+}
+
+[GET] /api/v1/hotel-report?reportId=<number> - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": {
+    "id": 1,
+    "userId": 1,
+    "trip": {
+      "id": 1,
+      "userId": 1,
+      "hotel": {
+        "id": 1,
+        "name": { "ru": "Отель Гранд", "en": "Grand Hotel" },
+        "photo": "https://example.com/photo.jpg",
+        "city": { "ru": "Москва", "en": "Moscow" },
+        "address": { "ru": "ул. Тверская, 1", "en": "Tverskaya St, 1" },
+        "description": { "ru": "Роскошный отель", "en": "Luxury hotel" },
+        "stars": 5,
+        "pricePerNight": 15000,
+        "availableDates": ["2025-11-01"]
+      },
+      "startDate": "2025-10-01",
+      "endDate": "2025-10-03",
+      "hasReport": true,
+      "totalScore": 4
+    },
+    "totalScore": 4,
+    "comment": "Хороший отель",
+    "createdDate": "2025-10-02",
+    "progress": 0.8
+  }
+}
+(или {"success": true, "statusCode": 200, "message": "", "data": null} если reportId не найден)
+
+[GET] /api/v1/hotel-report/stages?reportId=<number> - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "code": "checkin",
+      "name": { "ru": "Заселение", "en": "Check-in" },
+      "description": { "ru": "Процесс заселения", "en": "Check-in process" },
+      "progress": {
+        "stageId": 1,
+        "current": 2,
+        "max": 3
+      }
+    }
+  ]
+}
+(или {"data": []} если reportId не найден)
+
+[GET] /api/v1/hotel-report/categories?stageId=<number> - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "stageId": 1,
+      "code": "online_booking",
+      "name": { "ru": "Онлайн-бронирование", "en": "Online booking" },
+      "description": { "ru": "Процесс бронирования", "en": "Booking process" },
+      "progress": {
+        "categoryId": 1,
+        "current": 1,
+        "max": 2
+      }
+    }
+  ]
+}
+(или {"data": []} если stageId не найден)
+
+[GET] /api/v1/hotel-report/criteria?categoryId=<number> - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "categoryId": 1,
+      "code": "interface_convenience",
+      "name": { "ru": "Удобство интерфейса", "en": "Interface convenience" },
+      "description": { "ru": "Удобство использования", "en": "Ease of use" },
+      "is_basic": true
+    }
+  ]
+}
+(или {"data": []} если categoryId не найден)
+
+[POST] /api/v1/send-request-form - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Заявка оформлена",
+  "data": {
+    "id": 1,
+    "username": "newuser",
+    "password": "password",
+    "firstName": "Иван",
+    "lastName": "Иванов",
+    "avatar": "",
+    "email": "ivan@example.com",
+    "phone": "+79991234567",
+    "age": 25,
+    "city": "moscow",
+    "programRequestStatus": "pending",
+    "loyalty": {
+      "score": 0,
+      "code": "bronze"
+    },
+    "role": "user"
+  }
+}
+
+[POST] /api/v1/login - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": {
+    "id": 1,
+    "username": "user",
+    "password": "password",
+    "firstName": "Иван",
+    "lastName": "Иванов",
+    "avatar": "",
+    "email": "ivan@example.com",
+    "phone": "+79991234567",
+    "age": 25,
+    "city": "moscow",
+    "programRequestStatus": "accepted",
+    "loyalty": {
+      "score": 100,
+      "code": "bronze"
+    },
+    "role": "secret_guest"
+  }
+}
+(или {"success": false, "statusCode": 404, "message": "Такого пользователя не существует", "data": null} если пользователь не найден)
+(или {"success": false, "statusCode": 401, "message": "Неправильный пароль", "data": null} если пароль неверный)
+
+[POST] /api/v1/hotel-report/create - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": {
+    "id": 2,
+    "userId": 1,
+    "trip": {
+      "id": 1,
+      "userId": 1,
+      "hotel": {
+        "id": 1,
+        "name": { "ru": "Отель Гранд", "en": "Grand Hotel" },
+        "photo": "https://example.com/photo.jpg",
+        "city": { "ru": "Москва", "en": "Moscow" },
+        "address": { "ru": "ул. Тверская, 1", "en": "Tverskaya St, 1" },
+        "description": { "ru": "Роскошный отель", "en": "Luxury hotel" },
+        "stars": 5,
+        "pricePerNight": 15000,
+        "availableDates": ["2025-11-01"]
+      },
+      "startDate": "2025-10-01",
+      "endDate": "2025-10-03",
+      "hasReport": true,
+      "totalScore": 0
+    },
+    "totalScore": 0,
+    "comment": "",
+    "createdDate": "2025-10-02"
+  }
+}
+
+[POST] /api/v1/trip/create - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": {
+    "id": 2,
+    "userId": 1,
+    "hotel": {
+      "id": 1,
+      "name": { "ru": "Отель Гранд", "en": "Grand Hotel" },
+      "photo": "https://example.com/photo.jpg",
+      "city": { "ru": "Москва", "en": "Moscow" },
+      "address": { "ru": "ул. Тверская, 1", "en": "Tverskaya St, 1" },
+      "description": { "ru": "Роскошный отель", "en": "Luxury hotel" },
+      "stars": 5,
+      "pricePerNight": 15000,
+      "availableDates": ["2025-11-01"]
+    },
+    "startDate": "2025-10-12",
+    "endDate": "2025-10-17",
+    "hasReport": false,
+    "totalScore": 0
+  }
+}
+
+[POST] /api/v1/hotel-report/criteria/save - 200
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "",
+  "data": {
+    "userId": 1,
+    "reportId": 1,
+    "criterionId": 1,
+    "comment": "Отличный интерфейс",
+    "score": 5,
+    "media": []
+  }
+}

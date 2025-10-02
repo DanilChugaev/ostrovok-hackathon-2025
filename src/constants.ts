@@ -16,7 +16,7 @@ export const PAGES = {
   Health: '/health',
   Login: '/login',
   SubmitRequest: '/submit-request',
-  Profile: '/profile', // todo: добавить /profile/:id для просмотра инфы о гостях
+  Profile: '/profile',
   Admin: '/admin',
   HotelAccount: '/hotel-account',
   Hotels: '/hotels',
@@ -57,13 +57,6 @@ export const SUBMIT_REQUEST_FORM_STAGES = {
 export const PROFILE_TABS = {
   Trips: '1',
   Awards: '2',
-};
-
-export const LOYALTY_STATUS_MAP = {
-  bronze: 'Бронзовый',
-  silver: 'Серебрянный',
-  gold: 'Золотой',
-  diamond: 'Бриллиантовый',
 };
 
 export const HOTEL_REPORT_CODE_ICON_MAP: Record<string, string> = {

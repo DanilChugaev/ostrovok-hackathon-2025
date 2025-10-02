@@ -1,5 +1,6 @@
 services:
   app:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,8 +11,16 @@ services:
       - NODE_ENV=production
     volumes:
       - yarn-cache:/root/.yarn
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
 
   app-dev:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,6 +35,13 @@ services:
       - yarn-cache:/root/.yarn
     profiles:
       - dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
 
 volumes:
   yarn-cache:
