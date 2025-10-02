@@ -7,7 +7,11 @@
     <div class="hotels__list">
       <hotel-card v-for="hotel in hotelsFiltered" :key="hotel.id" :hotel="hotel">
         <template #actions>
-          <Button :label="selectHotelButtonLabel" @click="onSelectHotelButtonClick(hotel.id)" />
+          <Button
+            v-tooltip.bottom="selectHotelButtonTooltip"
+            :label="selectHotelButtonLabel"
+            @click="onSelectHotelButtonClick(hotel.id)"
+          />
         </template>
       </hotel-card>
     </div>
@@ -70,6 +74,9 @@ const hotelsFiltered = computed(() => {
 });
 const selectHotelButtonLabel = computed(() =>
   isSecretGuestProgramAccepted.value ? t('selectAHotel') : t('hotelInformation'),
+);
+const selectHotelButtonTooltip = computed(() =>
+  isSecretGuestProgramAccepted.value ? t('forRatingTheHotelYouWillReceivePoints') : undefined,
 );
 
 async function fetchHotels() {
