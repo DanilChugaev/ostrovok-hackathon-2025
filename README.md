@@ -1,17 +1,21 @@
 # Трек «Секретный гость»
 
+С данным решением вышел в финал, в топ 10 лучших решений из 221 команды
+
 Решение представляет собой прототип программы "Секретный гость" для платформы бронирования.
 Оно позволяет путешественникам подавать заявки на участие, оценивать отели по заданным критериям, 
 передавать подробные отчеты и получать за это баллы лояльности, которые можно потратить на скидки или бесплатное проживание.
 
-- [ссылка на видео-скринкаст](https://disk.yandex.ru/i/DQp0Ch3pPdRsTA)
-- [ссылка на презентацию](https://docs.google.com/presentation/d/1S_6JxWlt2S39eDYSke9vm6TxPv_iCK08/edit?usp=sharing&ouid=106089134352803758669&rtpof=true&sd=true)
+- [проблематика](https://github.com/DanilChugaev/ostrovok-hackathon-2025/blob/master/PROBLEM.md)
+- [технические требования](https://github.com/DanilChugaev/ostrovok-hackathon-2025/blob/master/TECHNICAL_REQUIREMENTS.md)
+- ссылка на видео-скринкаст
+- [ссылка на презентацию](https://github.com/DanilChugaev/ostrovok-hackathon-2025/blob/master/presentation.pdf)
 
 ## Быстрый старт
 
 ```bash
-git clone git@github.com:ostrovok-hackathon-2025/doc.git doc
-cd doc
+git clone git@github.com:DanilChugaev/ostrovok-hackathon-2025.git ostrovok-hackathon-2025
+cd ostrovok-hackathon-2025
 docker compose up --build или make up
 # открыть http://localhost:8080
 ```
@@ -32,15 +36,15 @@ docker compose up --build или make up
 Все данные замоканы и будут добавлены в localStorage при запуске приложения. 
 Дополнительно ничего делать не нужно.
 
-Для будущей интеграции [в папке sql](https://github.com/ostrovok-hackathon-2025/doc/tree/main/sql) корне проекта я расписал скрипты для создания необходимых таблиц
+Для будущей интеграции [в папке sql](https://github.com/DanilChugaev/ostrovok-hackathon-2025/blob/master/sql) корне проекта я расписал скрипты для создания необходимых таблиц
 Также добавил максимально подробные данные, которые используются при составлении отчета об оценке отеля
 
 ## Маршруты/доступ
 
 - `/` — UI
 - `/health` — 200 OK, JSON `{ "status": "ok" }` - в UI также можно перейти по данному маршруту и увидеть ожидаемый результат
-- Полное описание API сделал в отдельном файле [API](https://github.com/ostrovok-hackathon-2025/doc/blob/main/API) в корне проекта
-- Полное описание UI маршрутов сделал в отдельном файле [UI.md](https://github.com/ostrovok-hackathon-2025/doc/blob/main/UI.md) в корне проекта
+- Полное описание API сделал в отдельном файле [API](https://github.com/DanilChugaev/ostrovok-hackathon-2025/blob/master/API) в корне проекта
+- Полное описание UI маршрутов сделал в отдельном файле [UI.md](https://github.com/DanilChugaev/ostrovok-hackathon-2025/blob/master/UI.md) в корне проекта
 - В проекте реализована адаптивная версия
 
 - Тестовые пользователи:
